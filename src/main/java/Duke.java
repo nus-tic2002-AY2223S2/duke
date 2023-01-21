@@ -29,7 +29,7 @@ public class Duke {
                 //List out all the elements stored.
             } else if (userInput.equals("list")) {
                 for (int i = 0; i < userList.size(); i++) {
-                    System.out.println(i + ". " + userList.get(i));
+                    System.out.println((i+1) + ". " + userList.get(i));
                 }
                 //Store user input and echo out.
             } else {
