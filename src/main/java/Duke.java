@@ -1,4 +1,6 @@
+import java.util.List;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
     public static void main(String[] args) {
@@ -8,27 +10,32 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
 
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
         System.out.println(logo + "\nHello I'm Duke");
         System.out.println("What can i do for you?");
 
         String userInput = "";
+        List<String> userList = new ArrayList<>();
 
-        while(!userInput.equals("bye")){
+        while (!userInput.equals("bye")) {
 
-            userInput= sc.nextLine();
+            userInput = sc.nextLine();
 
-            if (userInput.equals("bye")){
+            //Exit the chatbot.
+            if (userInput.equals("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
-            }else {
+
+                //List out all the elements stored.
+            } else if (userInput.equals("list")) {
+                for (int i = 0; i < userList.size(); i++) {
+                    System.out.println(i + ". " + userList.get(i));
+                }
+                //Store user input and echo out.
+            } else {
+                userList.add(userInput);
                 System.out.println(userInput);
             }
-
-
         }
-
-
-
     }
 }
