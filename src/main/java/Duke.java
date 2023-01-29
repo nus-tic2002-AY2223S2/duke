@@ -16,12 +16,10 @@ public class Duke {
         System.out.println("What can i do for you?");
 
         String userInput = "";
-        List<String> userList = new ArrayList<>();
+
         List<Task> userTask = new ArrayList<>();
         while (!userInput.equals("bye")) {
-           Task t = new Task("read book");
-           System.out.println(t.getStatusIcon());
-
+            //Read user input.
             userInput = sc.nextLine();
 
             //Exit the chatbot.
@@ -31,29 +29,35 @@ public class Duke {
                 //List out all the elements stored.
             } else if (userInput.equals("list")) {
                 System.out.println("Here are the tasks in your list:");
-               for (int i = 0; i < userTask.size();i++){
-                   System.out.println((i+1) + ". [" + userTask.get(i).getStatusIcon() + "] " + userTask.get(i).description);
+                for (int i = 0; i < userTask.size(); i++) {
+                    System.out.println((i + 1) + ". [" + userTask.get(i).getStatusIcon() + "] " + userTask.get(i).description);
 
-               }
-               /**
-                for (int i = 0; i < userList.size(); i++) {
-                    System.out.println((i+1) + ". [" + t.getStatusIcon() + "] " + userList.get(i));
                 }
-                */
                 //Store user input and echo out.
-            } else if (userInput.contains("mark")) {
+            } else if (userInput.startsWith("mark")) {
+
                 int value = Integer.parseInt(userInput.replaceAll("[^0-9]", ""));
+                int listNumber = value - 1;
 
-                System.out.println("test mark: " + value);
-                userTask.get(value - 1).setStatusIcon(value - 1);
+                userTask.get(listNumber).setStatusIconMarked();
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println("[" + userTask.get(listNumber).getStatusIcon() + "] " + userTask.get(listNumber).description);
 
-            }else {
-                if (userInput.equals("")){
+            } else if (userInput.startsWith("unmark")) {
+                int value = Integer.parseInt(userInput.replaceAll("[^0-9]", ""));
+                int listNumber = value - 1;
 
-                }else {
+                userTask.get(listNumber).setStatusIconUnmarked();
+                System.out.println("OK, I've marked this task as not done yet:");
+                System.out.println("[" + userTask.get(listNumber).getStatusIcon() + "] " + userTask.get(listNumber).description);
+
+            } else {
+                if (userInput.equals("")) {
+
+                } else {
                     userTask.add(new Task(userInput));
-                    userList.add(userInput);
-                    System.out.println(userInput);
+                   // userList.add(userInput);
+                    //System.out.println(userInput);
                 }
 
             }
