@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Duke {
     public static void main(String[] args) {
@@ -13,16 +14,42 @@ public class Duke {
         System.out.println("\tWhat can I do for you?");
         System.out.println("------------------------------------------------------------");
 
+        //Store text
+        int count = 0;
+        String[] list = new String[100];
+
         String command;
         Scanner in = new Scanner(System.in);
         while(true) {
             command = in.nextLine().trim();
-            if (command.equalsIgnoreCase("bye")) {
+
+            if (command.isEmpty()){
+                continue;
+            }else if (command.equalsIgnoreCase("bye")) {
+                //Exit program
                 exitCommand();
                 break;
+            }else if (command.equalsIgnoreCase("list")){
+                //Print list
+                printList(list, count);
+                continue;
             }
-            printCommand(command);
+
+            //Add to list
+            list[count] = command;
+            count++;
+            printCommand("added: " + command);
+
         }
+    }
+
+    public static void printList(String[] list, int count) {
+        String printStr = "";
+        for (int i = 0; i < count; i++) {
+            String index = Integer.toString(i + 1);
+            printStr +=  index + "." + list[i] + "\n\t";
+        }
+        printCommand(printStr);
     }
 
     public static void exitCommand() {
