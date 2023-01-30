@@ -17,6 +17,7 @@ public class Task {
     }
 
     public void setStatusIconUnmarked() {
+
         isDone = false;
     }
 }
