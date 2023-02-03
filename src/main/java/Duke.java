@@ -4,28 +4,79 @@ import java.util.ArrayList;
 
 public class Duke {
 
+    public static void updateTask(String userInput, List<Task> userTask, String status) {
+        int listNumber = 0;
+        int currentItem = 0;
+        String formatString = "";
+        String description = "";
+        String[] stringSplit = new String[100];
+        try {
+            if (status.equals("mark") || status.equals("unmark")) {
 
-    public static void updateTask(String userInput,List<Task> userTask,String status){
-        int value = Integer.parseInt(userInput.replaceAll("[^0-9]", ""));
-        int listNumber = value - 1;
+                int value = Integer.parseInt(userInput.replaceAll("[^0-9]", ""));
+                listNumber = value - 1;
+            }
+            switch (status) {
+                case "mark":
+                    userTask.get(listNumber).setStatusIconMarked();
+                    System.out.println(userTask.get(listNumber));
+                    break;
+                case "unmark":
+                    userTask.get(listNumber).setStatusIconUnmarked();
+                    System.out.println(userTask.get(listNumber));
+                    break;
+                case "todo":
+                    formatString = userInput.replace("todo", "").trim();
+                    System.out.println("Got it. I've added this task:");
 
-        switch(status){
-            case "mark":
-                userTask.get(listNumber).setStatusIconMarked();
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.println("[" + userTask.get(listNumber).getStatusIcon() + "] " + userTask.get(listNumber).description);
-                break;
-            case "unmark":
-                userTask.get(listNumber).setStatusIconUnmarked();
-                System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println("[" + userTask.get(listNumber).getStatusIcon() + "] " + userTask.get(listNumber).description);
-                break;
-            default:
-                break;
+                    userTask.add(new ToDo(formatString, "T"));
+                    currentItem = userTask.size() - 1;
+
+                    System.out.println(userTask.get(currentItem));
+                    break;
+                case "deadline":
+                    formatString = userInput.replace("deadline", "").trim();
+                    stringSplit = formatString.split("/");
+                    description = stringSplit[0];
+                    String by = stringSplit[1].replace("by", "").trim();
+                    userTask.add(new Deadlines(description, "D", by));
+                    System.out.println("Got it. I've added this task:");
+
+                    currentItem = userTask.size() - 1;
+                    System.out.println(userTask.get(currentItem));
+
+                    System.out.println("Now you have " + userTask.size() + " tasks in the list.");
+                    break;
+                case "event":
+                    formatString = userInput.replace("event", "").trim();
+                    stringSplit = formatString.split("/");
+                    description = stringSplit[0];
+                    String from = stringSplit[1].replace("from", "").trim();
+                    String to = stringSplit[2].replace("to", "").trim();
+                    System.out.println("Got it. I've added this task:");
+
+                    userTask.add(new Events(description, "E", from, to));
+                    currentItem = userTask.size() - 1;
+
+                    System.out.println(userTask.get(currentItem));
+
+                    System.out.println("Now you have " + userTask.size() + " tasks in the list.");
+                    break;
+                default:
+                    System.out.println("Doesn't match any switch statement");
+                    break;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Listing not found, please try again.");
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter only numbers.");
+        } catch (Exception e) {
+            System.out.println(e);
         }
 
 
     }
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -56,26 +107,43 @@ public class Duke {
                 System.out.println("Here are the tasks in your list:");
 
                 for (int i = 0; i < userTask.size(); i++) {
+                    try {
+                        System.out.println((i + 1) + ". " + userTask.get(i));
+                        //System.out.println((i + 1) + ". [" + userTask.get(i).getTaskType() + "]" + "[" + userTask.get(i).getStatusIcon() + "] " + userTask.get(i).description);
 
-                    System.out.println((i + 1) + ". [" + userTask.get(i).getStatusIcon() + "] " + userTask.get(i).description);
+                    } catch (NumberFormatException e) {
+
+                        System.out.println("Please enter only numbers.");
+                    } catch (IndexOutOfBoundsException e) {
+
+                        System.out.println("Task number not found, please try again.");
+                    }
 
                 }
                 //Store user input and echo out.
             } else if (userInput.startsWith("mark")) {
                 //Marks a task as done.
-                updateTask(userInput, userTask,"mark");
+                updateTask(userInput, userTask, "mark");
 
             } else if (userInput.startsWith("unmark")) {
                 //unmarks a task as not done.
-                updateTask(userInput, userTask,"unmark");
+                updateTask(userInput, userTask, "unmark");
 
-            } else {
-                //accepts as a task only if there is input.
-                if (!userInput.equals("")) {
-                    userTask.add(new Task(userInput));
-                }
+            } else if (userInput.startsWith("todo")) {
+                updateTask(userInput, userTask, "todo");
+
+            } else if (userInput.startsWith("deadline")) {
+                updateTask(userInput, userTask, "deadline");
+
+            } else if (userInput.startsWith("event")) {
+                updateTask(userInput, userTask, "event");
 
             }
         }
+    }
+
+    public String FormatDescription(String input) {
+
+        return "";
     }
 }
