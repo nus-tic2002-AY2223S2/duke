@@ -16,7 +16,7 @@ public class Duke {
 
         //Store text
         int count = 0;
-        String[] list = new String[100];
+        Task[] taskList = new Task[100];
 
         String command;
         Scanner in = new Scanner(System.in);
@@ -25,29 +25,58 @@ public class Duke {
 
             if (command.isEmpty()){
                 continue;
-            }else if (command.equalsIgnoreCase("bye")) {
+            }else if (command.equalsIgnoreCase("BYE")) {
                 //Exit program
                 exitCommand();
                 break;
-            }else if (command.equalsIgnoreCase("list")){
+            }else if (command.equalsIgnoreCase("LIST")){
                 //Print list
-                printList(list, count);
+                printList(taskList, count);
+                continue;
+            }else if (command.toUpperCase().startsWith("MARK") || command.toUpperCase().startsWith("UNMARK")) {
+                //Mark or Unmark Task
+                command = command.toUpperCase();
+                boolean markAsDone = command.startsWith("MARK") ? true : false;
+                String numberStr = command.replace("UN", "").replace("MARK", "").trim();
+                try{
+                    int number = Integer.parseInt(numberStr) - 1;
+                    if (number < count) {
+                        markOrUnmakrTask(taskList[number], markAsDone);
+                    }
+                }
+                catch (NumberFormatException ex) {
+                    ex.printStackTrace();
+                }
                 continue;
             }
 
             //Add to list
-            list[count] = command;
+            Task task = new Task(command);
+            taskList[count] = task;
             count++;
             printCommand("added: " + command);
 
         }
     }
 
-    public static void printList(String[] list, int count) {
+
+    public static void markOrUnmakrTask(Task task, boolean markAsDone) {
+        String printStr = "";
+        if (markAsDone) {
+            task.markAsDone();
+            printStr = "Nice! I've marked this task as done:";
+        }else {
+            task.unMarkDone();
+            printStr = "OK, I've marked this task as not done yet:";
+        }
+        printCommand(printStr + System.lineSeparator() + "\t" + task);
+    }
+
+    public static void printList(Task[] list, int count) {
         String printStr = "";
         for (int i = 0; i < count; i++) {
             String index = Integer.toString(i + 1);
-            printStr +=  index + "." + list[i] + "\n\t";
+            printStr +=  index + "." + list[i] + System.lineSeparator() + "\t";
         }
         printCommand(printStr);
     }
