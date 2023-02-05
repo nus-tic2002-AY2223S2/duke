@@ -3,17 +3,8 @@ import java.util.ArrayList;
 
 public class Duke {
 
-    //  this isNumeric method get from https://www.baeldung.com/java-check-string-number
-    public static boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
-        }
-        try {
-            double d = Double.parseDouble(strNum);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
+    public static void drawLine() {
+        System.out.println("\n_________________________________________\n");
     }
 
     public static void main(String[] args) {
@@ -37,129 +28,141 @@ public class Duke {
         // other than bye than print the statement
         do {
             sentences = in.nextLine();
+            String[] wordsInSentences = sentences.split(" ");
 
+            // *********************
+            // level 1 bye feature
+            // *********************
             if (sentences.equals("bye")) {
                 continue;
-            } else if (sentences.equals("list")) {
-                System.out.println("_________________________________________");
+            }
+
+            // **********************
+            // level 2 list feature
+            // **********************
+            else if (sentences.equals("list")) {
+                //System.out.println("_________________________________________");
+                drawLine();
                 for (int i = 1; i < tasksArray.size() + 1; i++) {
                     System.out.println(tasksArray.get(i - 1).toString());
                 }
-                System.out.println("_________________________________________\n");
-                // level 3 mark feature
-            } else if (sentences.contains("mark")) {
-                // private case: mark, mark1, mark 0, mark paper, mark/unmark number > task number)
-                if (sentences.equals("mark")) {
-                    System.out.println("mark is a function key. Please indicate which task you want to mark!\n");
-                } else {
-                    String[] wordsInSentences = sentences.split(" ");
-                    if (wordsInSentences.length == 2 && isNumeric(wordsInSentences[1])) {
+                //System.out.println("_________________________________________\n");
+                drawLine();
+            }
+
+            // ***************************
+            // level 3 mark/unmark feature
+            // ***************************
+            else if (wordsInSentences[0].equals("mark")) {
+                // corner cases: mark, mark1, mark 0, mark paper, mark/unmark number > task number)
+                try {
+                    int taskNumber = Integer.parseInt(wordsInSentences[1]);
+                        if (taskNumber == 0) {
+                            System.out.println("There is no task 0. The task number is start from 1!\n");
+                            continue;
+                        } else if (taskNumber > tasksArray.size()) {
+                            System.out.println("Invalid task number! Please make sure the task number that you have!\n");
+                            continue;
+                        }
+                        tasksArray.get(taskNumber - 1).markAsDone();
+                } catch (NumberFormatException nfe) {
+                    System.out.println("mark is a function key. Please indicate task number to be marked!");
+                } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException obe) {
+                    System.out.println("mark feature must contain a task number");
+                }
+            }
+
+            else if (wordsInSentences[0].equals("unmark")) {
+                // corner cases: mark, mark1, mark 0, mark paper, mark/unmark number > task number)
+                try {
                         int taskNumber = Integer.parseInt(wordsInSentences[1]);
                         if (taskNumber == 0) {
                             System.out.println("There is no task 0. The task number is start from 1!\n");
                             continue;
-                        }
-                        else if (taskNumber > tasksArray.size()) {
+                        } else if (taskNumber > tasksArray.size()) {
                             System.out.println("Invalid task number! Please make sure the task number that you have!\n");
                             continue;
                         }
-                        if (wordsInSentences[0].equals("mark")) {
-                            tasksArray.get(taskNumber - 1).markAsDone();
-                        } else if (wordsInSentences[0].equals("unmark")) {
-                            tasksArray.get(taskNumber - 1).markAsNotDone();
-                        }
-                    } else {
-                        System.out.println("_________________________________________\n added:" + sentences + "\n_________________________________________\n");
-                        tasksArray.add(new Task(sentences));
-                    }
+                        tasksArray.get(taskNumber - 1).markAsNotDone();
+                } catch (NumberFormatException nfe) {
+                    System.out.println("mark is a function key. Please indicate task number to be marked!");
+                } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException obe) {
+                    System.out.println("unmark feature must contain a task number");
                 }
-                //*********************
-                // level 4 To do feature
-                //*********************
-            } else if (sentences.contains("todo")) {
-                // private case: to do, todo1,
-                if (sentences.equals("todo")) {
-                    System.out.println("todo is a function key. Please indicate what task to do!\n");
-                } else {
-                    String[] wordsInToDo = sentences.split(" ");
-                    if (wordsInToDo.length >= 2) {
-                        // if there is to do task: skip "to do" and put the task in taskArray
-                        tasksArray.add(new ToDo(sentences.substring(5)));
-                        System.out.println("_________________________________________\nGot it. I've added this task:\n    " + tasksArray.get(tasksArray.size() - 1).toString() + "\nNow you have " + tasksArray.size() + " tasks in the list.\n_________________________________________\n" );
-                    } else {
-                        System.out.println("_________________________________________\n added:" + sentences + "\n_________________________________________\n");
-                        tasksArray.add(new Task(sentences));
+            }
+
+            // **********************
+            // level 4 To do feature
+            // **********************
+            else if (wordsInSentences[0].equals("todo")) {
+                // corner cases: to do, todo1,
+                String[] descriptionInToDo = sentences.split(" ");
+                String todo = new String();
+                try {
+                    // if there is to do task: skip "to do" and put the task in taskArray
+                    todo = descriptionInToDo[1];
+                    for (int i = 2; i < descriptionInToDo.length; i++) {
+                        todo += " " + descriptionInToDo[i];
                     }
+                    tasksArray.add(new ToDo(todo));
+                    drawLine();
+                    System.out.println("Got it. I've added this task:\n    "
+                            + tasksArray.get(tasksArray.size() - 1).toString() +
+                            "\nNow you have " + tasksArray.size() + " tasks in the list.");
+                    drawLine();
+                } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException obe) {
+                    System.out.println("A todo command must contain a task!");
                 }
-                //**************************
-                // level 4 Deadline feature
-                //**************************
-            } else if (sentences.contains("deadline")) {
-                    // private case: deadline, deadline1,
-                    if (sentences.equals("deadline")) {
-                        System.out.println("deadline is a function key. Please indicate what task to do!\n");
-                    } else {
-                        String[] wordsInDeadline = sentences.split("/by");
-                        if (wordsInDeadline.length == 2) {
-                            // if there is deadline task: skip "deadline" and put the task in taskArray
-                            tasksArray.add(new Deadline(wordsInDeadline[0].substring(9),wordsInDeadline[1]));
-                            System.out.println("_________________________________________\nGot it. I've added this task:\n    " + tasksArray.get(tasksArray.size() - 1).toString() + "\nNow you have " + tasksArray.size() + " tasks in the list.\n_________________________________________\n" );
-                        } else {
-                            System.out.println("_________________________________________\n added:" + sentences + "\n_________________________________________\n");
-                            tasksArray.add(new Task(sentences));
-                        }
-                    }
-                //**************************
-                // level 4 Event feature
-                //**************************
-            } else if (sentences.contains("event")) {
+            }
+
+            // *************************
+            // level 4 Deadline feature
+            // *************************
+            else if (wordsInSentences[0].equals("deadline")) {
+                // corner case: deadline, deadline1, task = check return book deadline,
+                String[] descriptionInDeadline = sentences.split("/by");
+                try {
+                    // if there is deadline task: skip "deadline" and extract the task and by
+                    tasksArray.add(new Deadline(descriptionInDeadline[0].substring(9), descriptionInDeadline[1]));
+                    drawLine();
+                    System.out.println("Got it. I've added this task:\n    "
+                            + tasksArray.get(tasksArray.size() - 1).toString() +
+                            "\nNow you have " + tasksArray.size() + " tasks in the list.");
+                    drawLine();
+                } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException obe) {
+                    System.out.println("A deadline command must provide a deadline date (/by)!");
+                }
+            }
+
+            // *************************
+            // level 4 Event feature
+            // *************************
+            else if (wordsInSentences[0].equals("event")) {
                 // private case: event, event1,
-                if (sentences.equals("event")) {
-                    System.out.println("event is a function key. Please indicate what task to do!\n");
-                } else {
-                    String[] wordsInEvent = sentences.split("/from|/to");
-                    if (wordsInEvent.length > 2) {
-                        // if there is event task: skip "event" and put the task in taskArray
-                        tasksArray.add(new Event(wordsInEvent[0].substring(6),wordsInEvent[1], wordsInEvent[2]));
-                        System.out.println("_________________________________________\nGot it. I've added this task:\n    " + tasksArray.get(tasksArray.size() - 1).toString() + "\nNow you have " + tasksArray.size() + " tasks in the list.\n_________________________________________\n" );
-                    } else {
-                        System.out.println("_________________________________________\n added:" + sentences + "\n_________________________________________\n");
-                        tasksArray.add(new Task(sentences));
-                    }
+                String[] descriptionInEvent = sentences.split("/from|/to");
+                try {
+                    // if there is event task: skip "event" and put the task in taskArray
+                    tasksArray.add(new Event(descriptionInEvent[0].substring(6), descriptionInEvent[1], descriptionInEvent[2]));
+                    drawLine();
+                    System.out.println("Got it. I've added this task:\n    "
+                            + tasksArray.get(tasksArray.size() - 1).toString() +
+                            "\nNow you have " + tasksArray.size() + " tasks in the list.");
+                    drawLine();
+                } catch (ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException obe) {
+                    System.out.println("An event must contain a start period (/from) and a end period (/to)!");
                 }
-            } else {
-                System.out.println("_________________________________________\n added:" + sentences + "\n_________________________________________\n");
-                tasksArray.add(new Task(sentences));
+            }
+
+            else {
+                System.out.println("Please provide task feature in the 1st words!");
             }
         } while (!sentences.equals("bye"));
-        System.out.println("_________________________________________\n Bye. Hope to see you soon again! \n_________________________________________\n");
+        drawLine();
+        System.out.println("Bye. Hope to see you soon again!");
+        drawLine();
     }
 }
 
-
-
-//            //use switch-case statement
-//            switch (line) {
-//                case "bye":
-//                    continue;
-//                case "list":
-//                    System.out.println("_________________________________________");
-//                    for (int i = 1; i < tasksArray.size() + 1; i++) {
-//                        System.out.println(i + ". [" + tasksArray.get(i - 1).getStatusIcon() + "] " + tasksArray.get(i - 1).getTask());
-//                    }
-//                    System.out.println("_________________________________________\n");
-//                    break;
-//                case if (line.substring(0,3) == "mark") :
-//                    tasks.Array.get
-//                default:
-//                    System.out.println("_________________________________________\n added:" + line + "\n_________________________________________\n");
-//                    tasksArray.add(new Task(line));
-//                    break;
-//            }
-//        }while (!line.equals("bye")) ;
-//            System.out.println("_________________________________________\n Bye. Hope to see you soon again! \n_________________________________________\n");
-//    }
-//}
 
 
 
