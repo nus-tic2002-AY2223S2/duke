@@ -6,6 +6,7 @@ public class Task {
     public Task(String description){
         this.description = description;
         this.isDone = false;
+
     }
 
     //get method
@@ -13,8 +14,8 @@ public class Task {
         return (isDone ? "X" : " "); //mark done task with X
     }
 
-    public String getTask(){
-        return this.description;
+    public String toString(){
+        return "[" + this.getStatusIcon() + "] " + this.description;
     }
 
     public void markAsDone(){
