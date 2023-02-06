@@ -15,31 +15,51 @@ public class Duke {
         System.out.println(space + "Hello! I'm Duke\n" + space +"What can I do for you?");
         System.out.println(line);
 
-        String command;
-        List<String> lists = new ArrayList<>();
+        String command, splitCommand, restCommand;
+        List<Task> lists = new ArrayList<>();
+
         whileLoop: while (true){
             command = inputCommand();
-            switch (command){
+            Task taskInList = new Task(command);
+            splitCommand = command.split(" ",2)[0];
+            //System.out.println("splitCommand: " + splitCommand);
+            switch (splitCommand){
                 case "bye":
                     Echo("Bye. Hope to see you again soon!");
                     break whileLoop;
                 case "list":
                     printList(lists);
                     break;
+                case "mark": //mark 2
+                    restCommand = command.split(" ",2)[1];
+                    taskInList = lists.get(Integer.parseInt(restCommand) - 1);
+                    //System.out.println("Before mark task: " + taskInList);
+                    taskInList.Mark();
+                    //System.out.println("After mark task: " + taskInList);
+                    Echo("Nice! I've marked this task as done: \n" + space + space + taskInList);
+                    break;
+                case "unmark":
+                    restCommand = command.split(" ",2)[1];
+                    taskInList = lists.get(Integer.parseInt(restCommand) - 1);
+                    System.out.println("task: " + taskInList);
+                    taskInList.unMark();
+                    Echo("OK, I've marked this task as not done yet: \n" + space + space + taskInList);
+                    break;
                 default:
-                    lists.add(command);
+                    lists.add(taskInList);
                     Echo("added: " + command);
             }
         }
     }
 
-    private static void printList(List<String> lists) {
+    private static void printList(List<Task> lists) {
         String space = " ", line = "____________________________________________________________";
         System.out.println(line);
+        System.out.println(space + "Here are the tasks in your list:");
         int taskNum = 0;
-        for(String list : lists){
+        for(Task list : lists){
             taskNum ++;
-            System.out.println(space + taskNum + ". " + list);
+            System.out.println(space + taskNum + "." + list.toString());
         }
         System.out.println(line);
     }
