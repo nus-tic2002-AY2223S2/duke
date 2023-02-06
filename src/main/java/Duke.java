@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
@@ -14,16 +16,32 @@ public class Duke {
         System.out.println(line);
 
         String command;
-        whileloop:while (true){
+        List<String> lists = new ArrayList<>();
+        whileLoop: while (true){
             command = inputCommand();
             switch (command){
                 case "bye":
                     Echo("Bye. Hope to see you again soon!");
-                    break whileloop;
+                    break whileLoop;
+                case "list":
+                    printList(lists);
+                    break;
                 default:
-                    Echo(command);
+                    lists.add(command);
+                    Echo("added: " + command);
             }
         }
+    }
+
+    private static void printList(List<String> lists) {
+        String space = " ", line = "____________________________________________________________";
+        System.out.println(line);
+        int taskNum = 0;
+        for(String list : lists){
+            taskNum ++;
+            System.out.println(space + taskNum + ". " + list);
+        }
+        System.out.println(line);
     }
 
     private static void Echo(String s) {
