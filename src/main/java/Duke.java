@@ -9,14 +9,14 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?\n");
-        boolean notBye = true;
+        boolean notBye = false;
         Scanner Obj = new Scanner(System.in);
         int stringIndex = 0;
         String[] list = new String[100];
-        while (notBye) {
+        while (!notBye) {
             String question = Obj.nextLine();
             if (question.equals("bye")) { //if the input is bye then end the program
-                notBye = false;
+                notBye = true;
                 System.out.println("Bye. Hope to see you again soon!");
                 return; // stop the program and not continue
             }
@@ -31,7 +31,5 @@ public class Duke {
                 }
             }
         }
-
-
     }
 }
