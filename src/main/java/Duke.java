@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Duke {
+public class Duke{
 
     public static void updateTask(String userInput, List<Task> userTask, String status) {
         int listNumber = 0;
@@ -13,7 +13,8 @@ public class Duke {
         try {
             if (status.equals("mark") || status.equals("unmark")) {
 
-                int value = Integer.parseInt(userInput.replaceAll("[^0-9]", ""));
+                stringSplit = formatString.split("");
+                int value = Integer.parseInt(stringSplit[1]);
                 listNumber = value - 1;
             }
             switch (status) {
@@ -27,6 +28,9 @@ public class Duke {
                     break;
                 case "todo":
                     formatString = userInput.replace("todo", "").trim();
+                    if (formatString.equals("")){
+                        throw new DukeException("☹ OOPS!!! The description of a todo cannot be empty.");
+                    }
                     System.out.println("Got it. I've added this task:");
 
                     userTask.add(new ToDo(formatString, "T"));
@@ -40,6 +44,7 @@ public class Duke {
                     description = stringSplit[0];
                     String by = stringSplit[1].replace("by", "").trim();
                     userTask.add(new Deadlines(description, "D", by));
+
                     System.out.println("Got it. I've added this task:");
 
                     currentItem = userTask.size() - 1;
@@ -63,21 +68,21 @@ public class Duke {
                     System.out.println("Now you have " + userTask.size() + " tasks in the list.");
                     break;
                 default:
-                    System.out.println("Doesn't match any switch statement");
-                    break;
+                    throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+
             }
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Listing not found, please try again.");
+            System.out.println("Task number not found, please try again.");
         } catch (NumberFormatException e) {
             System.out.println("Please enter only numbers.");
         } catch (Exception e) {
-            System.out.println(e);
+            //System.out.println(e);
         }
 
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DukeException {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -91,11 +96,13 @@ public class Duke {
 
         String userInput = "";
 
+
+
         List<Task> userTask = new ArrayList<>();
         while (!userInput.equals("bye")) {
             //Read user input.
             userInput = sc.nextLine();
-
+            try{
             //Exit the chatbot.
             if (userInput.equals("bye")) {
 
@@ -108,8 +115,8 @@ public class Duke {
 
                 for (int i = 0; i < userTask.size(); i++) {
                     try {
-                        System.out.println((i + 1) + ". " + userTask.get(i));
-                        //System.out.println((i + 1) + ". [" + userTask.get(i).getTaskType() + "]" + "[" + userTask.get(i).getStatusIcon() + "] " + userTask.get(i).description);
+
+                        System.out.println((i + 1) + ". " + userTask.get(i)); 
 
                     } catch (NumberFormatException e) {
 
@@ -138,12 +145,15 @@ public class Duke {
             } else if (userInput.startsWith("event")) {
                 updateTask(userInput, userTask, "event");
 
+            }else {
+
+                throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+
             }
-        }
+        }catch (Exception e){
+
+            }
+}
     }
 
-    public String FormatDescription(String input) {
-
-        return "";
-    }
 }
