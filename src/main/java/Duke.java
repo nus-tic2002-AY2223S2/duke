@@ -1,9 +1,13 @@
+//////////////////////////////////////////////////////////////////////
+// DONE BY: A0227169X; ANG JIA JIN, GABRIEL
+//////////////////////////////////////////////////////////////////////
+
+
 import java.util.Scanner;  // Import Scanner class
 
 public class Duke {
     public static void main(String[] args) {
         //variable initialization
-        boolean factor = true;
         Scanner scanObj = new Scanner(System.in);
 
 /*        String logo = " ____        _        \n"
@@ -15,24 +19,19 @@ public class Duke {
 
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
-
         // Get input from user
-        while(factor)
+        String input = scanObj.nextLine();
+
+        // Main loop of the programme
+        while(!input.equals("bye"))
         {
-            String input = scanObj.nextLine();
-            if(input.equals("bye"))
-            {
-                System.out.println("Bye. Hope to see you again soon!");
-                factor = false;
-            }
-            else
-            {
-                System.out.println(input);
-            }
+            System.out.println(input);
+            input = scanObj.nextLine();
         }
 
-
-
+        // Motherhood Statement when bye is key-ed in
+        System.out.println("Bye. Hope to see you again soon!");
+        // End of programme
 
     }
 }
