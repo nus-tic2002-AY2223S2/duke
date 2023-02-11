@@ -22,7 +22,7 @@ public class Duke {
             command = inputCommand();
             Task taskInList = new Task(command);
             splitCommand = command.split(" ",2)[0];
-            //System.out.println("splitCommand: " + splitCommand);
+
             switch (splitCommand){
                 case "bye":
                     Echo("Bye. Hope to see you again soon!");
@@ -41,9 +41,39 @@ public class Duke {
                 case "unmark":
                     restCommand = command.split(" ",2)[1];
                     taskInList = lists.get(Integer.parseInt(restCommand) - 1);
-                    System.out.println("task: " + taskInList);
                     taskInList.unMark();
                     Echo("OK, I've marked this task as not done yet: \n" + space + space + taskInList);
+                    break;
+                case "todo": //todo borrow book
+                    restCommand = command.split(" ",2)[1];
+                    Todo todo = new Todo(restCommand);
+                    lists.add(todo);
+                    Echo("Got it. I've added this task: \n" + space + space + todo + "\n"
+                    + " Now you have "+ lists.size() +" tasks in the list.");
+                    break;
+                case "deadline": //deadline return book /by Sunday
+                                 //[D][ ] return book (by: Sunday)
+                    restCommand = command.split(" ",2)[1];
+                    int dividerPosition = restCommand.indexOf("/");
+                    String beforeBy = restCommand.substring(0, dividerPosition);
+                    String afterBy = restCommand.substring(dividerPosition + 4);
+
+                    Deadline deadline = new Deadline(beforeBy, afterBy);
+                    lists.add(deadline);
+                    Echo("Got it. I've added this task: \n" + space + space + deadline + "\n"
+                            + " Now you have "+ lists.size() +" tasks in the list.");
+                    break;
+                case "event": //event project meeting /at Mon 2-4pm
+                    //[E][ ] project meeting (at: Mon 2-4pm)
+                    restCommand = command.split(" ",2)[1];
+                    int dividerPos = restCommand.indexOf("/");
+                    String beforeAt = restCommand.substring(0, dividerPos);
+                    String afterAt = restCommand.substring(dividerPos + 4);
+
+                    Event event = new Event(beforeAt, afterAt);
+                    lists.add(event);
+                    Echo("Got it. I've added this task: \n" + space + space + event + "\n"
+                            + " Now you have "+ lists.size() +" tasks in the list.");
                     break;
                 default:
                     lists.add(taskInList);
