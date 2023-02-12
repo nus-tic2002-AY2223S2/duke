@@ -1,12 +1,14 @@
 //////////////////////////////////////////////
 // DONE BY: A0227169X; ANG JIA JIN, GABRIEL //
 //////////////////////////////////////////////
-import java.util.Scanner;  // Import Scanner class
+import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
     public static void main(String[] args) {
         //variable initialization
-        Scanner scanObj = new Scanner(System.in);
+        Scanner scanObj = new Scanner(System.in); //scanner
+        var lists = new ArrayList<String>(); //string initialize arraylist
 
 /*        String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -23,7 +25,18 @@ public class Duke {
         // Main loop of the programme
         while(!input.equals("bye"))
         {
-            System.out.println(input);
+            if(input.equals("list"))
+            {
+                for(int i = 0; i < lists.size(); i++)
+                {
+                    System.out.println(i+1 + ". " + lists.get(i));
+                }
+            }
+            else
+            {
+                lists.add(input);
+                System.out.println("added: " + input);
+            }
             input = scanObj.nextLine();
         }
 
