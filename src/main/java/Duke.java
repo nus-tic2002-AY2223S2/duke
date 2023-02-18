@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DukeException {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -15,65 +15,77 @@ public class Duke {
         System.out.println(space + "Hello! I'm Duke\n" + space +"What can I do for you?");
         System.out.println(line);
 
-        String command, splitCommand, restCommand;
+        String command, keyCommand, restCommand="";
         List<Task> lists = new ArrayList<>();
 
         whileLoop: while (true){
-            command = inputCommand();
+            command = inputCommand().trim();
             Task taskInList = new Task(command);
-            splitCommand = command.split(" ",2)[0];
+            try{
+                validateInputCommand(command);
+            }
+            catch (DukeException e){
+                Echo(e.getMessage());
+                continue ;
+            }
 
-            switch (splitCommand){
+            keyCommand = command.split(" ",2)[0];
+
+            switch (keyCommand){
                 case "bye":
                     Echo("Bye. Hope to see you again soon!");
                     break whileLoop;
                 case "list":
                     printList(lists);
                     break;
-                case "mark": //mark 2
+                case "mark":
                     restCommand = command.split(" ",2)[1];
-                    taskInList = lists.get(Integer.parseInt(restCommand) - 1);
-                    //System.out.println("Before mark task: " + taskInList);
-                    taskInList.Mark();
-                    //System.out.println("After mark task: " + taskInList);
-                    Echo("Nice! I've marked this task as done: \n" + space + space + taskInList);
+                    try {
+                        taskInList = lists.get(Integer.parseInt(restCommand) - 1);
+                        taskInList.Mark();
+                        Echo("Nice! I've marked this task as done: \n" + space + space + taskInList);
+                    }
+                    catch(IndexOutOfBoundsException e){
+                        System.out.println("☹ OOPS!!! Please key into correct number in the list!" );
+                    }
                     break;
                 case "unmark":
                     restCommand = command.split(" ",2)[1];
-                    taskInList = lists.get(Integer.parseInt(restCommand) - 1);
-                    taskInList.unMark();
-                    Echo("OK, I've marked this task as not done yet: \n" + space + space + taskInList);
+                    try{
+                        taskInList = lists.get(Integer.parseInt(restCommand) - 1);
+                        taskInList.unMark();
+                        Echo("OK, I've marked this task as not done yet: \n" + space + space + taskInList);
+                    }
+                    catch(IndexOutOfBoundsException e){
+                        System.out.println("☹ OOPS!!! Please key into correct number!" );
+                    }
                     break;
-                case "todo": //todo borrow book
+                case "todo":
                     restCommand = command.split(" ",2)[1];
-                    Todo todo = new Todo(restCommand);
+                    Task todo = new Todo(restCommand);
                     lists.add(todo);
-                    Echo("Got it. I've added this task: \n" + space + space + todo + "\n"
-                    + " Now you have "+ lists.size() +" tasks in the list.");
+                    Echo("Got it. I've added this task:\n"+ space + space + todo
+                            + "\n Now you have " + lists.size() + " tasks in the list.");
                     break;
-                case "deadline": //deadline return book /by Sunday
-                                 //[D][ ] return book (by: Sunday)
+                case "deadline":
                     restCommand = command.split(" ",2)[1];
-                    int dividerPosition = restCommand.indexOf("/");
-                    String beforeBy = restCommand.substring(0, dividerPosition);
-                    String afterBy = restCommand.substring(dividerPosition + 4);
-
-                    Deadline deadline = new Deadline(beforeBy, afterBy);
+                    String beforeBy,afterBy;
+                    beforeBy = restCommand.split("/by")[0];
+                    afterBy = restCommand.split("/by")[1];
+                    Task deadline = new Deadline(beforeBy,afterBy);
                     lists.add(deadline);
-                    Echo("Got it. I've added this task: \n" + space + space + deadline + "\n"
-                            + " Now you have "+ lists.size() +" tasks in the list.");
+                    Echo("Got it. I've added this task:\n"+ space + space + deadline
+                            + "\n Now you have " + lists.size() + " tasks in the list.");
                     break;
-                case "event": //event project meeting /at Mon 2-4pm
-                    //[E][ ] project meeting (at: Mon 2-4pm)
+                case "event":
                     restCommand = command.split(" ",2)[1];
-                    int dividerPos = restCommand.indexOf("/");
-                    String beforeAt = restCommand.substring(0, dividerPos);
-                    String afterAt = restCommand.substring(dividerPos + 4);
-
-                    Event event = new Event(beforeAt, afterAt);
+                    String beforeAt,afterAt;
+                    beforeAt = restCommand.split("/at",2)[0];
+                    afterAt = restCommand.split("/at",2)[1];
+                    Task event = new Event(beforeAt,afterAt);
                     lists.add(event);
-                    Echo("Got it. I've added this task: \n" + space + space + event + "\n"
-                            + " Now you have "+ lists.size() +" tasks in the list.");
+                    Echo("Got it. I've added this task:\n"+ space + space + event
+                            + "\n Now you have " + lists.size() + " tasks in the list.");
                     break;
                 default:
                     lists.add(taskInList);
@@ -104,5 +116,41 @@ public class Duke {
     private static String inputCommand() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
+    }
+    private static void validateInputCommand(String inputCommand) throws DukeException{
+        String keyInput;
+        keyInput = inputCommand.split(" ",2)[0];
+        switch (keyInput) {
+            case "list":
+            case "bye":
+                return;
+            case "mark":
+                if(inputCommand.split(" ",2).length < 2){
+                    throw new DukeException("☹ OOPS!!! Mark number can not be empty.");
+                }
+                break;
+            case "unmark":
+                if(inputCommand.split(" ",2).length < 2){
+                    throw new DukeException("☹ OOPS!!! Unmark number can not be empty.");
+                }
+                break;
+            case "deadline":
+                if(inputCommand.split(" ",2).length < 2){
+                    throw new DukeException("☹ OOPS!!! The description of a deadline cannot be empty.");
+                }
+                break;
+            case "todo":
+                if(inputCommand.split(" ",2).length < 2){
+                    throw new DukeException("☹ OOPS!!! The description of a todo cannot be empty.");
+                }
+                break;
+            case "event":
+                if(inputCommand.split(" ",2).length < 2){
+                    throw new DukeException("☹ OOPS!!! The description of a event cannot be empty.");
+                }
+                break;
+            default:
+                throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+        }
     }
 }

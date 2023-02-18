@@ -1,12 +1,10 @@
 public class Deadline extends Task{
-    protected String by;
-
-    public Deadline(String description, String by) {
+    protected String afterBy;
+    public Deadline(String description,String word) {
         super(description);
-        this.by = by;
+        this.afterBy = word;
     }
-
     public String toString(){
-        return "[D]" + super.toString() + "(by: " + by + ")";
+        return "[D]" + super.toString() + "(by:" + afterBy + ")";
     }
 }
