@@ -91,41 +91,61 @@ public class Duke {
                 task = getDeadline(command);
             }else if (command.toUpperCase().startsWith("EVENT")) {
                 task = getEvent(command);
+            }else {
+                throw new IllegalTaskException();
             }
-        }catch (IndexOutOfBoundsException e){
-            System.out.println("Incomplete task description: " + command);
+        }catch (IllegalTodoException e){
+            printCommand("☹ OOPS!!! The description of a todo cannot be empty.");
+        }catch (IllegalDeadlineException e){
+            printCommand("☹ OOPS!!! The description or date of a deadline cannot be empty.");
+        }catch (IllegalEventException e){
+            printCommand("☹ OOPS!!! The description or start date or end date of an event cannot be empty.");
         }catch (IllegalTaskException e){
-            System.out.println("Unable to process task: " + command);
+            printCommand("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+        }catch (IndexOutOfBoundsException e){
+            System.out.println("IndexOutOfBoundsException for task: " + command);
         }
         return task;
     }
 
-    private static Todo getTodo(String command) throws IndexOutOfBoundsException {
+    private static Todo getTodo(String command) throws IndexOutOfBoundsException, IllegalTodoException {
         String[] commandStr = command.split(" ");
+        if (commandStr.length < 2) {
+            throw new IllegalTodoException();
+        }
         String description = command.replaceFirst(commandStr[0], "").trim();
         return new Todo(description);
     }
 
-    private static Deadline getDeadline(String command) throws IndexOutOfBoundsException, IllegalTaskException{
+    private static Deadline getDeadline(String command) throws IndexOutOfBoundsException, IllegalDeadlineException{
         String[] deadlines = command.split("/by");
-        if (deadlines.length > 2) {
-            throw new IllegalTaskException();
+        if (deadlines.length < 2) {
+            throw new IllegalDeadlineException();
         }
         String[] commandStr = deadlines[0].split(" ");
+        if (commandStr.length < 2) {
+            throw new IllegalDeadlineException();
+        }
         String description = deadlines[0].replaceFirst(commandStr[0], "").trim();
         String by = deadlines[1].trim();
         return new Deadline(description, by);
     }
 
-    private static Event getEvent(String command) throws IndexOutOfBoundsException, IllegalTaskException{
+    private static Event getEvent(String command) throws IndexOutOfBoundsException, IllegalEventException{
         String[] events = command.split("/from");
-        if (events.length > 2) {
-            throw new IllegalTaskException();
+        if (events.length < 2) {
+            throw new IllegalEventException();
         }
         String[] commandStr = events[0].split(" ");
+        if (commandStr.length < 2) {
+            throw new IllegalEventException();
+        }
         String description = events[0].replaceFirst(commandStr[0], "").trim();
 
         String[] dates = events[1].split("/to");
+        if (dates.length < 2) {
+            throw new IllegalEventException();
+        }
         String fromDate = dates[0].trim();
         String toDate = dates[1].trim();
 
