@@ -49,14 +49,28 @@ public class Duke {
         // if bye then exit()
         do {
             sentences = in.nextLine();
+
+            // initialized a new object for the task that user type in
+            Task objectTask = new Task(sentences);
+
+            // initialized arrays and string variable
             String[] wordsInSentences = sentences.split(" ");
             String[] wordsInDescription = sentences.split(" ");
             String[] partsInDescription = sentences.split("/by|/from|/to");
-            String duty = new String();
-
-            Feature task = null;
+            String task = new String();
+/*
+            Feature duty = null;
             try {
-                task = Feature.valueOf(wordsInSentences[0].toUpperCase());   // convert different types of values into string
+                duty = Feature.valueOf(wordsInSentences[0].toUpperCase());   // convert different types of values into string
+            } catch (IllegalArgumentException iae) {
+                System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                continue;
+            }
+ */
+            //initialized an object for Enum task
+            Task.task objectEnumTask = null;
+            try {
+                objectEnumTask = Task.task.valueOf(task.valueOf(wordsInSentences[0].toUpperCase()));   // convert different types of values into string
             } catch (IllegalArgumentException iae) {
                 System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 continue;
@@ -64,7 +78,7 @@ public class Duke {
             // *************************
             // level 6 ENUM
             // *************************
-            switch (task) {
+            switch (objectEnumTask) {
                 // **********************
                 // level 2 list feature
                 // **********************
@@ -90,8 +104,7 @@ public class Duke {
                         System.out.println("mark is a function key. Please indicate task number to be marked!");
                     } catch (ArrayIndexOutOfBoundsException obe) {    // corner case: mark
                         System.out.println("mark feature must contain a task number");
-                    } catch (
-                            IndexOutOfBoundsException obe) {          // corner case: mark 0,  taskNumber > taskArray.size
+                    } catch (IndexOutOfBoundsException obe) {          // corner case: mark 0,  taskNumber > taskArray.size
                         System.out.println("Please give a valid task number that you want to mark!");
                     }
                     break;
@@ -104,8 +117,7 @@ public class Duke {
                         System.out.println("unmark is a function key. Please indicate task number to be marked!");
                     } catch (ArrayIndexOutOfBoundsException obe) {  // to handle exception: mark
                         System.out.println("unmark feature must contain a task number");
-                    } catch (
-                            IndexOutOfBoundsException obe) {        // to handle exception:  taskNumber > taskArray.size
+                    } catch (IndexOutOfBoundsException obe) {        // to handle exception:  taskNumber > taskArray.size
                         System.out.println("Please give a valid task number that you want to unmark!");
                     }
                     break;
@@ -143,10 +155,10 @@ public class Duke {
                         int indexBy = Arrays.asList(wordsInDescription).indexOf("/by");
                         //duty = new String();
                         for (int i = 1; i < indexBy; i++) {
-                            duty += wordsInDescription[i] + " ";
+                            task += wordsInDescription[i] + " ";
                         }
                         checkTaskExist(indexBy, 1);
-                        tasksArray.add(new Deadline(duty, partsInDescription[1]));
+                        tasksArray.add(new Deadline(task, partsInDescription[1]));
                         drawLine();
                         System.out.println("Got it. I've added this task:\n    "
                                 + tasksArray.get(tasksArray.size() - 1).toString() +
@@ -155,7 +167,7 @@ public class Duke {
                     } catch (ArrayIndexOutOfBoundsException obe) {
                         System.out.println("A deadline command must provide a deadline date (/by)!");
                     } catch (IncompleteDescriptionException ide) {
-                        System.out.println("cannot give more than 2 deadline (/by)");
+                        System.out.println(ide);
                     } catch (NoTaskException nte) {
                         System.out.println("There is no Task .");
                     } catch (DukeException de) {
@@ -174,10 +186,10 @@ public class Duke {
                         // if there is event duty: skip "event" and put the duty in taskArray
                         //String duty = new String();
                         for (int i = 1; i < indexFrom; i++) {
-                            duty += wordsInDescription[i] + " ";
+                            task += wordsInDescription[i] + " ";
                         }
                         checkTaskExist(indexFrom, 1);
-                        tasksArray.add(new Event(duty, partsInDescription[1], partsInDescription[2]));
+                        tasksArray.add(new Event(task, partsInDescription[1], partsInDescription[2]));
                         drawLine();
                         System.out.println("Got it. I've added this duty:\n    "
                                 + tasksArray.get(tasksArray.size() - 1).toString() +

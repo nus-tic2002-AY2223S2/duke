@@ -9,6 +9,13 @@ public class Task {
 
     }
 
+    public enum task {
+        LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE
+    }
+
+    public Task() {
+    }
+
     //get method
     public String getStatusIcon(){
         return (isDone ? "X" : " "); //mark done task with X
