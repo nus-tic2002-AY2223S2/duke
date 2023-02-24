@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
-    public static void main(String[] args) throws DukeException {
+    public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -15,8 +15,8 @@ public class Duke {
         System.out.println(space + "Hello! I'm Duke\n" + space +"What can I do for you?");
         System.out.println(line);
 
-        String command, keyCommand, restCommand="";
-        List<Task> lists = new ArrayList<>();
+        String command, keyCommand, restCommand;
+        ArrayList<Task> lists = new ArrayList<>();
 
         whileLoop: while (true){
             command = inputCommand().trim();
@@ -46,7 +46,10 @@ public class Duke {
                         Echo("Nice! I've marked this task as done: \n" + space + space + taskInList);
                     }
                     catch(IndexOutOfBoundsException e){
-                        System.out.println("☹ OOPS!!! Please key into correct number in the list!" );
+                        System.out.println("☹ OOPS!!! Please key into correct number!" );
+                    }
+                    catch(NumberFormatException e){
+                        System.out.println("☹ OOPS!!! Please key into correct number!" );
                     }
                     break;
                 case "unmark":
@@ -57,6 +60,9 @@ public class Duke {
                         Echo("OK, I've marked this task as not done yet: \n" + space + space + taskInList);
                     }
                     catch(IndexOutOfBoundsException e){
+                        System.out.println("☹ OOPS!!! Please key into correct number!" );
+                    }
+                    catch(NumberFormatException e){
                         System.out.println("☹ OOPS!!! Please key into correct number!" );
                     }
                     break;
@@ -86,6 +92,21 @@ public class Duke {
                     lists.add(event);
                     Echo("Got it. I've added this task:\n"+ space + space + event
                             + "\n Now you have " + lists.size() + " tasks in the list.");
+                    break;
+                case "delete":
+                    restCommand = command.split(" ",2)[1];
+                    try{
+                        taskInList = lists.get(Integer.parseInt(restCommand) - 1);
+                        lists.remove(Integer.parseInt(restCommand) - 1);
+                        Echo("Noted. I've removed this task: \n" + space + space + taskInList
+                                + "\n Now you have " + lists.size() + " tasks in the list.");
+                    }
+                    catch(IndexOutOfBoundsException e){
+                        System.out.println("☹ OOPS!!! Please key into correct number!" );
+                    }
+                    catch(NumberFormatException e){
+                        System.out.println("☹ OOPS!!! Please key into correct number!" );
+                    }
                     break;
                 default:
                     lists.add(taskInList);
@@ -147,6 +168,11 @@ public class Duke {
             case "event":
                 if(inputCommand.split(" ",2).length < 2){
                     throw new DukeException("☹ OOPS!!! The description of a event cannot be empty.");
+                }
+                break;
+            case "delete":
+                if(inputCommand.split(" ",2).length < 2){
+                    throw new DukeException("☹ OOPS!!! The description of a delete cannot be empty.");
                 }
                 break;
             default:
