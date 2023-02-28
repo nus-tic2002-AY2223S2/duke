@@ -1,182 +1,43 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.HashMap;
 
 public class Duke {
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
-        String space = " ", line = "____________________________________________________________";
-        System.out.println(line);
-        System.out.println(space + "Hello! I'm Duke\n" + space +"What can I do for you?");
-        System.out.println(line);
+        DukeInit.duke();
 
-        String command, keyCommand, restCommand;
-        ArrayList<Task> lists = new ArrayList<>();
+        HashMap<String, enumCommand> newMap = new HashMap<>();
+        newMap.put("bye", enumCommand.BYE);
+        newMap.put("list", enumCommand.LIST);
+        newMap.put("mark", enumCommand.MARK);
+        newMap.put("unmark", enumCommand.UNMARK);
+        newMap.put("delete", enumCommand.DELETE);
+        newMap.put("todo", enumCommand.TODO);
+        newMap.put("deadline", enumCommand.DEADLINE);
+        newMap.put("event", enumCommand.EVENT);
 
-        whileLoop: while (true){
-            command = inputCommand().trim();
-            Task taskInList = new Task(command);
-            try{
-                validateInputCommand(command);
-            }
-            catch (DukeException e){
-                Echo(e.getMessage());
-                continue ;
-            }
+        String inputCommand, key;
+        enumCommand enumCommand;
+        TasksList tasksList = new TasksList();
 
-            keyCommand = command.split(" ",2)[0];
+        whileLoop:
+        while (true) {
+            inputCommand = DukeInit.inputCommand();
+            key = DukeInit.keyCommand(inputCommand);
+            enumCommand = newMap.get(key);
 
-            switch (keyCommand){
-                case "bye":
-                    Echo("Bye. Hope to see you again soon!");
+            try {
+                if (enumCommand == null) {
+                    enumCommand = enumCommand.UNKNOWN;
+                }
+
+                if (enumCommand.equals(enumCommand.BYE)) {
+                    DukeInit.Echo("Bye. Hope to see you again soon!");
                     break whileLoop;
-                case "list":
-                    printList(lists);
-                    break;
-                case "mark":
-                    restCommand = command.split(" ",2)[1];
-                    try {
-                        taskInList = lists.get(Integer.parseInt(restCommand) - 1);
-                        taskInList.Mark();
-                        Echo("Nice! I've marked this task as done: \n" + space + space + taskInList);
-                    }
-                    catch(IndexOutOfBoundsException e){
-                        System.out.println("☹ OOPS!!! Please key into correct number!" );
-                    }
-                    catch(NumberFormatException e){
-                        System.out.println("☹ OOPS!!! Please key into correct number!" );
-                    }
-                    break;
-                case "unmark":
-                    restCommand = command.split(" ",2)[1];
-                    try{
-                        taskInList = lists.get(Integer.parseInt(restCommand) - 1);
-                        taskInList.unMark();
-                        Echo("OK, I've marked this task as not done yet: \n" + space + space + taskInList);
-                    }
-                    catch(IndexOutOfBoundsException e){
-                        System.out.println("☹ OOPS!!! Please key into correct number!" );
-                    }
-                    catch(NumberFormatException e){
-                        System.out.println("☹ OOPS!!! Please key into correct number!" );
-                    }
-                    break;
-                case "todo":
-                    restCommand = command.split(" ",2)[1];
-                    Task todo = new Todo(restCommand);
-                    lists.add(todo);
-                    Echo("Got it. I've added this task:\n"+ space + space + todo
-                            + "\n Now you have " + lists.size() + " tasks in the list.");
-                    break;
-                case "deadline":
-                    restCommand = command.split(" ",2)[1];
-                    String beforeBy,afterBy;
-                    beforeBy = restCommand.split("/by")[0];
-                    afterBy = restCommand.split("/by")[1];
-                    Task deadline = new Deadline(beforeBy,afterBy);
-                    lists.add(deadline);
-                    Echo("Got it. I've added this task:\n"+ space + space + deadline
-                            + "\n Now you have " + lists.size() + " tasks in the list.");
-                    break;
-                case "event":
-                    restCommand = command.split(" ",2)[1];
-                    String beforeAt,afterAt;
-                    beforeAt = restCommand.split("/at",2)[0];
-                    afterAt = restCommand.split("/at",2)[1];
-                    Task event = new Event(beforeAt,afterAt);
-                    lists.add(event);
-                    Echo("Got it. I've added this task:\n"+ space + space + event
-                            + "\n Now you have " + lists.size() + " tasks in the list.");
-                    break;
-                case "delete":
-                    restCommand = command.split(" ",2)[1];
-                    try{
-                        taskInList = lists.get(Integer.parseInt(restCommand) - 1);
-                        lists.remove(Integer.parseInt(restCommand) - 1);
-                        Echo("Noted. I've removed this task: \n" + space + space + taskInList
-                                + "\n Now you have " + lists.size() + " tasks in the list.");
-                    }
-                    catch(IndexOutOfBoundsException e){
-                        System.out.println("☹ OOPS!!! Please key into correct number!" );
-                    }
-                    catch(NumberFormatException e){
-                        System.out.println("☹ OOPS!!! Please key into correct number!" );
-                    }
-                    break;
-                default:
-                    lists.add(taskInList);
-                    Echo("added: " + command);
+                }
+                enumCommand.command(tasksList, inputCommand);
+            } catch (DukeException e) {
+                DukeInit.Echo(e.getMessage());
             }
-        }
-    }
-
-    private static void printList(List<Task> lists) {
-        String space = " ", line = "____________________________________________________________";
-        System.out.println(line);
-        System.out.println(space + "Here are the tasks in your list:");
-        int taskNum = 0;
-        for(Task list : lists){
-            taskNum ++;
-            System.out.println(space + taskNum + "." + list.toString());
-        }
-        System.out.println(line);
-    }
-
-    private static void Echo(String s) {
-        String space = " ", line = "____________________________________________________________";
-        System.out.println(line);
-        System.out.println(space + s);
-        System.out.println(line);
-    }
-
-    private static String inputCommand() {
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
-    }
-    private static void validateInputCommand(String inputCommand) throws DukeException{
-        String keyInput;
-        keyInput = inputCommand.split(" ",2)[0];
-        switch (keyInput) {
-            case "list":
-            case "bye":
-                return;
-            case "mark":
-                if(inputCommand.split(" ",2).length < 2){
-                    throw new DukeException("☹ OOPS!!! Mark number can not be empty.");
-                }
-                break;
-            case "unmark":
-                if(inputCommand.split(" ",2).length < 2){
-                    throw new DukeException("☹ OOPS!!! Unmark number can not be empty.");
-                }
-                break;
-            case "deadline":
-                if(inputCommand.split(" ",2).length < 2){
-                    throw new DukeException("☹ OOPS!!! The description of a deadline cannot be empty.");
-                }
-                break;
-            case "todo":
-                if(inputCommand.split(" ",2).length < 2){
-                    throw new DukeException("☹ OOPS!!! The description of a todo cannot be empty.");
-                }
-                break;
-            case "event":
-                if(inputCommand.split(" ",2).length < 2){
-                    throw new DukeException("☹ OOPS!!! The description of a event cannot be empty.");
-                }
-                break;
-            case "delete":
-                if(inputCommand.split(" ",2).length < 2){
-                    throw new DukeException("☹ OOPS!!! The description of a delete cannot be empty.");
-                }
-                break;
-            default:
-                throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
     }
 }
+
