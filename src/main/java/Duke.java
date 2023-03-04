@@ -10,7 +10,7 @@ public class Duke {
 
         while (scanner.hasNext()) {
             String input = scanner.nextLine();
-            if (!input.equals("list")) {
+            if (!input.equals("list") && !input.equals("bye")) {
                 task.add(input);
                 index++;
                 System.out.println("added:" + input);
