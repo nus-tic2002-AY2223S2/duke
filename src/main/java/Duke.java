@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Duke {
@@ -14,85 +15,156 @@ public class Duke {
         System.out.println("\tWhat can I do for you?");
         System.out.println("------------------------------------------------------------");
 
-        //Store text
-        int count = 0;
-        Task[] taskList = new Task[100];
+        //Store task
+        ArrayList<Task> taskList = new ArrayList<>();
 
         Task task;
         String command;
+        CommandType commandType;
+
         Scanner in = new Scanner(System.in);
         while(true) {
             command = in.nextLine().trim();
+            commandType = getCommandType(command);
 
-            if (command.isEmpty()){
-                continue;
-            }else if (command.equalsIgnoreCase("BYE")) {
-                //Exit program
-                exitCommand();
-                break;
-            }else if (command.equalsIgnoreCase("LIST")){
-                //Print list
-                printList(taskList, count);
-                continue;
-            }else if (command.toUpperCase().startsWith("MARK") || command.toUpperCase().startsWith("UNMARK")) {
-                //Mark or Unmark Task
-                markOrUnmarkTask(count, taskList, command);
-                continue;
+            switch (commandType) {
+                case EXIT:
+                    //Exit program
+                    exitCommand();
+                    break;
+                case LIST:
+                    //Print list
+                    printList(taskList);
+                    break;
+                case MARK:
+                case UNMARK:
+                    //Mark or Unmark Task
+                    markTask(taskList, command, commandType);
+                    break;
+                case DELETE:
+                    //Mark or Unmark Task
+                    deleteTask(taskList, command);
+                    break;
+                case ADD:
+                    //Create and add task to list
+                    addTask(taskList, command);
+                    break;
+                default:
+                    break;
             }
-
-            //Create and add task to list
-            count = getTaskCount(count, taskList, command);
         }
     }
 
-    private static void markOrUnmarkTask(int count, Task[] taskList, String command) {
+    private static CommandType getCommandType(String command) {
+        if (command.isEmpty()){
+            return CommandType.EMPTY;
+        }else if (command.equalsIgnoreCase("BYE")) {
+            return CommandType.EXIT;
+        }else if (command.equalsIgnoreCase("LIST")){
+            return CommandType.LIST;
+        }else if (command.toUpperCase().startsWith("MARK")) {
+            return CommandType.MARK;
+        }else if (command.toUpperCase().startsWith("UNMARK")) {
+            return CommandType.UNMARK;
+        }else if (command.toUpperCase().startsWith("DELETE")) {
+            return CommandType.DELETE;
+        }else {
+            return CommandType.ADD;
+        }
+    }
+
+    private static void markTask(ArrayList<Task> taskList, String command, CommandType commandType) {
         command = command.toUpperCase();
-        boolean markAsDone = command.startsWith("MARK") ? true : false;
+        boolean markAsDone = commandType == CommandType.MARK ? true : false;
         try{
             String numberStr = command.split(" ")[1].trim();
-            int number = Integer.parseInt(numberStr) - 1;
-            if (number < count) {
-                markOrUnmakrTask(taskList[number], markAsDone);
+            int index = Integer.parseInt(numberStr) - 1;
+            Task task = taskList.get(index);
+            String printStr = "";
+            if (markAsDone) {
+                task.markAsDone();
+                printStr = "Nice! I've marked this task as done:";
+            }else {
+                task.unMarkDone();
+                printStr = "OK, I've marked this task as not done yet:";
             }
+            printCommand(printStr + System.lineSeparator() + "\t" + task);
         }
         catch (IndexOutOfBoundsException ex) {
-            ex.printStackTrace();
+            System.out.println("IndexOutOfBoundsException for delete: " + command);
         }
         catch (NumberFormatException ex) {
             ex.printStackTrace();
         }
     }
 
-    private static int getTaskCount(int count, Task[] taskList, String command) {
-        Task task;
-        task = getTask(command);
-        if (task != null) {
-            taskList[count] = task;
-            count++;
-            String addedTask = getNewTaskString(count, task);
+    private static void deleteTask(ArrayList<Task> taskList, String command) {
+        try{
+            String numberStr = command.split(" ")[1].trim();
+            int index = Integer.parseInt(numberStr) - 1;
+            Task task = taskList.get(index);
+            taskList.remove(index);
+            String addedTask = getDeletedTaskString(taskList, task);
             printCommand(addedTask);
         }
-        return count;
+        catch (IndexOutOfBoundsException ex) {
+            System.out.println("IndexOutOfBoundsException for task: " + command);
+        }
+        catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        }
     }
 
-    private static String getNewTaskString(int count, Task task) {
-        String addedTask = "Got it. I've added this task: " + System.lineSeparator();
+    private static String getDeletedTaskString(ArrayList<Task> taskList, Task task) {
+        String addedTask = "Noted. I've removed this task: " + System.lineSeparator();
         addedTask += "\t\t" + task + System.lineSeparator();
-        addedTask += "\t" + "Now you have " + count + " tasks in the list.";
+        addedTask += "\t" + "Now you have " + taskList.size() + " tasks in the list.";
         return addedTask;
     }
 
+    private static void addTask(ArrayList<Task> taskList, String command) {
+        Task task = getTask(command);
+        if (task != null) {
+            taskList.add(task);
+            String addedTask = getNewTaskString(taskList, task);
+            printCommand(addedTask);
+        }
+    }
+
+    private static String getNewTaskString(ArrayList<Task> taskList, Task task) {
+        String addedTask = "Got it. I've added this task: " + System.lineSeparator();
+        addedTask += "\t\t" + task + System.lineSeparator();
+        addedTask += "\t" + "Now you have " + taskList.size() + " tasks in the list.";
+        return addedTask;
+    }
+
+    private static TaskType getTaskType(String command) {
+        if (command.toUpperCase().startsWith("TODO")) {
+            return TaskType.TODO;
+        }else if (command.toUpperCase().startsWith("DEADLINE")) {
+            return TaskType.DEADLINE;
+        }else if (command.toUpperCase().startsWith("EVENT")) {
+            return TaskType.EVENT;
+        }else {
+            return TaskType.UNKNOWN;
+        }
+    }
     private static Task getTask(String command) {
         Task task = null;
         try {
-            if (command.toUpperCase().startsWith("TODO")) {
-                task = getTodo(command);
-            }else if (command.toUpperCase().startsWith("DEADLINE")) {
-                task = getDeadline(command);
-            }else if (command.toUpperCase().startsWith("EVENT")) {
-                task = getEvent(command);
-            }else {
-                throw new IllegalTaskException();
+            TaskType taskType = getTaskType(command);
+            switch (taskType) {
+                case TODO:
+                    task = getTodo(command);
+                    break;
+                case DEADLINE:
+                    task = getDeadline(command);
+                    break;
+                case EVENT:
+                    task = getEvent(command);
+                    break;
+                default:
+                    throw new IllegalTaskException();
             }
         }catch (IllegalTodoException e){
             printCommand("☹ OOPS!!! The description of a todo cannot be empty.");
@@ -152,25 +224,18 @@ public class Duke {
         return new Event(description, fromDate, toDate);
     }
 
-    private static void markOrUnmakrTask(Task task, boolean markAsDone) {
+    private static void printList(ArrayList<Task> list) {
         String printStr = "";
-        if (markAsDone) {
-            task.markAsDone();
-            printStr = "Nice! I've marked this task as done:";
-        }else {
-            task.unMarkDone();
-            printStr = "OK, I've marked this task as not done yet:";
-        }
-        printCommand(printStr + System.lineSeparator() + "\t" + task);
-    }
-
-    private static void printList(Task[] list, int count) {
-        String printStr = "";
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < list.size(); i++) {
             String index = Integer.toString(i + 1);
-            printStr +=  index + "." + list[i] + System.lineSeparator() + "\t";
+            printStr +=  index + "." + list.get(i) + System.lineSeparator() + "\t";
         }
-        printCommand(printStr);
+
+        if (list.size() > 0){
+            printCommand(printStr);
+        }else {
+            printCommand("You have 0 tasks in the list.");
+        }
     }
 
     private static void exitCommand() {
