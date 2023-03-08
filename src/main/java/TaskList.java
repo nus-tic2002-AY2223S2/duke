@@ -8,19 +8,18 @@ public class TaskList {
         this.tasks = new ArrayList<>();
     }
 
-    public void addTask(String description, boolean status) {
-        Task task = new Task(description);
-        this.tasks.add(task);
+    public void addTask(Task tasks) {
+        this.tasks.add(tasks);
 
-        if (task instanceof Deadline){
+        if (tasks instanceof Deadline){
             Deadline deadlineTask = (Deadline) tasks;
             System.out.println(deadlineTask.getTaskType());
-        }else if (task instanceof Event){
+        }else if (tasks instanceof Event){
             Event eventTask = (Event) tasks;
             System.out.println(eventTask.getTaskType());
-        }else if(task instanceof ToDo){
+        }else if(tasks instanceof ToDo){
             ToDo toDoTask = (ToDo) tasks;
-            System.out.println(toDoTask.getTaskType());
+            System.out.println("TaskList:AddTask Method: " + toDoTask.getTaskType());
 
         }
     }

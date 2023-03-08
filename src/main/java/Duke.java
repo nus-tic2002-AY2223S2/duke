@@ -102,7 +102,7 @@ public static void updateTask(String userInput, List<Task> userTask, String stat
 
         List<Task> userTask = new ArrayList<>();
 
-        List<TaskList> tasks;
+        TaskList tasks = new TaskList();
 
         while (!userInput.equals("bye")) {
             //Read user input.
@@ -134,6 +134,7 @@ public static void updateTask(String userInput, List<Task> userTask, String stat
                     //updateTask(userInput, userTask, "todo");
                     t = parser.createToDo(userInput);
                     userTask.add(t);
+                    tasks.addTask(t);
                     System.out.println("Got it. I've added this task:");
                     System.out.println(userTask.get(userTask.size()-1));
                     System.out.println("Now you have " + userTask.size() + " tasks in the list.");

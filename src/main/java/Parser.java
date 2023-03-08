@@ -67,20 +67,26 @@ public class Parser {
             case "deadline":
                 formatString = userInput.replace("deadline", "").trim();
                 String[]  formatDeadlineSplit = formatString.split("/");
+
                 if (formatDeadlineSplit.length < 2){
                     throw new DukeException("deadline is missing by details, please try again");
+                }else if (formatDeadlineSplit.length > 2){
+                    throw new DukeException("deadline has too many parameters, please try again");
                 }else {
+                    System.out.println("formatDeadlineSplit.length: " + formatDeadlineSplit.length);
                     formatDeadlineSplit[1] = formatDeadlineSplit[1].replace("by", "").trim();
                     return formatDeadlineSplit;
                 }
 
             case "event":
                 formatString = userInput.replace("event", "").trim();
-                String[]  formatEventSplit = formatString.split("/");
+                String[] formatEventSplit = formatString.split("/");
                 if (formatEventSplit.length <3){
                     throw new DukeException("Event is missing either from or to, please try again");
-                } else {
-
+                } else  if (formatEventSplit.length >3){
+                    throw new DukeException("Event has too many parameters, please try again");
+                }else {
+                    System.out.println(formatEventSplit[1]);
                     formatEventSplit[1] = formatEventSplit[1].replace("from", "").trim();
                     formatEventSplit[2] = formatEventSplit[2].replace("to", "").trim();
                     return formatEventSplit;
