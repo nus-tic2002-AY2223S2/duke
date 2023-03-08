@@ -1,101 +1,79 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
+    private Storage storage;
 
-    public static String[] formatString(String userInput, String status) throws DukeException {
-        String formatString = "";
-        String[] stringSplit = new String[3];
-
-        switch (status) {
-            case "todo":
-                stringSplit[0] = userInput.replace("todo", "").trim();
-                if (stringSplit[0].equals("")) {
-                    throw new DukeException("☹ OOPS!!! The description of a todo cannot be empty.");
-                }
-                break;
-            case "deadline":
-                formatString = userInput.replace("deadline", "").trim();
-                stringSplit = formatString.split("/");
-                stringSplit[1] = stringSplit[1].replace("by", "").trim();
-                break;
-            case "event":
-                formatString = userInput.replace("event", "").trim();
-                stringSplit = formatString.split("/");
-                stringSplit[1] = stringSplit[1].replace("from", "").trim();
-                stringSplit[2] = stringSplit[2].replace("to", "").trim();
-                break;
-            default:
-
-
-        }
-        return stringSplit;
+    private List<Task> tasks;
+    public Duke(String filename){
+        storage = new Storage(filename);
     }
 
 
-    public static void updateTask(String userInput, List<Task> userTask, String status) {
+public static void updateSaveFile(List<Task> userTask){
+        try{
+            FileWriter myWriter = new FileWriter("data\\duke.txt");
+            for (int i = 0; i < userTask.size(); i++) {
+              //  System.out.println((i + 1) + ". " + userTask.get(i));
+                String test = userTask.get(i).toString().replace("[", "").trim();
+                String test2 = test.replace("]", "|").trim();
+                String test3 = test2.replace("/by", "|").trim();
+                String test4 = test3.replace("/from", "|").trim();
+                String test5 = test4.replace("/to", "|").trim();
+
+               // System.out.println(test5);
+
+                try {
+
+                    myWriter.write(test5 + "\n");
+
+                   // System.out.println("Successfully wrote to the file.");
+                } catch (IOException e) {
+                    System.out.println("An error occurred.");
+                    e.printStackTrace();
+                }
+            }
+
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+}
+
+public static void updateTask(String userInput, List<Task> userTask, String status) {
         int listNumber = 0;
-        int currentItem = 0;
-        String description = "";
         String[] stringSplit = new String[1];
         String[] formattedString = new String[3];
         try {
-            if (status.equals("mark") || status.equals("unmark") || status.equals("delete")) {
 
+            if (status.equals("mark") || status.equals("unmark") || status.equals("delete")) {
                 stringSplit = userInput.split(" ");
                 int value = Integer.parseInt(stringSplit[1]);
                 listNumber = value - 1;
             }
+
             switch (status) {
                 case "mark":
-                    userTask.get(listNumber).setStatusIconMarked();
+                    userTask.get(listNumber).setStatusAsMarked();
                     System.out.println(userTask.get(listNumber));
+                    updateSaveFile(userTask);
                     break;
                 case "unmark":
-                    userTask.get(listNumber).setStatusIconUnmarked();
+                    userTask.get(listNumber).setStatusAsUnmarked();
                     System.out.println(userTask.get(listNumber));
+                    updateSaveFile(userTask);
                     break;
                 case "delete":
-                    System.out.println("Noted. I've removed this task:");
+
                     System.out.println(userTask.get(listNumber));
                     userTask.remove(listNumber);
+                    System.out.println("I've removed this task:");
                     System.out.println("Now you have " + userTask.size() + " tasks in the list.");
-                    break;
-                case "todo":
-                    formattedString = formatString(userInput, status);
-
-                    userTask.add(new ToDo(formattedString[0], "T"));
-                    currentItem = userTask.size() - 1;
-
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(userTask.get(currentItem));
-                    break;
-                case "deadline":
-                    formattedString = formatString(userInput, status);
-                    description = formattedString[0];
-                    String by = formattedString[1];
-
-                    userTask.add(new Deadlines(description, "D", by));
-                    currentItem = userTask.size() - 1;
-
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(userTask.get(currentItem));
-                    System.out.println("Now you have " + userTask.size() + " tasks in the list.");
-                    break;
-                case "event":
-                    formattedString = formatString(userInput, status);
-                    description = formattedString[0];
-                    String from = formattedString[1];
-                    String to = formattedString[2];
-
-                    userTask.add(new Events(description, "E", from, to));
-
-                    currentItem = userTask.size() - 1;
-
-                    System.out.println("Got it. I've added this task:");
-                    System.out.println(userTask.get(currentItem));
-                    System.out.println("Now you have " + userTask.size() + " tasks in the list.");
+                    updateSaveFile(userTask);
                     break;
                 default:
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
@@ -109,59 +87,74 @@ public class Duke {
         }
     }
 
+
     public static void main(String[] args) throws DukeException {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
+        new Duke("data/test.txt").run();
+    }
 
+    public static void run() {
         Scanner sc = new Scanner(System.in);
-
-        System.out.println(logo + "\nHello I'm Duke");
-        System.out.println("What can i do for you?");
+        System.out.println("Hello, I'm Duke. What can i do for you?");
+        Parser parser = new Parser();
 
         String userInput = "";
+        Task t ;
 
         List<Task> userTask = new ArrayList<>();
+
+        List<TaskList> tasks;
+
         while (!userInput.equals("bye")) {
             //Read user input.
             userInput = sc.nextLine();
             try {
                 //Exit the chatbot.
                 if (userInput.equals("bye")) {
-
                     System.out.println("Bye. Hope to see you again soon!");
-
                     //List out all the elements stored.
-                } else if (userInput.equals("list")) {
+                } else if (parser.isListCommand(userInput)) {
                     System.out.println("Here are the tasks in your list:");
                     for (int i = 0; i < userTask.size(); i++) {
                         System.out.println((i + 1) + ". " + userTask.get(i));
                     }
                     //Store user input and echo out.
-                } else if (userInput.startsWith("delete")) {
+                } else if (parser.isDeleteCommand(userInput)) {
                     //Deletes a task.
                     updateTask(userInput, userTask, "delete");
-                } else if (userInput.startsWith("mark")) {
+                } else if (parser.isMarkCommand(userInput)) {
                     //Marks a task as done.
                     updateTask(userInput, userTask, "mark");
 
-                } else if (userInput.startsWith("unmark")) {
+                } else if (parser.isUnmarkCommand(userInput)) {
                     //unmarks a task as not done.
                     updateTask(userInput, userTask, "unmark");
 
-                } else if (userInput.startsWith("todo")) {
+                } else if (parser.isToDoCommand(userInput)) {
                     //Create to-do task
-                    updateTask(userInput, userTask, "todo");
+                    //updateTask(userInput, userTask, "todo");
+                    t = parser.createToDo(userInput);
+                    userTask.add(t);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(userTask.get(userTask.size()-1));
+                    System.out.println("Now you have " + userTask.size() + " tasks in the list.");
 
-                } else if (userInput.startsWith("deadline")) {
+                } else if (parser.isDeadlineCommand(userInput)) {
                     //Create Deadline task
-                    updateTask(userInput, userTask, "deadline");
+                   // updateTask(userInput, userTask, "deadline");
+                    t = parser.createDeadline(userInput);
+                    userTask.add(t);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(userTask.get(userTask.size()-1));
+                    System.out.println("Now you have " + userTask.size() + " tasks in the list.");
 
-                } else if (userInput.startsWith("event")) {
+                } else if (parser.isEventCommand(userInput)) {
                     //Create event task
-                    updateTask(userInput, userTask, "event");
+                    //updateTask(userInput, userTask, "event");
+                    t = parser.createEvent(userInput);
+                    userTask.add(t);
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(userTask.get(userTask.size()-1));
+                    System.out.println("Now you have " + userTask.size() + " tasks in the list.");
 
                 } else {
 

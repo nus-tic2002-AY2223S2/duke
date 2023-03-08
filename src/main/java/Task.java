@@ -9,8 +9,11 @@ public class Task {
         this.description = description;
         this.isDone = false;
     }
-    //Getter Methods
-    public String getStatusIcon() {
+
+
+
+    //Getters
+    public String getStatus() {
         return (isDone ? "X" : " "); // mark done task with X
     }
     public String getTaskType() {
@@ -19,20 +22,26 @@ public class Task {
     public String getBy() {
         return " ";
     }
-    //Setter Methods
-    public void setStatusIconMarked() {
+
+    //Setters
+    public void setStatusAsMarked() {
         System.out.println("Nice! I've marked this task as done:");
 
         isDone = true;
     }
-
-    public void setStatusIconUnmarked() {
+    public void setStatusAsUnmarked() {
         System.out.println("OK, I've marked this task as not done yet:");
 
         isDone = false;
     }
 
-    public String toString(){
-        return String.format("[" + this.getTaskType() + "]" + "[" + this.getStatusIcon() + "] " + description);
+    public void setTaskType(String TaskType) {
+
     }
+
+    public String toString(){
+        return String.format("[" + this.getTaskType() + "]" + "[" + this.getStatus() + "] " + description);
+    }
+
+
 }
