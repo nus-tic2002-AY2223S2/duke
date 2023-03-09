@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -9,7 +10,18 @@ public class Duke {
 
     private List<Task> tasks;
     public Duke(String filename){
-        storage = new Storage(filename);
+
+        File directory = new File(String.valueOf("data"));
+        if (!directory.exists()) {
+            System.out.println("Directory doesn't exist, creating it now");
+            directory.mkdir();
+
+        }else {
+            storage = new Storage(filename);
+        }
+
+
+
     }
 
 
@@ -65,7 +77,7 @@ public static void updateTask(String userInput, List<Task> userTask, String stat
                 case "unmark":
                     userTask.get(listNumber).setStatusAsUnmarked();
                     System.out.println(userTask.get(listNumber));
-                    updateSaveFile(userTask);
+                   // updateSaveFile(userTask);
                     break;
                 case "delete":
 
@@ -89,7 +101,7 @@ public static void updateTask(String userInput, List<Task> userTask, String stat
 
 
     public static void main(String[] args) throws DukeException {
-        new Duke("data/test.txt").run();
+        new Duke("data/duke.txt").run();
     }
 
     public static void run() {
@@ -114,9 +126,13 @@ public static void updateTask(String userInput, List<Task> userTask, String stat
                     //List out all the elements stored.
                 } else if (parser.isListCommand(userInput)) {
                     System.out.println("Here are the tasks in your list:");
+                    tasks.listTasks();
+                    /*
                     for (int i = 0; i < userTask.size(); i++) {
                         System.out.println((i + 1) + ". " + userTask.get(i));
                     }
+                    */
+
                     //Store user input and echo out.
                 } else if (parser.isDeleteCommand(userInput)) {
                     //Deletes a task.
@@ -144,6 +160,7 @@ public static void updateTask(String userInput, List<Task> userTask, String stat
                    // updateTask(userInput, userTask, "deadline");
                     t = parser.createDeadline(userInput);
                     userTask.add(t);
+                    tasks.addTask(t);
                     System.out.println("Got it. I've added this task:");
                     System.out.println(userTask.get(userTask.size()-1));
                     System.out.println("Now you have " + userTask.size() + " tasks in the list.");
@@ -153,6 +170,7 @@ public static void updateTask(String userInput, List<Task> userTask, String stat
                     //updateTask(userInput, userTask, "event");
                     t = parser.createEvent(userInput);
                     userTask.add(t);
+                    tasks.addTask(t);
                     System.out.println("Got it. I've added this task:");
                     System.out.println(userTask.get(userTask.size()-1));
                     System.out.println("Now you have " + userTask.size() + " tasks in the list.");
