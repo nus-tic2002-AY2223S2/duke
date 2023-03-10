@@ -19,19 +19,19 @@ public class Task {
     public String getTaskType() {
         return " ";
     }
-    public String getBy() {
-        return " ";
+    public String getDescription() {
+        return description;
     }
+
+
 
     //Setters
     public void setStatusAsMarked() {
         System.out.println("Nice! I've marked this task as done:");
-
         isDone = true;
     }
     public void setStatusAsUnmarked() {
         System.out.println("OK, I've marked this task as not done yet:");
-
         isDone = false;
     }
 

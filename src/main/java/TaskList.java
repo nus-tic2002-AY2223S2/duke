@@ -1,35 +1,89 @@
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskList {
     private List<Task> tasks;
+    public TaskList(ArrayList<Task> task) {
+        this.tasks = new ArrayList<>();
+    }
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
-
     public void addTask(Task tasks) {
         this.tasks.add(tasks);
 
-        if (tasks instanceof Deadline){
-            Deadline deadlineTask = (Deadline) tasks;
-            System.out.println(deadlineTask.getTaskType());
-        }else if (tasks instanceof Event){
-            Event eventTask = (Event) tasks;
-            System.out.println(eventTask.getTaskType());
-        }else if(tasks instanceof ToDo){
-            ToDo toDoTask = (ToDo) tasks;
-            System.out.println("TaskList:AddTask Method: " + toDoTask.getTaskType());
 
-        }
+
+        System.out.println("Got it. I've added this task:");
+        System.out.println(this.tasks.get(this.tasks.size()-1));
+        System.out.println("Now you have " + this.tasks.size() + " tasks in the list.");
     }
 
 
     public void listTasks(){
+        System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
+
             System.out.println((i + 1) + ". " + tasks.get(i));
+        }
+    }
+
+    public Integer getTaskSize(){
+        return tasks.size();
+    }
+
+    public Task getTask(Integer taskNum){
+        return tasks.get(taskNum);
+    }
+    public void updateTask(String userInput) {
+        int listNumber;
+        String[] stringSplit ;
+        try {
+            stringSplit = userInput.split(" ");
+            int input_value = Integer.parseInt(stringSplit[1]);
+            listNumber = input_value - 1;
+            String status = stringSplit[0];
+
+            switch (status) {
+                case "mark":
+                    this.tasks.get(listNumber).setStatusAsMarked();
+                    System.out.println(this.tasks.get(listNumber));
+                    break;
+                case "unmark":
+                    this.tasks.get(listNumber).setStatusAsUnmarked();
+                    System.out.println(this.tasks.get(listNumber));
+                    break;
+                case "delete":
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println(this.tasks.get(listNumber));
+                    this.tasks.remove(listNumber);
+                    System.out.println("Now you have " + this.tasks.size() + " tasks in the list.");
+                    break;
+                default:
+                    throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Task number not found, please try again.");
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter only numbers.");
+        } catch (Exception e) {
+        }
+    }
+
+    public String getTaskDetails(String testing,Integer taskNum) {
+
+        if (tasks.get(taskNum) instanceof Deadline){
+            Deadline deadlineTask = (Deadline) tasks.get(taskNum);
+            return  " | " + deadlineTask.getBy();
+        }else if (tasks.get(taskNum) instanceof Event){
+            Event eventTask = (Event) tasks.get(taskNum);
+            return " | " + eventTask.getFrom() + " | " + eventTask.getTo();
+        }else{
+            return  "";
         }
 
     }
-
 }
