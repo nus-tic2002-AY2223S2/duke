@@ -15,14 +15,15 @@ public class Duke {
         System.out.println("\tWhat can I do for you?");
         System.out.println("------------------------------------------------------------");
 
-        //Store task
-        ArrayList<Task> taskList = new ArrayList<>();
-
         Task task;
         String command;
         CommandType commandType;
 
         Scanner in = new Scanner(System.in);
+
+        //Store task
+        ArrayList<Task> taskList = DukeFileReader.getTasklistInFile();
+
         while(true) {
             command = in.nextLine().trim();
             commandType = getCommandType(command);
@@ -42,7 +43,7 @@ public class Duke {
                     markTask(taskList, command, commandType);
                     break;
                 case DELETE:
-                    //Mark or Unmark Task
+                    //Delete Task
                     deleteTask(taskList, command);
                     break;
                 case ADD:
@@ -88,10 +89,14 @@ public class Duke {
                 task.unMarkDone();
                 printStr = "OK, I've marked this task as not done yet:";
             }
+
+            String taskStr = getTaskList(taskList);
+            DukeFileWriter.writeInFile(taskStr);
+
             printCommand(printStr + System.lineSeparator() + "\t" + task);
         }
         catch (IndexOutOfBoundsException ex) {
-            System.out.println("IndexOutOfBoundsException for delete: " + command);
+            System.out.println("IndexOutOfBoundsException : " + command);
         }
         catch (NumberFormatException ex) {
             ex.printStackTrace();
@@ -104,8 +109,11 @@ public class Duke {
             int index = Integer.parseInt(numberStr) - 1;
             Task task = taskList.get(index);
             taskList.remove(index);
-            String addedTask = getDeletedTaskString(taskList, task);
-            printCommand(addedTask);
+            String deletedTask = getDeletedTaskString(taskList, task);
+            printCommand(deletedTask);
+
+            String taskStr = getTaskList(taskList);
+            DukeFileWriter.writeInFile(taskStr);
         }
         catch (IndexOutOfBoundsException ex) {
             System.out.println("IndexOutOfBoundsException for task: " + command);
@@ -128,6 +136,9 @@ public class Duke {
             taskList.add(task);
             String addedTask = getNewTaskString(taskList, task);
             printCommand(addedTask);
+
+            DukeFileWriter.appendInFile(command + "@" + task.isDone + System.lineSeparator());
+
         }
     }
 
@@ -138,7 +149,7 @@ public class Duke {
         return addedTask;
     }
 
-    private static TaskType getTaskType(String command) {
+    public static TaskType getTaskType(String command) {
         if (command.toUpperCase().startsWith("TODO")) {
             return TaskType.TODO;
         }else if (command.toUpperCase().startsWith("DEADLINE")) {
@@ -149,7 +160,7 @@ public class Duke {
             return TaskType.UNKNOWN;
         }
     }
-    private static Task getTask(String command) {
+    public static Task getTask(String command) {
         Task task = null;
         try {
             TaskType taskType = getTaskType(command);
@@ -180,16 +191,30 @@ public class Duke {
         return task;
     }
 
-    private static Todo getTodo(String command) throws IndexOutOfBoundsException, IllegalTodoException {
+
+    public static Todo getTodo(String command) throws IndexOutOfBoundsException, IllegalTodoException, NumberFormatException {
         String[] commandStr = command.split(" ");
         if (commandStr.length < 2) {
             throw new IllegalTodoException();
         }
-        String description = command.replaceFirst(commandStr[0], "").trim();
-        return new Todo(description);
+
+        String[] taskStr = commandStr[1].split("@");
+
+        String description = taskStr[0].trim();
+        Todo todo = new Todo(description);
+
+        if (taskStr.length > 1) {
+            String markAsDone = taskStr[1].trim();
+            boolean mark = Boolean.parseBoolean(markAsDone);
+            if (mark) {
+                todo.markAsDone();
+            }
+        }
+
+        return todo;
     }
 
-    private static Deadline getDeadline(String command) throws IndexOutOfBoundsException, IllegalDeadlineException{
+    public static Deadline getDeadline(String command) throws IndexOutOfBoundsException, IllegalDeadlineException{
         String[] deadlines = command.split("/by");
         if (deadlines.length < 2) {
             throw new IllegalDeadlineException();
@@ -199,11 +224,23 @@ public class Duke {
             throw new IllegalDeadlineException();
         }
         String description = deadlines[0].replaceFirst(commandStr[0], "").trim();
-        String by = deadlines[1].trim();
-        return new Deadline(description, by);
+
+        String[] byStr = deadlines[1].split("@");
+        String by = byStr[0].trim();
+        Deadline deadline = new Deadline(description, by);
+
+        if (byStr.length > 1) {
+            String markAsDone = byStr[1].trim();
+            boolean mark = Boolean.parseBoolean(markAsDone);
+            if (mark) {
+                deadline.markAsDone();
+            }
+        }
+
+        return deadline;
     }
 
-    private static Event getEvent(String command) throws IndexOutOfBoundsException, IllegalEventException{
+    public static Event getEvent(String command) throws IndexOutOfBoundsException, IllegalEventException{
         String[] events = command.split("/from");
         if (events.length < 2) {
             throw new IllegalEventException();
@@ -219,9 +256,21 @@ public class Duke {
             throw new IllegalEventException();
         }
         String fromDate = dates[0].trim();
-        String toDate = dates[1].trim();
 
-        return new Event(description, fromDate, toDate);
+        String[] toStr = dates[1].split("@");
+        String toDate = toStr[0].trim();
+
+        Event event = new Event(description, fromDate, toDate);
+
+        if (toStr.length > 1) {
+            String markAsDone = toStr[1].trim();
+            boolean mark = Boolean.parseBoolean(markAsDone);
+            if (mark) {
+                event.markAsDone();
+            }
+        }
+
+        return event;
     }
 
     private static void printList(ArrayList<Task> list) {
@@ -237,6 +286,15 @@ public class Duke {
             printCommand("You have 0 tasks in the list.");
         }
     }
+
+    private static String getTaskList(ArrayList<Task> list) {
+        String printStr = "";
+        for (int i = 0; i < list.size(); i++) {
+            printStr +=  list.get(i).toCommand() + "@" + list.get(i).isDone + System.lineSeparator();
+        }
+        return printStr;
+    }
+
 
     private static void exitCommand() {
         printCommand("Bye. Hope to see you again soon!");

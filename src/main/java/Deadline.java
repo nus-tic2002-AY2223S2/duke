@@ -10,5 +10,14 @@ public class Deadline extends Task {
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by + ")";
     }
+
+    @Override
+    public String toCommand() {
+        return getType().name() + " " + description + " /by " + by;
+    }
+
+    public TaskType getType(){
+        return TaskType.DEADLINE;
+    }
 }
 
