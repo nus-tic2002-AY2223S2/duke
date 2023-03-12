@@ -14,22 +14,18 @@ public class DukeFileReader {
         file.createNewFile(); // if file already exists will do nothing
     }
 
-    public static ArrayList<Task> getTasklistInFile() {
-        ArrayList<Task> taskList = new ArrayList<>();
+    public static Scanner getTasklistInFile() {
+        Scanner s = null;
         try {
             createFile();
             File f = new File(FILE_PATH); // create a File for the given file path
-            Scanner s = new Scanner(f); // create a Scanner using the File as the source
-            while (s.hasNext()) {
-                Task task = Duke.getTask(s.nextLine());
-                taskList.add(task);
-            }
+            s = new Scanner(f); // create a Scanner using the File as the source
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e.getMessage());
         }
-        return taskList;
+        return s;
     }
 
 }
