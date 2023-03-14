@@ -1,10 +1,11 @@
-public class DukeException extends Exception{
+public class DukeException extends Exception {
 
     public DukeException(String message) {
-    System.out.println(message);
-    }
-    public void du(String message) {
-        System.out.println(message);
+        super(message);
+
     }
 
+    public String toString() {
+        return getMessage(); // return only the exception message
+    }
 }

@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class Storage {
     private String filename;
-
     private File duke_save;
+
     public Storage(String filename) {
         this.filename = filename;
         this.duke_save = new File(filename);
@@ -22,68 +22,77 @@ public class Storage {
                 System.out.println(io);
             }
         }
-
     }
-    public void save(TaskList userTask){
 
-        try{
+    public void save(TaskList userTask) {
+
+        try {
             FileWriter myWriter = new FileWriter("data\\duke.txt");
             for (int i = 0; i < userTask.getTaskSize(); i++) {
-                int result = userTask.getTask(i).getStatus().equals("X") ? 1 : 0;
+                int status = userTask.getTask(i).getStatus().equals("X") ? 1 : 0;
 
-                String testing = userTask.getTask(i).getTaskType() + " | " + result + " | " +  userTask.getTask(i).getDescription();
+                String output = userTask.getTask(i).getTaskType() + " | " + status + " | " + userTask.getTask(i).getDescription();
 
-                String finaltesting = testing+ userTask.getTaskDetails(testing,i);
-
-
-                System.out.println(finaltesting);
+                String finalOutput = output + userTask.getTaskDetails(i);
 
                 try {
-
-                  myWriter.write(finaltesting + "\n");
-
-                    // System.out.println("Successfully wrote to the file.");
+                    myWriter.write(finalOutput + "\n");
                 } catch (IOException e) {
                     System.out.println("An error occurred.");
                     e.printStackTrace();
                 }
             }
-
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
     }
 
-/*
-        public TaskList load () {
+    public List<Task> load() {
+        List<Task> tasks = new ArrayList<>();
+        Task t;
+        try {
 
-            TaskList tasks;
-            Task t;
-            try {
-
-                System.out.println("File exist, loading data.");
-                //Try to load the file
-                Scanner myReader = new Scanner(duke_save);
-                while (myReader.hasNextLine()) {
-                    String data = myReader.nextLine();
-                    System.out.println(data);
-                    tasks.addTask(t);
+            System.out.println("File exist, loading data.");
+            //Try to load the file
+            Scanner myReader = new Scanner(duke_save);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                System.out.println(data);
+                String[] formatSaveDataSplit = data.split("\\|");
+                for (int i = 0; i < formatSaveDataSplit.length; i++) {
+                    formatSaveDataSplit[i] = formatSaveDataSplit[i].trim();
                 }
-                myReader.close();
-            } catch (Exception e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
 
+                if (formatSaveDataSplit.length == 3) {
+                    t = new ToDo(formatSaveDataSplit[2], "T");
+                    if (formatSaveDataSplit[1].equals("1")) {
+                        t.setStatusAsMarked();
+                    }
 
+                    tasks.add(t);
+                } else if (formatSaveDataSplit.length == 4) {
+                    t = new Deadline(formatSaveDataSplit[2], "D", formatSaveDataSplit[3]);
+                    if (formatSaveDataSplit[1].equals("1")) {
+                        t.setStatusAsMarked();
+                    }
+
+                    tasks.add(t);
+                } else if (formatSaveDataSplit.length == 5) {
+                    t = new Event(formatSaveDataSplit[2], "E", formatSaveDataSplit[3], formatSaveDataSplit[4]);
+                    if (formatSaveDataSplit[1].equals("1")) {
+                        t.setStatusAsMarked();
+                    }
+                    tasks.add(t);
+                }
             }
-
-            return tasks;
+            myReader.close();
+        } catch (Exception e) {
+            System.out.println("☹ OOPS!!! an error occurred while reading the save file.");
         }
-*/
-
+        return tasks;
+    }
 
 
 }

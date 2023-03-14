@@ -1,40 +1,59 @@
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
-import java.util.ArrayList;
 
+/**
+ * @author Ng Kwang Hai Jeffrey
+ * @version Level 7.5
+ */
 public class Duke {
     private Storage storage;
     private List<Task> tasks;
-    public Duke(String filename){
+    private Ui ui;
+
+    public Duke(String filename) throws DukeException {
+        ui = new Ui();
 
         File directory = new File("data");
         if (!directory.exists()) {
             System.out.println("Directory doesn't exist, creating it now");
-            directory.mkdir();
+          boolean isCreated =  directory.mkdir();
+          if (isCreated){
+              System.out.println("Directory created");
+          }else {
+              throw new DukeException("OOPS! Failed to create directory, please check your folder permission!");
+          }
         }
         storage = new Storage(filename);
     }
 
+    public static void main(String[] args) throws DukeException {
+        new Duke("data/duke.txt").run();
+    }
 
     public void run() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Hello, I'm Duke. What can i do for you?");
+        ui.showWelcome();
 
         Parser parser = new Parser();
         String userInput = "";
         Task t;
         TaskList tasks = new TaskList();
+        try {
+            tasks = new TaskList(storage.load());
+        } catch (Exception e) {
+            System.out.println(e);
+            ui.showLoadingError();
+        }
+
         while (!userInput.equals("bye")) {
             //Read user input.
-            userInput = sc.nextLine();
+            userInput = ui.readCommand();
+            ui.showLine(); // show the divider line ("_______")
+
+
             try {
                 //Exit the chatbot.
                 if (userInput.equals("bye")) {
                     System.out.println("Bye. Hope to see you again soon!");
-
                 } else if (parser.isListCommand(userInput)) {
                     //List out all the elements stored.
                     tasks.listTasks();
@@ -51,7 +70,6 @@ public class Duke {
                     //Create to-do task
                     t = parser.createToDo(userInput);
                     tasks.addTask(t);
-
                 } else if (parser.isDeadlineCommand(userInput)) {
                     //Create Deadline task
                     t = parser.createDeadline(userInput);
@@ -66,17 +84,13 @@ public class Duke {
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
             } catch (Exception e) {
+                System.out.println(e);
+            } finally {
+                ui.showLine();
+                //Save the task into the file.
+                storage.save(tasks);
 
             }
-            //Save the task into the file.
-            storage.save(tasks);
         }
     }
-
-
-    public static void main(String[] args) throws DukeException {
-        new Duke("data/duke.txt").run();
-    }
-
-
 }
