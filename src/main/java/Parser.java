@@ -1,4 +1,5 @@
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -12,7 +13,7 @@ public class Parser {
      * @throws DukeException If the input is invalid, an exception will be thrown with an appropriate error message.
      */
     public static String[] formatString(String userInput, String status) throws DukeException {
-        String formatString = "";
+        String formatString;
         String[] stringSplit = new String[3];
         switch (status) {
             case "todo":
@@ -90,6 +91,14 @@ public class Parser {
         return userInput.startsWith("event");
     }
 
+    /**
+     * The createToDo method creates a To Do task based on the user input.
+     * It extracts the description of the task from the user input and creates a new To Do task with that description.
+     *
+     * @param userInput the user input to be parsed.
+     * @return the new To Do task that was created.
+     * @throws DukeException if the description of the To Do task is empty.
+     */
     public Task createToDo(String userInput) throws DukeException {
         String[] stringSplit = new String[1];
         stringSplit[0] = userInput.replace("todo", "").trim();
@@ -100,6 +109,13 @@ public class Parser {
         }
     }
 
+    /**
+     * The createDeadline method creates a Deadline task based on the user input.
+     *
+     * @param userInput the user input to be parsed.
+     * @return the new Deadline task that was created.
+     * @throws DukeException if the description of the Deadline task is empty.
+     */
     public Task createDeadline(String userInput) throws DukeException {
         String[] formattedString = formatString(userInput, "deadline");
         String description = formattedString[0];
@@ -109,6 +125,13 @@ public class Parser {
         return new Deadline(description, "D", by);
     }
 
+    /**
+     * The createEvent method creates a Event task based on the user input.
+     *
+     * @param userInput the user input to be parsed.
+     * @return the new Event task that was created.
+     * @throws DukeException if the description of the Event task is empty.
+     */
     public Task createEvent(String userInput) throws DukeException {
         String[] formattedString = formatString(userInput, "event");
         String description = formattedString[0];
@@ -118,24 +141,25 @@ public class Parser {
         return new Event(description, "E", from, to);
     }
 
+
     /**
      * This method converts a date string in the format "d/M/yyyy HHmm" to a more readable format of "dd MMM yyyy haa".
      *
      * @param datetime A string representing a date and time in the format "d/M/yyyy HHmm". e.g.(2/12/2023 2000)
      * @return A string representing the converted date and time in the format "dd MMM yyyy haa". e.g.(02 Dec 2023 8PM)
      */
-    public String convertToDateTime(String datetime) {
+    public String convertToDateTime(String datetime) throws DukeException {
 
         DateFormat df = new SimpleDateFormat("d/M/yyyy HHmm");
         DateFormat outputformat = new SimpleDateFormat("dd MMM yyyy haa");
 
-        String output = null;
-        Date date = null;
+        String output;
+        Date date;
         try {
             date = df.parse(datetime);
             output = outputformat.format(date);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ParseException e) {
+            throw new DukeException("Invalid DateTime format, Please follow this format: d/M/yyyy HHmm");
         }
         return output;
     }

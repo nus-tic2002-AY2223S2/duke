@@ -5,10 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * This is a storage class that creates/saves duke's file
+ */
 public class Storage {
     private String filename;
-    private File duke_save;
+    private final File duke_save;
 
+    /**
+     * Constructor for Storage class
+     * @param filename the name of the file to be created if it doesn't exist
+     */
     public Storage(String filename) {
         this.filename = filename;
         this.duke_save = new File(filename);
@@ -16,39 +23,52 @@ public class Storage {
         if (!duke_save.exists()) {
             try {
                 //create a new save file
-                duke_save.createNewFile();
-                System.out.println("New save file created: " + duke_save.getAbsoluteFile());
-            } catch (IOException io) {
-                System.out.println(io);
+               boolean isFileCreated = duke_save.createNewFile();
+
+               if (isFileCreated){
+                   System.out.println("New save file created: " + duke_save.getAbsoluteFile());
+               }else {
+                   throw new DukeException("☹ OOPS!!! Failed to create file, Please check the path and folder permission");
+               }
+            } catch (IOException | DukeException io) {
+                System.out.println(io.getMessage());
             }
         }
     }
 
+    /**
+     * Save user's task list into a file.
+     * @param userTask the user's task list
+     */
     public void save(TaskList userTask) {
 
         try {
             FileWriter myWriter = new FileWriter("data\\duke.txt");
             for (int i = 0; i < userTask.getTaskSize(); i++) {
                 int status = userTask.getTask(i).getStatus().equals("X") ? 1 : 0;
-
-                String output = userTask.getTask(i).getTaskType() + " | " + status + " | " + userTask.getTask(i).getDescription();
+                String priority = userTask.getTask(i).getPriority();
+                String output = userTask.getTask(i).getTaskType() + " | " + status + " | " +  priority + " | " + userTask.getTask(i).getDescription();
 
                 String finalOutput = output + userTask.getTaskDetails(i);
 
                 try {
                     myWriter.write(finalOutput + "\n");
-                } catch (IOException e) {
-                    System.out.println("An error occurred.");
-                    e.printStackTrace();
+                } catch (IOException io) {
+                    System.out.println("An error occurred while writing to the save file.");
+                    io.printStackTrace();
                 }
             }
             myWriter.close();
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred while accessing the save file.");
             e.printStackTrace();
         }
     }
 
+    /**
+     * Loads user's task from a file.
+     * @return a list of task loaded from the file.
+     */
     public List<Task> load() {
         List<Task> tasks = new ArrayList<>();
         Task t;

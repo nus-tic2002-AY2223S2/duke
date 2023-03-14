@@ -8,10 +8,6 @@ public class Deadline extends Task {
         this.by = by;
     }
 
-    //Setter Methods
-    public void setBy(String by){
-        this.by = by;
-    }
     //Getter Methods
     public String getTaskType() {
         return taskType;
@@ -19,6 +15,11 @@ public class Deadline extends Task {
 
     public String getBy() {
         return by;
+    }
+
+    //Setter Methods
+    public void setBy(String by) {
+        this.by = by;
     }
 
     public String toString() {

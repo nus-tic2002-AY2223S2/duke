@@ -40,8 +40,25 @@ public class TaskList {
 
             switch (status) {
                 case "mark":
-                    this.tasks.get(listNumber).setStatusAsMarked();
-                    System.out.println(this.tasks.get(listNumber));
+                    if (stringSplit.length == 2) {
+                        this.tasks.get(listNumber).setStatusAsMarked();
+                        System.out.println(this.tasks.get(listNumber));
+                    } else if (stringSplit.length == 4) {
+                        String priority = stringSplit[3];
+
+                        if (priority.equals("HIGH")) {
+                            this.tasks.get(listNumber).setPriority(Priority.HIGH);
+                            System.out.println("Priority set to HIGH");
+                        } else if (priority.equals("MEDIUM")) {
+                            this.tasks.get(listNumber).setPriority(Priority.MEDIUM);
+                            System.out.println("Priority set to MEDIUM");
+                        } else if (priority.equals("LOW")) {
+                            this.tasks.get(listNumber).setPriority(Priority.LOW);
+                            System.out.println("Priority set to LOW");
+                        }else {
+                            throw new DukeException("OOPS! Please use either HIGH,MEDIUM,LOW when setting priority");
+                        }
+                    }
                     break;
                 case "unmark":
                     this.tasks.get(listNumber).setStatusAsUnmarked();
@@ -62,7 +79,7 @@ public class TaskList {
         } catch (NumberFormatException e) {
             System.out.println("Please enter only numbers.");
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 

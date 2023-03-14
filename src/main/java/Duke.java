@@ -2,26 +2,30 @@ import java.io.File;
 import java.util.List;
 
 /**
- * @author Ng Kwang Hai Jeffrey
- * @version Level 7.5
+ * @author Ng Kwang Hai Jeffrey (A0227137H)
  */
 public class Duke {
     private Storage storage;
     private List<Task> tasks;
     private Ui ui;
 
+    /**
+     * The Duke class represents the main component of the Duke application.
+     *
+     * @param filename the name of the file to store the data.
+     * @throws DukeException if there is an error creating the directory or initializing the storage.
+     */
     public Duke(String filename) throws DukeException {
         ui = new Ui();
-
-        File directory = new File("data");
+        File directory = new File("data"); //The directory of the save file.
         if (!directory.exists()) {
             System.out.println("Directory doesn't exist, creating it now");
-          boolean isCreated =  directory.mkdir();
-          if (isCreated){
-              System.out.println("Directory created");
-          }else {
-              throw new DukeException("OOPS! Failed to create directory, please check your folder permission!");
-          }
+            boolean isDirCreated = directory.mkdir();
+            if (isDirCreated) {
+                System.out.println("Directory created!");
+            } else {
+                throw new DukeException("OOPS! Failed to create directory, please check your folder permission!");
+            }
         }
         storage = new Storage(filename);
     }
@@ -30,9 +34,12 @@ public class Duke {
         new Duke("data/duke.txt").run();
     }
 
+    /**
+     * The run method handles the main functionality of the Duke application.
+     * It reads user input and performs the actions based on the command entered by the user.
+     */
     public void run() {
-        ui.showWelcome();
-
+        ui.showWelcome(); //Display logo
         Parser parser = new Parser();
         String userInput = "";
         Task t;
@@ -40,7 +47,7 @@ public class Duke {
         try {
             tasks = new TaskList(storage.load());
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
             ui.showLoadingError();
         }
 
@@ -48,7 +55,6 @@ public class Duke {
             //Read user input.
             userInput = ui.readCommand();
             ui.showLine(); // show the divider line ("_______")
-
 
             try {
                 //Exit the chatbot.
@@ -84,7 +90,7 @@ public class Duke {
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
             } catch (Exception e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
             } finally {
                 ui.showLine();
                 //Save the task into the file.

@@ -10,7 +10,6 @@ public class Event extends Task {
         this.to = to;
     }
 
-
     //Getter Methods
     public String getTaskType() {
         return taskType;

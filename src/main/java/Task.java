@@ -1,13 +1,15 @@
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected Priority priority;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.priority = null;
     }
 
-    //Getters
+    //Getters method
     public String getStatus() {
         return (isDone ? "X" : " "); // mark done task with X
     }
@@ -20,7 +22,7 @@ public class Task {
         return description;
     }
 
-    //Setters
+    //Setters method
     public void setStatusAsMarked() {
         System.out.println("Nice! I've marked this task as done:");
         isDone = true;
@@ -31,9 +33,29 @@ public class Task {
         isDone = false;
     }
 
-    public String toString() {
-        return String.format("[" + this.getTaskType() + "]" + "[" + this.getStatus() + "] " + description);
+    public String getPriority() {
+        if (this.priority == null) {
+            return " ";
+        }
+        switch (this.priority) {
+            case LOW:
+                return "L";
+            case MEDIUM:
+                return "M";
+            case HIGH:
+                return "H";
+            default:
+                return " ";
+        }
     }
 
+    public void setPriority(Priority p) {
+        this.priority = p;
+    }
+
+    public String toString() {
+        return String.format("[" + this.getTaskType() + "]" + "[" + this.getStatus() + "]" + "[" + this.getPriority() + "] " + description);
+    }
+//
 
 }
