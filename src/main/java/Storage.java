@@ -81,31 +81,39 @@ public class Storage {
                 String data = myReader.nextLine();
                 System.out.println(data);
                 String[] formatSaveDataSplit = data.split("\\|");
+                //Remove all blank spaces
                 for (int i = 0; i < formatSaveDataSplit.length; i++) {
                     formatSaveDataSplit[i] = formatSaveDataSplit[i].trim();
                 }
 
-                if (formatSaveDataSplit.length == 3) {
-                    t = new ToDo(formatSaveDataSplit[2], "T");
-                    if (formatSaveDataSplit[1].equals("1")) {
-                        t.setStatusAsMarked();
-                    }
+                String description = formatSaveDataSplit[3];
 
-                    tasks.add(t);
-                } else if (formatSaveDataSplit.length == 4) {
-                    t = new Deadline(formatSaveDataSplit[2], "D", formatSaveDataSplit[3]);
+                if (formatSaveDataSplit.length == 4) {
+                    t = new ToDo(description, "T");
+                    t.setPriority(formatSaveDataSplit[2]);
                     if (formatSaveDataSplit[1].equals("1")) {
                         t.setStatusAsMarked();
                     }
 
                     tasks.add(t);
                 } else if (formatSaveDataSplit.length == 5) {
-                    t = new Event(formatSaveDataSplit[2], "E", formatSaveDataSplit[3], formatSaveDataSplit[4]);
+                    t = new Deadline(description, "D", formatSaveDataSplit[4]);
+                    t.setPriority(formatSaveDataSplit[2]);
+                    if (formatSaveDataSplit[1].equals("1")) {
+                        t.setStatusAsMarked();
+                    }
+
+                    tasks.add(t);
+                } else if (formatSaveDataSplit.length == 6) {
+                    t = new Event(description, "E", formatSaveDataSplit[4], formatSaveDataSplit[5]);
+                    t.setPriority(formatSaveDataSplit[2]);
                     if (formatSaveDataSplit[1].equals("1")) {
                         t.setStatusAsMarked();
                     }
                     tasks.add(t);
                 }
+
+
             }
             myReader.close();
         } catch (Exception e) {

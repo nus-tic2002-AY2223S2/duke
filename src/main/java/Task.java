@@ -49,13 +49,35 @@ public class Task {
         }
     }
 
-    public void setPriority(Priority p) {
-        this.priority = p;
+    public void setPriority(String p) throws DukeException {
+        switch(p){
+            case "HIGH":
+            case "H":
+                priority = Priority.HIGH;
+                System.out.println("Priority set as HIGH");
+                break;
+            case "MEDIUM":
+            case "M":
+                priority = Priority.MEDIUM;
+                System.out.println("Priority set as MEDIUM");
+                break;
+            case "LOW":
+            case "L":
+                priority = Priority.LOW;
+                System.out.println("Priority set as LOW");
+                break;
+            case " ":
+            case "":
+                priority = null;
+                break;
+            default:
+               throw new DukeException("OOPS! Please use either HIGH,MEDIUM,LOW when setting priority");
+
+        }
     }
 
     public String toString() {
         return String.format("[" + this.getTaskType() + "]" + "[" + this.getStatus() + "]" + "[" + this.getPriority() + "] " + description);
     }
-//
 
 }

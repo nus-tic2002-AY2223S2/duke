@@ -86,7 +86,10 @@ public class Duke {
                     t = parser.createEvent(userInput);
                     tasks.addTask(t);
 
-                } else {
+                }else if (parser.isFindCommand(userInput)) {
+                    //List out all the elements based on the user's find keyword.
+                    tasks.listFindTasks(userInput);
+                }  else {
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
             } catch (Exception e) {

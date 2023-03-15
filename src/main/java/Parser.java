@@ -90,6 +90,9 @@ public class Parser {
     public boolean isEventCommand(String userInput) {
         return userInput.startsWith("event");
     }
+    public boolean isFindCommand(String userInput) {
+        return userInput.startsWith("find");
+    }
 
     /**
      * The createToDo method creates a To Do task based on the user input.

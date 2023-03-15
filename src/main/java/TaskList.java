@@ -21,6 +21,7 @@ public class TaskList {
     }
 
 
+
     public void listTasks() {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
@@ -28,7 +29,24 @@ public class TaskList {
             System.out.println((i + 1) + ". " + tasks.get(i));
         }
     }
-
+    public void listFindTasks(String userInput) {
+        userInput = userInput.replace("find","").trim();
+        System.out.println("Here are the matching tasks in your list:");
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getDescription().contains(userInput)){
+                System.out.println((i + 1) + ". " + tasks.get(i));
+            }
+        }
+    }
+    /**
+     * Updates the task list based on user input.
+     * Takes in a string userInput, splits it into separate elements, and check based on the first element of the split string.
+     * If the first element is "mark", marks a task as completed and/or updates the priority of the task.
+     * If the first element is "unmark", unmarks a task as completed.
+     * If the first element is "delete", deletes a task from the task list.
+     * @param userInput a string representing the user input to be processed.
+     * @throws DukeException if the input is invalid.
+     */
     public void updateTask(String userInput) {
         int listNumber;
         String[] stringSplit;
@@ -46,18 +64,8 @@ public class TaskList {
                     } else if (stringSplit.length == 4) {
                         String priority = stringSplit[3];
 
-                        if (priority.equals("HIGH")) {
-                            this.tasks.get(listNumber).setPriority(Priority.HIGH);
-                            System.out.println("Priority set to HIGH");
-                        } else if (priority.equals("MEDIUM")) {
-                            this.tasks.get(listNumber).setPriority(Priority.MEDIUM);
-                            System.out.println("Priority set to MEDIUM");
-                        } else if (priority.equals("LOW")) {
-                            this.tasks.get(listNumber).setPriority(Priority.LOW);
-                            System.out.println("Priority set to LOW");
-                        }else {
-                            throw new DukeException("OOPS! Please use either HIGH,MEDIUM,LOW when setting priority");
-                        }
+                        this.tasks.get(listNumber).setPriority(priority);
+
                     }
                     break;
                 case "unmark":
@@ -83,7 +91,7 @@ public class TaskList {
         }
     }
 
-    //Getters
+    //Getters method
     public Integer getTaskSize() {
         return tasks.size();
     }
@@ -92,6 +100,11 @@ public class TaskList {
         return tasks.get(taskNum);
     }
 
+    /**
+     * Returns a string containing details of a task with the specified task number.
+     * @param taskNum the task number of the task to retrieve details for.
+     * @return a string containing details of the specified task.
+     */
     public String getTaskDetails(Integer taskNum) {
 
         if (tasks.get(taskNum) instanceof Deadline) {
