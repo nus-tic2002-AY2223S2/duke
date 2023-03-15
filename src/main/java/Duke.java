@@ -1,12 +1,12 @@
 import java.io.File;
-import java.util.List;
 
 /**
  * @author Ng Kwang Hai Jeffrey (A0227137H)
+ * Implemented individual feature 1: C-Priority
  */
 public class Duke {
     private Storage storage;
-    private List<Task> tasks;
+    private TaskList tasks;
     private Ui ui;
 
     /**
@@ -39,11 +39,11 @@ public class Duke {
      * It reads user input and performs the actions based on the command entered by the user.
      */
     public void run() {
-        ui.showWelcome(); //Display logo
         Parser parser = new Parser();
         String userInput = "";
         Task t;
-        TaskList tasks = new TaskList();
+        tasks = new TaskList();
+        ui.showWelcome(); //Display logo
         try {
             tasks = new TaskList(storage.load());
         } catch (Exception e) {
@@ -80,16 +80,14 @@ public class Duke {
                     //Create Deadline task
                     t = parser.createDeadline(userInput);
                     tasks.addTask(t);
-
                 } else if (parser.isEventCommand(userInput)) {
                     //Create event task
                     t = parser.createEvent(userInput);
                     tasks.addTask(t);
-
-                }else if (parser.isFindCommand(userInput)) {
+                } else if (parser.isFindCommand(userInput)) {
                     //List out all the elements based on the user's find keyword.
                     tasks.listFindTasks(userInput);
-                }  else {
+                } else {
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
             } catch (Exception e) {
@@ -98,7 +96,6 @@ public class Duke {
                 ui.showLine();
                 //Save the task into the file.
                 storage.save(tasks);
-
             }
         }
     }

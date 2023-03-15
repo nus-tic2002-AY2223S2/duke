@@ -12,7 +12,11 @@ public class TaskList {
         this.tasks = new ArrayList<>();
     }
 
-
+    /**
+     * Add a task into the current list of tasks.
+     *
+     * @param tasks a task class that stores the description, task type, priority of the task to a list of tasks.
+     */
     public void addTask(Task tasks) {
         this.tasks.add(tasks);
         System.out.println("Got it. I've added this task:");
@@ -21,7 +25,9 @@ public class TaskList {
     }
 
 
-
+    /**
+     * Retrieves all task in the list.
+     */
     public void listTasks() {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
@@ -29,21 +35,29 @@ public class TaskList {
             System.out.println((i + 1) + ". " + tasks.get(i));
         }
     }
+
+    /**
+     * Retrieves a list of task that matches the user input keyword.
+     *
+     * @param userInput a string representing the user input to be processed.
+     */
     public void listFindTasks(String userInput) {
-        userInput = userInput.replace("find","").trim();
+        userInput = userInput.replace("find", "").trim();
         System.out.println("Here are the matching tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getDescription().contains(userInput)){
+            if (tasks.get(i).getDescription().contains(userInput)) {
                 System.out.println((i + 1) + ". " + tasks.get(i));
             }
         }
     }
+
     /**
      * Updates the task list based on user input.
      * Takes in a string userInput, splits it into separate elements, and check based on the first element of the split string.
      * If the first element is "mark", marks a task as completed and/or updates the priority of the task.
      * If the first element is "unmark", unmarks a task as completed.
      * If the first element is "delete", deletes a task from the task list.
+     *
      * @param userInput a string representing the user input to be processed.
      * @throws DukeException if the input is invalid.
      */
@@ -58,17 +72,17 @@ public class TaskList {
 
             switch (status) {
                 case "mark":
-                    if (stringSplit.length == 2) {
+                    if (stringSplit.length == 2) { //E.g. Mark 1
+                        System.out.println("Nice! I've marked this task as done:");
                         this.tasks.get(listNumber).setStatusAsMarked();
                         System.out.println(this.tasks.get(listNumber));
-                    } else if (stringSplit.length == 4) {
+                    } else if (stringSplit.length == 4) { //E.g. Mark 1 as HIGH
                         String priority = stringSplit[3];
-
                         this.tasks.get(listNumber).setPriority(priority);
-
                     }
                     break;
                 case "unmark":
+                    System.out.println("OK, I've marked this task as not done yet:");
                     this.tasks.get(listNumber).setStatusAsUnmarked();
                     System.out.println(this.tasks.get(listNumber));
                     break;
@@ -85,7 +99,7 @@ public class TaskList {
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Task number not found, please try again.");
         } catch (NumberFormatException e) {
-            System.out.println("Please enter only numbers.");
+            System.out.println("☹ OOPS!!! Please enter only numbers.");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -102,6 +116,7 @@ public class TaskList {
 
     /**
      * Returns a string containing details of a task with the specified task number.
+     *
      * @param taskNum the task number of the task to retrieve details for.
      * @return a string containing details of the specified task.
      */

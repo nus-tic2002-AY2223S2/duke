@@ -58,7 +58,7 @@ public class Parser {
     }
 
     /**
-     * This 7 command method check if the user input starts with the list of commands
+     * This 8 command method check if the user input starts with the list of commands
      *
      * @param userInput A string representing the user input.
      * @return A boolean value indicating whether the user input is a command or not.
@@ -90,6 +90,7 @@ public class Parser {
     public boolean isEventCommand(String userInput) {
         return userInput.startsWith("event");
     }
+
     public boolean isFindCommand(String userInput) {
         return userInput.startsWith("find");
     }

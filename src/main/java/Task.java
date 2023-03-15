@@ -22,17 +22,11 @@ public class Task {
         return description;
     }
 
-    //Setters method
-    public void setStatusAsMarked() {
-        System.out.println("Nice! I've marked this task as done:");
-        isDone = true;
-    }
-
-    public void setStatusAsUnmarked() {
-        System.out.println("OK, I've marked this task as not done yet:");
-        isDone = false;
-    }
-
+    /**
+     * Retrieves the priority of a task as a string.
+     *
+     * @return a string of the priority of the task.
+     */
     public String getPriority() {
         if (this.priority == null) {
             return " ";
@@ -49,8 +43,16 @@ public class Task {
         }
     }
 
+    //Setters method
+
+    /**
+     * Sets the priority of a task based on the given string input for both Mark method and storage load method.
+     *
+     * @param p a string representing the priority of the task.
+     * @throws DukeException if the input string does not match "HIGH", "H", "MEDIUM", "M", "LOW", "L".
+     */
     public void setPriority(String p) throws DukeException {
-        switch(p){
+        switch (p) {
             case "HIGH":
             case "H":
                 priority = Priority.HIGH;
@@ -71,9 +73,17 @@ public class Task {
                 priority = null;
                 break;
             default:
-               throw new DukeException("OOPS! Please use either HIGH,MEDIUM,LOW when setting priority");
+                throw new DukeException("OOPS! Please use either HIGH,MEDIUM,LOW when setting priority");
 
         }
+    }
+
+    public void setStatusAsMarked() {
+        isDone = true;
+    }
+
+    public void setStatusAsUnmarked() {
+        isDone = false;
     }
 
     public String toString() {
