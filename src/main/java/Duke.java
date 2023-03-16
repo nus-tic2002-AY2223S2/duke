@@ -4,8 +4,7 @@ import java.util.Scanner;
 public class Duke {
     public static boolean checkMark(String input) {
         String[] splitted = input.split(" ");
-        if (splitted.length == 2 ) { return true; }
-        else { return false; }
+        return splitted.length == 2;
     }
 
     public static void main(String[] args) {
@@ -30,18 +29,18 @@ public class Duke {
             if (question.equals("bye")) { //if the input is bye then end the program
                 bye = true;
                 System.out.println("Bye. Hope to see you again soon!");
-                return; // stop the program and not continue
+                //return; // stop the program and not continue
             }
 
             if (question.contains("mark")) {
                 if (checkMark(question)) {
                     String[] splitted = question.split(" ");
                     if (question.contains("unmark")) {
-                        list[Integer.valueOf(splitted[1]) - 1].markAsNotDone();
+                        list[Integer.parseInt(splitted[1]) - 1].markAsNotDone();
                         continue;
                     }
                     else {
-                        list[Integer.valueOf(splitted[1]) - 1].markAsDone();
+                        list[Integer.parseInt(splitted[1]) - 1].markAsDone();
                         continue;
                     }
                 }
