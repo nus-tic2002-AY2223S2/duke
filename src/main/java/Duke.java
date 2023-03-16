@@ -50,6 +50,7 @@ public class Duke {
                     System.out.println(i + 1 + ". " + "[" + list[i].getStatusIcon() + "] " + list[i].description);
                 }
             }
+
             else { //store the string
                 Task t = new Task(question);
                 //t.markAsDone();
