@@ -29,7 +29,6 @@ public class Duke {
             if (question.equals("bye")) { //if the input is bye then end the program
                 bye = true;
                 System.out.println("Bye. Hope to see you again soon!");
-                //return; // stop the program and not continue
             }
 
             if (question.contains("mark")) {
