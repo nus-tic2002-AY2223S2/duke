@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 
 public class Duke {
-    public static boolean checkMark(String input) {
+    public static boolean checkMark(String input) { //method to check is mark/unmark is a single word or with something behind
         String[] splitted = input.split(" ");
         return splitted.length == 2;
     }
