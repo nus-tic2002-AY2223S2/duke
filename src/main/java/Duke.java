@@ -1,5 +1,13 @@
 import java.util.Scanner;
+
+
 public class Duke {
+    public static boolean checkMark(String input) {
+        String[] splitted = input.split(" ");
+        if (splitted.length == 2 ) { return true; }
+        else { return false; }
+    }
+
     public static void main(String[] args) {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -9,26 +17,46 @@ public class Duke {
         System.out.println("Hello from\n" + logo);
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?\n");
-        boolean notBye = false;
+        boolean bye = false;
         Scanner Obj = new Scanner(System.in);
-        int stringIndex = 0;
-        String[] list = new String[100];
-        while (!notBye) {
+        int taskIndex = 0;
+        Task[] list = new Task[100];
+
+
+        while (!bye) {
             String question = Obj.nextLine();
+
             if (question.equals("bye")) { //if the input is bye then end the program
-                notBye = true;
+                bye = true;
                 System.out.println("Bye. Hope to see you again soon!");
                 return; // stop the program and not continue
             }
-            else if (!question.equals("list")){ //store the string except "list"
-                list[stringIndex] = question;
-                stringIndex++;
-                System.out.println("added: " + question);
-            }
-            else if (question.equals("list")) { //loop to print out the items in list[]
-                for (int i = 0; i < stringIndex; i++) {
-                    System.out.println(i + 1 + ". " + list[i]);
+
+            if (question.contains("mark")) {
+                if (checkMark(question)) {
+                    String[] splitted = question.split(" ");
+                    if (question.contains("unmark")) {
+                        list[Integer.valueOf(splitted[1]) - 1].markAsNotDone();
+                        continue;
+                    }
+                    else {
+                        list[Integer.valueOf(splitted[1]) - 1].markAsDone();
+                        continue;
+                    }
                 }
+            }
+
+            if (question.equals("list")) { //loop to print out the items in list[]
+                for (int i = 0; i < taskIndex; i++) {
+                    System.out.println(i + 1 + ". " + "[" + list[i].getStatusIcon() + "] " + list[i].description);
+                }
+            }
+            else { //store the string
+                Task t = new Task(question);
+                //t.markAsDone();
+                list[taskIndex] = t;
+                taskIndex++;
+                System.out.println("added: " + question);
             }
         }
     }
