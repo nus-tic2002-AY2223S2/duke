@@ -97,7 +97,7 @@ public class Duke {
                 System.out.println("Here are the tasks in your list:");
                 for(int i = 0; i < lists.size(); i++)
                 {
-                    System.out.println(i+1 + ".[" + lists.get(i).getTaskStatus() + "] " + lists.get(i).description);
+                    System.out.println(i+1 + "." + lists.get(i).toString());
                 }
             }
             else if (checkInputForMarkAction(input))
@@ -113,7 +113,7 @@ public class Duke {
 
                 //Print output as expected
                 System.out.println("Nice! I've marked this task as done:");
-                System.out.println("  [" + lists.get(indexInList).getTaskStatus() + "] " + lists.get(indexInList).description);
+                System.out.println(lists.get(indexInList).toString());
 
             }
             else if (checkInputForUnmarkAction(input))
@@ -129,13 +129,27 @@ public class Duke {
 
                 //Print output as expected
                 System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println("  [" + lists.get(indexInList).getTaskStatus() + "] " + lists.get(indexInList).description);
+                System.out.println(lists.get(indexInList).toString());
             }
             else
             {
-                Task newTask = new Task(input);
-                lists.add(newTask);
-                System.out.println("added: " + input);
+                //time to start adding DATELINES / TODOS / EVENTS
+                String[] separatedString = input.split(" ");
+                if(separatedString[0].equalsIgnoreCase("deadline"))
+                {
+
+                }
+                else if(separatedString[0].equalsIgnoreCase("event"))
+                {
+
+                }
+                else
+                {
+                    //assuming not "deadline" & "event" means "to-do"
+                    Todo newTodo = new Todo(input);
+                    lists.add(newTodo);
+                    System.out.println("added: " + input);
+                }
             }
             System.out.println("____________________________________________________________\n");
             input = scanObj.nextLine();
