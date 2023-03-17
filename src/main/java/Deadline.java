@@ -1,17 +1,24 @@
 public class Deadline extends Task {
-    protected String by;
+    protected String taskString;
+    protected String byString;
 
     public Deadline(String description, String by) {
         super(description);
-        this.by = by;
+        this.byString = by;
     }
 
+    public Deadline(String description) {
+        super(description);
+        this.partsInDescription = description.split("/by");
+        this.taskString = partsInDescription[0];
+        this.byString = partsInDescription[1];
+    }
     public String getBy() {
-        return this.by;
+        return this.byString;
     }
 
     public String toString() {
-        return "[D]" + super.toString() + " (by:" + by + ")";
+        return "[D]" + super.toString() + " (by:" + byString + ")";
     }
 
 }

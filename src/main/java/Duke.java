@@ -1,12 +1,55 @@
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+
+
 
 public class Duke {
+
+    public Duke(String filePath) {
+        Ui ui = new Ui();
+        Storage storage = new Storage(filePath);
+        try {
+            TaskList tasks = new TaskList(storage.load());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        do {
+            String command = ui.getUserCommand();
+
+            if(Parser.isToDoCommand(command))
+            {
+                Object t = Parser.createTodo(command);
+                tasks.addTask(t);
+            }
+
+            ui.showToUser(tasks.getTaskListDescription());
+        }
+
+    }
+
+    public void run() {
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+
+        System.out.println("Hello from\n" + logo);
+        System.out.println("Hello. This is Reminder created by WP.\nWhat can i do for you?");
+
+
+    }
+
 
     public static void drawLine() {
         System.out.println("\n_________________________________________\n");
     }
+
+
 
     public static void checkDescriptionExist(int wordsDescription, int minWords) throws DukeException {
         if (wordsDescription < minWords) {
@@ -26,20 +69,16 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
 
-        String sentences;
+        new Duke("data/tasks.txt").run();
 
+
+        //String sentences;
         // instantiate new empty ArrayList
-        ArrayList<Task> tasksArray = new ArrayList<>();
+        //ArrayList<Task> tasksArray = new ArrayList<>();
 
-        Scanner in = new Scanner(System.in);
-        System.out.println("Hello. This is Reminder created by WP.\nWhat can i do for you?");
+        //Scanner in = new Scanner(System.in);
+
 
 
         // *********************
@@ -48,7 +87,10 @@ public class Duke {
         // use .equals to compare string
         // if bye then exit()
         do {
-            sentences = in.nextLine();
+            //sentences = in.nextLine();
+            //String command = ui.getUserCommand();
+
+
 
             // initialized a new object for the task that user type in
             Task objectTask = new Task(sentences);
@@ -235,6 +277,8 @@ public class Duke {
         System.out.println("Bye. Hope to see you soon again!");
         drawLine();
     }
+
+
 }
 
 
