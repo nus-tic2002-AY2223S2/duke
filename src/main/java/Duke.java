@@ -84,7 +84,7 @@ public class Duke {
     //  Events functions:                                                                                //
     //  - Missing /from & /to parameters                                                                 //
     //  - Missing duration                                                                               //
-    //  Mark / Unmark functions:                                                                         //
+    //  Mark / Unmark / Delete functions:                                                                //
     //  - Missing value for mark & unmark                                                                //
     //  - Too much values for mark & unmark                                                              //
     //  - Index over the List size                                                                       //
@@ -133,7 +133,7 @@ public class Duke {
                 return separatedInput;
             }
         }
-        else if (separatedInput[0].equalsIgnoreCase("Mark") || separatedInput[0].equalsIgnoreCase("Unmark"))
+        else if (separatedInput[0].equalsIgnoreCase("Mark") || separatedInput[0].equalsIgnoreCase("Unmark") || separatedInput[0].equalsIgnoreCase("Delete"))
         {
             if (separatedInput.length < 2)
             {
@@ -260,12 +260,22 @@ public class Duke {
                         lists.add(newEvent);
                         System.out.println("got it. I've added this task:\n" + newEvent.toString());
                     }
-                    else
+                    else if (separatedString[0].equalsIgnoreCase("todo"))
                     {
-                        //Assuming not "deadline" & "event" means "to-do"
                         Todo newTodo = new Todo(separatedString[1]);
                         lists.add(newTodo);
                         System.out.println("got it. I've added this task:\n" + newTodo.toString());
+                    }
+                    else if (separatedString[0].equalsIgnoreCase("delete"))
+                    {
+                        int indexInList = Integer.parseInt(separatedString[1]) - 1 ;
+                        Task item = lists.get(indexInList);
+                        lists.remove(indexInList);
+                        System.out.println("Noted. I've removed this task:\n" + item.toString());
+                    }
+                    else
+                    {
+                        System.out.println(separatedString[0] + " is unknown!");
                     }
                     System.out.println("Now you have " + lists.size() + " task(s) in the list");
                 }
