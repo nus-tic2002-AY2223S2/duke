@@ -1,6 +1,14 @@
+package duke.task;
+
+import duke.type.TaskType;
+
 public abstract class Task {
     protected String description;
     protected boolean isDone;
+
+    public boolean isDone() {
+        return isDone;
+    }
 
     public Task(String description) {
         this.description = description;

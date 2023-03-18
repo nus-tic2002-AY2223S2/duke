@@ -1,5 +1,8 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+package duke;
+
+import duke.storage.Storage;
+import duke.task.TaskList;
+import duke.ui.Ui;
 
 public class Duke {
 

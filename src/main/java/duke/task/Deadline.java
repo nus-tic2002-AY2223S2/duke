@@ -1,3 +1,8 @@
+package duke.task;
+
+import duke.task.Task;
+import duke.type.TaskType;
+
 public class Deadline extends Task {
     protected String by;
 

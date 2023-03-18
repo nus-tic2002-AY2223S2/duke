@@ -1,7 +1,21 @@
-import java.util.ArrayList;
+package duke.parser;
+
+import duke.task.TaskList;
+import duke.ui.Ui;
+import duke.exception.IllegalDeadlineException;
+import duke.exception.IllegalEventException;
+import duke.exception.IllegalTaskException;
+import duke.exception.IllegalTodoException;
+import duke.storage.DukeFileWriter;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.Todo;
+import duke.type.CommandType;
+import duke.type.TaskType;
 
 /**
- * A <code>Parser</code> class deals with making sense of the user command
+ * A <code>duke.parser.Parser</code> class deals with making sense of the user command
  */
 public class Parser {
     private static TaskType getTaskType(String command) {
@@ -38,7 +52,7 @@ public class Parser {
         return todo;
     }
 
-    public static Deadline getDeadline(String command) throws IndexOutOfBoundsException, IllegalDeadlineException{
+    public static Deadline getDeadline(String command) throws IndexOutOfBoundsException, IllegalDeadlineException {
         String[] deadlines = command.split("/by");
         if (deadlines.length < 2) {
             throw new IllegalDeadlineException();
@@ -64,7 +78,7 @@ public class Parser {
         return deadline;
     }
 
-    public static Event getEvent(String command) throws IndexOutOfBoundsException, IllegalEventException{
+    public static Event getEvent(String command) throws IndexOutOfBoundsException, IllegalEventException {
         String[] events = command.split("/from");
         if (events.length < 2) {
             throw new IllegalEventException();
@@ -135,7 +149,7 @@ public class Parser {
             String addedTask = Ui.getNewTaskString(taskList, task);
             Ui.printCommand(addedTask);
 
-            DukeFileWriter.appendInFile(command + "@" + task.isDone + System.lineSeparator());
+            DukeFileWriter.appendInFile(command + "@" + task.isDone() + System.lineSeparator());
         }
     }
 
@@ -191,7 +205,7 @@ public class Parser {
     private static String getTaskList(TaskList taskList) {
         String printStr = "";
         for (int i = 0; i < taskList.getSize(); i++) {
-            printStr +=  taskList.getItem(i).toCommand() + "@" + taskList.getItem(i).isDone + System.lineSeparator();
+            printStr +=  taskList.getItem(i).toCommand() + "@" + taskList.getItem(i).isDone() + System.lineSeparator();
         }
         return printStr;
     }

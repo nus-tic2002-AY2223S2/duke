@@ -1,8 +1,14 @@
-import java.util.ArrayList;
+package duke.ui;
+
+import duke.task.TaskList;
+import duke.parser.Parser;
+import duke.task.Task;
+import duke.type.CommandType;
+
 import java.util.Scanner;
 
 /**
- * A <code>Ui</code> class deals with interactions with the user
+ * A <code>duke.ui.Ui</code> class deals with interactions with the user
  */
 public class Ui {
 
@@ -17,7 +23,7 @@ public class Ui {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println(logo);
         System.out.println("------------------------------------------------------------");
-        System.out.println("\tHello! I'm Duke");
+        System.out.println("\tHello! I'm duke.Duke");
         System.out.println("\tWhat can I do for you?");
         System.out.println("------------------------------------------------------------");
     }
@@ -38,11 +44,11 @@ public class Ui {
                     break;
                 case MARK:
                 case UNMARK:
-                    //Mark or Unmark Task
+                    //Mark or Unmark duke.task.Task
                     Parser.markTask(tasks, command, commandType);
                     break;
                 case DELETE:
-                    //Delete Task
+                    //Delete duke.task.Task
                     Parser.deleteTask(tasks, command);
                     break;
                 case ADD:

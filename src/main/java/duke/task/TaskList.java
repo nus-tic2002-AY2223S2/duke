@@ -1,8 +1,13 @@
+package duke.task;
+
+import duke.parser.Parser;
+import duke.task.Task;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * A <code>TaskList</code> class contains the task list
+ * A <code>duke.task.TaskList</code> class contains the task list
  * e.g., it has operations to add/delete tasks in the list
  */
 public class TaskList {

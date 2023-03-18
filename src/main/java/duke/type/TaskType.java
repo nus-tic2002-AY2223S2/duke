@@ -1,3 +1,5 @@
+package duke.type;
+
 public enum TaskType {
     TODO("TODO"),
     DEADLINE("DEADLINE"),

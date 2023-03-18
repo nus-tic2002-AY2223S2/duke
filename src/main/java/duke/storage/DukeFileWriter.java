@@ -1,3 +1,7 @@
+package duke.storage;
+
+import duke.storage.DukeFileReader;
+
 import java.io.FileWriter;
 import java.io.IOException;
 
