@@ -67,6 +67,98 @@ public class Duke {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  Helper method                                                                                    //
+    //  identifyFunctionsValidateInput() method will perform 2 actions:                                  //
+    //  1) return Functions and the parameters                                                           //
+    //  functions: "Deadline" "Event" "To-Do" "Mark" "Unmark"                                            //
+    //  Outcome: separatedInput[0] = Functions                                                           //
+    //           separatedInput[1] = Parameters                                                          //
+    //                                                                                                   //
+    //  2) validates the input to catch all kinds of error such as                                       //
+    //  - Empty Parameters                                                                               //
+    //  - Invalid functions                                                                              //
+    //  Deadline functions:                                                                              //
+    //  - Missing /by parameters                                                                         //
+    //  - Missing deadline                                                                               //
+    //  Events functions:                                                                                //
+    //  - Missing /from & /to parameters                                                                 //
+    //  - Missing duration                                                                               //
+    //  Mark / Unmark functions:                                                                         //
+    //  - Missing value for mark & unmark                                                                //
+    //  - Too much values for mark & unmark                                                              //
+    //  - Index over the List size                                                                       //
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static String[] identifyFunctionsValidateInput(String stringInput, ArrayList currList) throws DukeException
+    {
+        String[] separatedInput = stringInput.split(" ", 2);
+        if(separatedInput[0].equalsIgnoreCase("Deadline"))
+        {
+            if (separatedInput.length < 2)
+            {
+                throw new DukeException("☹ OOPS!!! The description of a " + separatedInput[0] + " cannot be empty.");
+            }
+            else if (!separatedInput[1].contains("/by"))
+            {
+                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a /by for deadline");
+            }
+            else if(separatedInput[1].split("/by").length < 2)
+            {
+                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a deadline");
+            }
+            else
+            {
+                return separatedInput;
+            }
+        }
+        else if(separatedInput[0].equalsIgnoreCase("Event"))
+        {
+            if (separatedInput.length < 2)
+            {
+                throw new DukeException("☹ OOPS!!! The description of a " + separatedInput[0] + " cannot be empty.");
+            }
+            else
+            {
+                return separatedInput;
+            }
+        }
+        else if(separatedInput[0].equalsIgnoreCase("Todo"))
+        {
+            if (separatedInput.length < 2)
+            {
+                throw new DukeException("☹ OOPS!!! The description of a " + separatedInput[0] + " cannot be empty.");
+            }
+            else
+            {
+                return separatedInput;
+            }
+        }
+        else if (separatedInput[0].equalsIgnoreCase("Mark") || separatedInput[0].equalsIgnoreCase("Unmark"))
+        {
+            if (separatedInput.length < 2)
+            {
+                throw new DukeException("☹ OOPS!!! The value after " + separatedInput[0] + " cannot be empty.");
+            }
+            else if (separatedInput.length > 2)
+            {
+                throw new DukeException("☹ OOPS!!! There can only by 1 value after " + separatedInput[0] + ".");
+            }
+            else if (!isNumber(separatedInput[1]))
+            {
+                throw new DukeException("☹ OOPS!!! The value after " + separatedInput[0] + " must be a number.");
+            }
+            else
+            {
+                return separatedInput;
+            }
+        }
+        else
+        {
+            //any other starting words besides the functions list, throws error
+            throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+        }
+    }
+
     public static void main(String[] args) {
 
         //variable initialization
@@ -134,45 +226,53 @@ public class Duke {
             else
             {
                 //time to start adding DATELINES / TODOS / EVENTS
-                String[] separatedString = input.split(" ", 2); //by doing so, everything after the first space will be stored in the last index of the array
-                if(separatedString[0].equalsIgnoreCase("deadline"))
-                {
-                    //Using indexOf method to extract description & dateline
-                    //nextSeparated array will store value in such index
-                    //nextSeparated[0] = description;
-                    //nextSeparated[1] = deadline;
-                    String [] nextSeparated = separatedString[1].split("/by");
+                try{
+                    //this method [identifyFunctionsValidateInput] will validate most commonly seen error and handle it within the method
+                    String[] separatedString = identifyFunctionsValidateInput(input, lists);
+                    //by doing so, everything after the first space will be stored in the last index of the array
+                    if(separatedString[0].equalsIgnoreCase("deadline"))
+                    {
+                        //Using indexOf method to extract description & dateline
+                        //nextSeparated array will store value in such index
+                        //nextSeparated[0] = description;
+                        //nextSeparated[1] = deadline;
+                        String [] nextSeparated = separatedString[1].split("/by");
 
-                    Deadline newDeadline = new Deadline(nextSeparated[0].trim(), nextSeparated[1].trim());
-                    lists.add(newDeadline);
-                    System.out.println("got it. I've added this task:\n" + newDeadline.toString());
-                }
-                else if(separatedString[0].equalsIgnoreCase("event"))
-                {
-                    //Using indexOf method to extract description & start/end timing
-                    //nextSeparated array will store value in such index
-                    //nextSeparated[0] = description;
-                    //nextSeparated[1] = start/end timing;
-                    String [] nextSeparated = separatedString[1].split("/from");
+                        Deadline newDeadline = new Deadline(nextSeparated[0].trim(), nextSeparated[1].trim());
+                        lists.add(newDeadline);
+                        System.out.println("got it. I've added this task:\n" + newDeadline.toString());
+                    }
+                    else if(separatedString[0].equalsIgnoreCase("event"))
+                    {
+                        //Using indexOf method to extract description & start/end timing
+                        //nextSeparated array will store value in such index
+                        //nextSeparated[0] = description;
+                        //nextSeparated[1] = start/end timing;
+                        String [] nextSeparated = separatedString[1].split("/from");
 
-                    //Using indexOf method again to extract start & end timing
-                    //nextSeparated array will store value in such index
-                    //separatedTiming[0] = start timing;
-                    //separatedTiming[1] = end timing;
-                    String [] separatedTiming = nextSeparated[1].split("/to");
+                        //Using indexOf method again to extract start & end timing
+                        //nextSeparated array will store value in such index
+                        //separatedTiming[0] = start timing;
+                        //separatedTiming[1] = end timing;
+                        String [] separatedTiming = nextSeparated[1].split("/to");
 
-                    Event newEvent = new Event(nextSeparated[0].trim(), separatedTiming[0].trim(), separatedTiming[1].trim());
-                    lists.add(newEvent);
-                    System.out.println("got it. I've added this task:\n" + newEvent.toString());
+                        Event newEvent = new Event(nextSeparated[0].trim(), separatedTiming[0].trim(), separatedTiming[1].trim());
+                        lists.add(newEvent);
+                        System.out.println("got it. I've added this task:\n" + newEvent.toString());
+                    }
+                    else
+                    {
+                        //Assuming not "deadline" & "event" means "to-do"
+                        Todo newTodo = new Todo(separatedString[1]);
+                        lists.add(newTodo);
+                        System.out.println("got it. I've added this task:\n" + newTodo.toString());
+                    }
+                    System.out.println("Now you have " + lists.size() + " task(s) in the list");
                 }
-                else
+                catch (DukeException de)
                 {
-                    //Assuming not "deadline" & "event" means "to-do"
-                    Todo newTodo = new Todo(input);
-                    lists.add(newTodo);
-                    System.out.println("got it. I've added this task:\n" + newTodo.toString());
+                    System.out.println("Caught: " + de);
                 }
-                System.out.println("Now you have " + lists.size() + " task(s) in the list");
             }
             System.out.println("____________________________________________________________\n");
             input = scanObj.nextLine();
