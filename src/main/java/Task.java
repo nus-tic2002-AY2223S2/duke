@@ -19,7 +19,6 @@ public class Task {
     ///////////////////////////////////////////////////////////////////
     //  getDescription() method will return the description of Task  //
     ///////////////////////////////////////////////////////////////////
-    //
     public String getDescription() {
         return this.description; // returns the value stored in the description attribute
     }
@@ -27,7 +26,6 @@ public class Task {
     ///////////////////////////////////////////////////////////////////
     //  setDescription() method will change the description of Task  //
     ///////////////////////////////////////////////////////////////////
-    //
     public void setDescription(String newDescription) {
         this.description = newDescription; // changes the description with the new input
     }
@@ -35,7 +33,6 @@ public class Task {
     /////////////////////////////////////////////////////////////////
     //  getTaskStatus() method will return the status of the Task  //
     /////////////////////////////////////////////////////////////////
-    //
     public String getTaskStatus() {
         return (isDone ? "X" : " "); // mark done task with X
     }

@@ -134,22 +134,45 @@ public class Duke {
             else
             {
                 //time to start adding DATELINES / TODOS / EVENTS
-                String[] separatedString = input.split(" ");
+                String[] separatedString = input.split(" ", 2); //by doing so, everything after the first space will be stored in the last index of the array
                 if(separatedString[0].equalsIgnoreCase("deadline"))
                 {
+                    //Using indexOf method to extract description & dateline
+                    //nextSeparated array will store value in such index
+                    //nextSeparated[0] = description;
+                    //nextSeparated[1] = deadline;
+                    String [] nextSeparated = separatedString[1].split("/by");
 
+                    Deadline newDeadline = new Deadline(nextSeparated[0].trim(), nextSeparated[1].trim());
+                    lists.add(newDeadline);
+                    System.out.println("got it. I've added this task:\n" + newDeadline.toString());
                 }
                 else if(separatedString[0].equalsIgnoreCase("event"))
                 {
+                    //Using indexOf method to extract description & start/end timing
+                    //nextSeparated array will store value in such index
+                    //nextSeparated[0] = description;
+                    //nextSeparated[1] = start/end timing;
+                    String [] nextSeparated = separatedString[1].split("/from");
 
+                    //Using indexOf method again to extract start & end timing
+                    //nextSeparated array will store value in such index
+                    //separatedTiming[0] = start timing;
+                    //separatedTiming[1] = end timing;
+                    String [] separatedTiming = nextSeparated[1].split("/to");
+
+                    Event newEvent = new Event(nextSeparated[0].trim(), separatedTiming[0].trim(), separatedTiming[1].trim());
+                    lists.add(newEvent);
+                    System.out.println("got it. I've added this task:\n" + newEvent.toString());
                 }
                 else
                 {
-                    //assuming not "deadline" & "event" means "to-do"
+                    //Assuming not "deadline" & "event" means "to-do"
                     Todo newTodo = new Todo(input);
                     lists.add(newTodo);
-                    System.out.println("added: " + input);
+                    System.out.println("got it. I've added this task:\n" + newTodo.toString());
                 }
+                System.out.println("Now you have " + lists.size() + " task(s) in the list");
             }
             System.out.println("____________________________________________________________\n");
             input = scanObj.nextLine();
