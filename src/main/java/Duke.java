@@ -147,6 +147,10 @@ public class Duke {
             {
                 throw new DukeException("☹ OOPS!!! The value after " + separatedInput[0] + " must be a number.");
             }
+            else if (Integer.parseInt(separatedInput[1]) > currList.size())
+            {
+                throw new DukeException("☹ OOPS!!! The index after command " + separatedInput[0] + " is over the list.");
+            }
             else
             {
                 return separatedInput;
@@ -197,31 +201,44 @@ public class Duke {
                 //This condition checks if the Mark Action needs to be executed
 
                 //retrieve the index to be marked
-                String[] separatedReturn = input.split(" ");
-                int indexInList = Integer.parseInt(separatedReturn[1]) - 1 ;
+                try{
+                    String[] separatedReturn = identifyFunctionsValidateInput(input, lists);
+                    int indexInList = Integer.parseInt(separatedReturn[1]) - 1 ;
 
-                //set Status of Task to Done
-                lists.get(indexInList).markAsDone();
+                    //set Status of Task to Done
+                    lists.get(indexInList).markAsDone();
 
-                //Print output as expected
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.println(lists.get(indexInList).toString());
+                    //Print output as expected
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.println(lists.get(indexInList).toString());
+
+                }
+                catch (DukeException de)
+                {
+                    System.out.println("Caught: " + de);
+                }
 
             }
-            else if (checkInputForUnmarkAction(input))
-            {
+            else if (checkInputForUnmarkAction(input)) {
                 //This condition checks if the Unmark Action needs to be executed
 
                 //retrieve the index to be unmarked
-                String[] separatedReturn = input.split(" ");
-                int indexInList = Integer.parseInt(separatedReturn[1]) - 1 ;
+                try
+                {
+                    String[] separatedReturn = identifyFunctionsValidateInput(input, lists);
+                    int indexInList = Integer.parseInt(separatedReturn[1]) - 1;
 
-                //set Status of Task to Undone
-                lists.get(indexInList).markAsUndone();
+                    //set Status of Task to Undone
+                    lists.get(indexInList).markAsUndone();
 
-                //Print output as expected
-                System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println(lists.get(indexInList).toString());
+                    //Print output as expected
+                    System.out.println("OK, I've marked this task as not done yet:");
+                    System.out.println(lists.get(indexInList).toString());
+                }
+                catch (DukeException de)
+                {
+                    System.out.println("Caught: " + de);
+                }
             }
             else
             {
