@@ -1,4 +1,6 @@
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -8,9 +10,11 @@ public class Duke {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
+    private String filePath;
 
 
     public Duke(String filePath) {
+        this.filePath = filePath;
         ui = new Ui();
         storage = new Storage(filePath);
         try {
@@ -35,9 +39,12 @@ public class Duke {
                 ui.showLine();
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, ui, storage);
+                storage.save(tasks, filePath);
                 isExit = c.isExit();
             } catch (DukeException e) {
                 ui.showError(e.getMessage());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             } finally {
                 ui.showLine();
             }

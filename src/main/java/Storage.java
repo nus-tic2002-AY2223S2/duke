@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -28,5 +30,13 @@ public class Storage {
             a.add(t);
         }
         return a;
+    }
+
+    public static void save(TaskList tl, String filePath) throws DukeException, IOException {
+        FileWriter fw = new FileWriter(filePath);
+        for (int i = 0; i < tl.getSize(); i++) {
+            fw.write(tl.tasksArray.get(i).toString()+ System.lineSeparator());
+        }
+        fw.close();
     }
 }
