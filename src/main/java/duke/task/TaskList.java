@@ -2,7 +2,7 @@ package duke.task;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import static duke.command.Command.getTask;
+import static duke.parser.Parser.getTask;
 
 /**
  * A <code>duke.task.TaskList</code> class contains the task list

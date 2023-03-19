@@ -1,6 +1,12 @@
 package duke.parser;
 
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import duke.command.Command;
+import duke.exception.IllegalTaskException;
 import duke.task.TaskList;
 import duke.type.TaskType;
 import duke.exception.IllegalDeadlineException;
@@ -11,6 +17,7 @@ import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 import duke.type.CommandType;
+import duke.ui.Ui;
 
 /**
  * A <code>duke.parser.Parser</code> class deals with making sense of the user command
@@ -58,7 +65,7 @@ public class Parser {
         String description = deadlines[0].replaceFirst(commandStr[0], "").trim();
 
         String[] byStr = deadlines[1].split("@");
-        String by = byStr[0].trim();
+        String by = formatDateTime(byStr[0].trim());
         Deadline deadline = new Deadline(description, by);
 
         if (byStr.length > 1) {
@@ -87,10 +94,10 @@ public class Parser {
         if (dates.length < 2) {
             throw new IllegalEventException();
         }
-        String fromDate = dates[0].trim();
+        String fromDate = formatDateTime(dates[0].trim());
 
         String[] toStr = dates[1].split("@");
-        String toDate = toStr[0].trim();
+        String toDate = formatDateTime(toStr[0].trim());
 
         Event event = new Event(description, fromDate, toDate);
 
@@ -168,6 +175,50 @@ public class Parser {
         }else {
             return CommandType.ADD;
         }
+    }
+
+
+    public static Task getTask(String command) {
+        Task task = null;
+        try {
+            TaskType taskType = getTaskType(command);
+            switch (taskType) {
+                case TODO:
+                    task = parseTodo(command);
+                    break;
+                case DEADLINE:
+                    task = parseDeadline(command);
+                    break;
+                case EVENT:
+                    task = parseEvent(command);
+                    break;
+                default:
+                    throw new IllegalTaskException();
+            }
+        }catch (IllegalTodoException e){
+            Ui.printCommand("☹ OOPS!!! The description of a todo cannot be empty.");
+        }catch (IllegalDeadlineException e){
+            Ui.printCommand("☹ OOPS!!! The description or date of a deadline cannot be empty.");
+        }catch (IllegalEventException e){
+            Ui.printCommand("☹ OOPS!!! The description or start date or end date of an event cannot be empty.");
+        }catch (IllegalTaskException e){
+            Ui.printCommand("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+        }catch (IndexOutOfBoundsException e){
+            System.out.println("IndexOutOfBoundsException for task: " + command);
+        }
+        return task;
+    }
+
+
+    public static String formatDateTime(String datetime) {
+        String formattedDate = datetime;
+        try {
+            LocalDate date = LocalDate.parse(datetime);
+            formattedDate = date.format(DateTimeFormatter.ofPattern("MMM d yyyy haa"));
+        } catch (DateTimeParseException e) {
+            Ui.printCommand("☹ OOPS!!! Invalid DateTime format (DateTimeParseException) --> " + datetime);
+        }
+        return formattedDate;
     }
 
 }

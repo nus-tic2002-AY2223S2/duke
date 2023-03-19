@@ -106,37 +106,6 @@ public class Command {
         }
     }
 
-    public static Task getTask(String command) {
-        Task task = null;
-        try {
-            TaskType taskType = Parser.getTaskType(command);
-            switch (taskType) {
-                case TODO:
-                    task = parseTodo(command);
-                    break;
-                case DEADLINE:
-                    task = parseDeadline(command);
-                    break;
-                case EVENT:
-                    task = parseEvent(command);
-                    break;
-                default:
-                    throw new IllegalTaskException();
-            }
-        }catch (IllegalTodoException e){
-            Ui.printCommand("☹ OOPS!!! The description of a todo cannot be empty.");
-        }catch (IllegalDeadlineException e){
-            Ui.printCommand("☹ OOPS!!! The description or date of a deadline cannot be empty.");
-        }catch (IllegalEventException e){
-            Ui.printCommand("☹ OOPS!!! The description or start date or end date of an event cannot be empty.");
-        }catch (IllegalTaskException e){
-            Ui.printCommand("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-        }catch (IndexOutOfBoundsException e){
-            System.out.println("IndexOutOfBoundsException for task: " + command);
-        }
-        return task;
-    }
-
     public boolean isExit() {
         return isExit;
     }
