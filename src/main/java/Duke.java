@@ -117,8 +117,17 @@ public class Duke {
             {
                 throw new DukeException("☹ OOPS!!! The description of a " + separatedInput[0] + " cannot be empty.");
             }
+            else if (!separatedInput[1].contains("/from"))
+            {
+                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a /from for deadline");
+            }
+            else if (!separatedInput[1].contains("/to"))
+            {
+                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a /to for deadline");
+            }
             else
             {
+                //separate "/from" & "/to" to check for variable before returning separatedInput
                 return separatedInput;
             }
         }
