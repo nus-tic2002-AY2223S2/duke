@@ -1,10 +1,7 @@
 package duke.ui;
 
 import duke.task.TaskList;
-import duke.parser.Parser;
 import duke.task.Task;
-import duke.type.CommandType;
-
 import java.util.Scanner;
 
 /**
@@ -28,37 +25,10 @@ public class Ui {
         System.out.println("------------------------------------------------------------");
     }
 
-    public void getUserInput(TaskList tasks){
+    public String readCommand(){
         Scanner in = new Scanner(System.in);
-        while(true) {
-            String command = in.nextLine().trim();
-            CommandType commandType = Parser.getCommandType(command);
-            switch (commandType) {
-                case EXIT:
-                    //Exit program
-                    Ui.exitCommand();
-                    break;
-                case LIST:
-                    //Print list
-                    Ui.printList(tasks);
-                    break;
-                case MARK:
-                case UNMARK:
-                    //Mark or Unmark duke.task.Task
-                    Parser.markTask(tasks, command, commandType);
-                    break;
-                case DELETE:
-                    //Delete duke.task.Task
-                    Parser.deleteTask(tasks, command);
-                    break;
-                case ADD:
-                    //Create and add task to list
-                    Parser.addTask(tasks, command);
-                    break;
-                default:
-                    break;
-            }
-        }
+        String command = in.nextLine().trim();
+        return command;
     }
 
     public static void exitCommand() {

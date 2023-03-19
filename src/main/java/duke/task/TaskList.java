@@ -1,23 +1,19 @@
 package duke.task;
 
-import duke.parser.Parser;
-import duke.task.Task;
-
 import java.util.ArrayList;
 import java.util.Scanner;
+import static duke.command.Command.getTask;
 
 /**
  * A <code>duke.task.TaskList</code> class contains the task list
  * e.g., it has operations to add/delete tasks in the list
  */
 public class TaskList {
-
-    public TaskList() {
-    }
+    private ArrayList<Task> tasklist = new ArrayList<>();
 
     public TaskList(Scanner s) {
         while (s.hasNext()) {
-            Task task = Parser.getTask(s.nextLine());
+            Task task = getTask(s.nextLine());
             this.tasklist.add(task);
         }
     }
@@ -41,9 +37,6 @@ public class TaskList {
     public void addItem(Task task){
         tasklist.add(task);
     }
-
-    private ArrayList<Task> tasklist = new ArrayList<>();
-
 
 
 }
