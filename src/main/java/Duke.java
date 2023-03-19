@@ -257,7 +257,7 @@ public class Duke {
 
                         Deadline newDeadline = new Deadline(nextSeparated[0].trim(), nextSeparated[1].trim());
                         lists.add(newDeadline);
-                        System.out.println("got it. I've added this task:\n" + newDeadline.toString());
+                        System.out.println("Got it. I've added this task:\n" + newDeadline.toString());
                     }
                     else if(separatedString[0].equalsIgnoreCase("event"))
                     {
@@ -275,13 +275,13 @@ public class Duke {
 
                         Event newEvent = new Event(nextSeparated[0].trim(), separatedTiming[0].trim(), separatedTiming[1].trim());
                         lists.add(newEvent);
-                        System.out.println("got it. I've added this task:\n" + newEvent.toString());
+                        System.out.println("Got it. I've added this task:\n" + newEvent.toString());
                     }
                     else if (separatedString[0].equalsIgnoreCase("todo"))
                     {
                         Todo newTodo = new Todo(separatedString[1]);
                         lists.add(newTodo);
-                        System.out.println("got it. I've added this task:\n" + newTodo.toString());
+                        System.out.println("Got it. I've added this task:\n" + newTodo.toString());
                     }
                     else if (separatedString[0].equalsIgnoreCase("delete"))
                     {

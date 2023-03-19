@@ -58,6 +58,5 @@ public class Task {
     @Override
     public String toString() {
         return "[" + this.getTaskStatus() + "] " + this.description;
-        // converts isDone attribute to 'FALSE'
     }
 }
