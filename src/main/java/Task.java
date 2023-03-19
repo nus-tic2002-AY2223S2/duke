@@ -1,12 +1,8 @@
 public class Task {
     protected String description;
-    /*
-    String[] wordsInSentences = sentences.split(" ");
-    String[] wordsInDescription = sentences.split(" ");
-    String[] partsInDescription = sentences.split("/by|/from|/to");
-    String task = new String();
-    */
 
+    protected String taskString;
+    protected String task;
     protected String[] wordsInSentences;
     protected String[] wordsInDescription;
     protected String[]  partsInDescription;
@@ -22,10 +18,12 @@ public class Task {
 
     }
 
+    /*
     // Enumerate the task features
     public enum task {
         LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE
     }
+    */
 
     //get method
     public String getStatusIcon(){

@@ -4,53 +4,57 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
 
-
-
 public class Duke {
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+
 
     public Duke(String filePath) {
-        Ui ui = new Ui();
-        Storage storage = new Storage(filePath);
+        ui = new Ui();
+        storage = new Storage(filePath);
         try {
-            TaskList tasks = new TaskList(storage.load());
+            tasks = new TaskList(storage.load());
+        } catch (DukeException e) {
+            ui.showLoadingError();
+            tasks = new TaskList();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-        do {
-            String command = ui.getUserCommand();
-
-            if(Parser.isToDoCommand(command))
-            {
-                Object t = Parser.createTodo(command);
-                tasks.addTask(t);
-            }
-
-            ui.showToUser(tasks.getTaskListDescription());
-        }
-
     }
 
     public void run() {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-
-        System.out.println("Hello from\n" + logo);
-        System.out.println("Hello. This is Reminder created by WP.\nWhat can i do for you?");
-
-
+        ui.showWelcome();
+        // *********************
+        // level 1 bye feature
+        // *********************
+        boolean isExit = false;
+        while (!isExit) {
+            try {
+                String fullCommand = ui.readCommand();
+                ui.showLine();
+                Command c = Parser.parse(fullCommand);
+                c.execute(tasks, ui, storage);
+                isExit = c.isExit();
+            } catch (DukeException e) {
+                ui.showError(e.getMessage());
+            } finally {
+                ui.showLine();
+            }
+        }
     }
 
 
-    public static void drawLine() {
-        System.out.println("\n_________________________________________\n");
+    public static void main(String[] args) {
+
+        new Duke("data/tasks.txt").run();
+
     }
 
+}
 
 
+/*
     public static void checkDescriptionExist(int wordsDescription, int minWords) throws DukeException {
         if (wordsDescription < minWords) {
             throw new DukeException("no description");            // To handle exception: to-do
@@ -67,11 +71,12 @@ public class Duke {
             throw new IncompleteDescriptionException("incomplete description");            // To handle exception: description more than 1 /by /from /to
         }
     }
+*/
 
+    /*
     public static void main(String[] args) {
 
-        new Duke("data/tasks.txt").run();
-
+*/
 
         //String sentences;
         // instantiate new empty ArrayList
@@ -80,7 +85,7 @@ public class Duke {
         //Scanner in = new Scanner(System.in);
 
 
-
+/*
         // *********************
         // level 1 bye feature
         // *********************
@@ -100,6 +105,7 @@ public class Duke {
             String[] wordsInDescription = sentences.split(" ");
             String[] partsInDescription = sentences.split("/by|/from|/to");
             String task = new String();
+ */
 /*
             Feature duty = null;
             try {
@@ -109,6 +115,7 @@ public class Duke {
                 continue;
             }
  */
+    /*
             //initialized an object for Enum task
             Task.task objectEnumTask = null;
             try {
