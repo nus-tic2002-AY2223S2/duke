@@ -1,3 +1,6 @@
+import java.io.IOException;
+
+
 public class Command {
 
     protected Parser.taskEnum task;
@@ -8,7 +11,7 @@ public class Command {
     protected String start;
     protected String end;
 
-    public void execute(TaskList tasksArray, Ui ui, Storage storage) {
+    public void execute(TaskList tasksArray, Ui ui, Storage storage) throws DukeException, IOException {
         switch (task) {
             // *********************
             // level 1 bye feature
@@ -23,6 +26,7 @@ public class Command {
                 for (int i = 1; i < tasksArray.getSize() + 1; i++) {
                     System.out.println(tasksArray.tasksArray.get(i - 1).toString());
                 }
+
                 break;
 
             // ***************************
@@ -33,7 +37,7 @@ public class Command {
                 // level 5 ErrorHandle
                 // *************************
                 try {
-                    tasksArray.get(taskNumber -1).markAsDone();
+                    tasksArray.get(taskNumber - 1).markAsDone();
                 } catch (NumberFormatException nfe) {                 // corner case: mark nonINTEGER
                     System.out.println("mark is a function key. Please indicate task number to be marked!");
                 } catch (ArrayIndexOutOfBoundsException obe) {    // corner case: mark
@@ -41,6 +45,7 @@ public class Command {
                 } catch (IndexOutOfBoundsException obe) {          // corner case: mark 0,  taskNumber > taskArray.size
                     System.out.println("Please give a valid task number that you want to mark!");
                 }
+
                 break;
 
             case UNMARK:
@@ -53,6 +58,7 @@ public class Command {
                 } catch (IndexOutOfBoundsException obe) {        // to handle exception:  taskNumber > taskArray.size
                     System.out.println("Please give a valid task number that you want to unmark!");
                 }
+
                 break;
 
             // **********************
@@ -63,6 +69,7 @@ public class Command {
                 System.out.println("Got it. I've added this task:\n    "
                         + taskDescription +
                         "\nNow you have " + tasksArray.getSize() + " tasks in the list.");
+
                 break;
 
             // *************************
@@ -71,18 +78,20 @@ public class Command {
             case DEADLINE:
                 tasksArray.add(new Deadline(taskDescription, taskDeadline));
                 System.out.println("Got it. I've added this task:\n    "
-                        + taskDescription + "/by" + taskDeadline +
+                        + taskDescription + "/by " + taskDeadline +
                         "\nNow you have " + tasksArray.getSize() + " tasks in the list.");
+
                 break;
 
             // *************************
             // level 4 Event feature
             // *************************
             case EVENT:
-                tasksArray.add(new Event(taskDescription, start , end));
+                tasksArray.add(new Event(taskDescription, start, end));
                 System.out.println("Got it. I've added this duty:\n    "
                         + taskDescription + "/from" + start + "/to" + end +
-                            "\nNow you have " + tasksArray.getSize() + " tasks in the list.");
+                        "\nNow you have " + tasksArray.getSize() + " tasks in the list.");
+
                 break;
 
             // *************************
@@ -102,10 +111,14 @@ public class Command {
                         IndexOutOfBoundsException obe) {          // corner case: mark 0,  taskNumber > taskArray.size
                     System.out.println("Please give a valid task number that you want to delete!");
                 }
+
                 break;
             default:
+
         }
     }
+
+
 
     public boolean isExit() {
         return this.isExit;

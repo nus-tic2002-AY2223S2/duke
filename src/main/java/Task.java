@@ -8,6 +8,8 @@ public class Task {
     protected String[]  partsInDescription;
     protected boolean isDone;
 
+
+
     //constructor
     public Task(String description){
         this.description = description;

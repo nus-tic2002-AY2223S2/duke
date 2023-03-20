@@ -7,10 +7,11 @@ import java.util.ArrayList;
 import java.io.File;
 
 public class Duke {
+    public static String filePath;
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
-    private String filePath;
+
 
 
     public Duke(String filePath) {
@@ -50,6 +51,7 @@ public class Duke {
             }
         }
     }
+
 
 
     public static void main(String[] args) {

@@ -3,7 +3,7 @@ import java.util.Collection;
 
 public class TaskList {
 
-    protected ArrayList<Task> tasksArray;
+    protected static ArrayList<Task> tasksArray;
     protected int size;
 
 /*

@@ -1,5 +1,6 @@
 import java.util.Arrays;
 
+
 public class Parser {
  /*   public static boolean isToDoCommand(String command) {
         String[] wordsInSentences = command.split(" ");
@@ -113,7 +114,10 @@ public class Parser {
                     System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
                 }
                 c.taskDescription = taskJob;
-                c.taskDeadline = partsInDescription[1];
+                c.taskDeadline = partsInDescription[1].substring(1);
+                System.out.println(c.taskDeadline);
+
+
                 break;
 
 

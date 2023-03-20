@@ -35,7 +35,7 @@ public class Storage {
     public static void save(TaskList tl, String filePath) throws DukeException, IOException {
         FileWriter fw = new FileWriter(filePath);
         for (int i = 0; i < tl.getSize(); i++) {
-            fw.write(tl.tasksArray.get(i).toString()+ System.lineSeparator());
+            fw.write(tl.tasksArray.get(i).toString() + System.lineSeparator());
         }
         fw.close();
     }
