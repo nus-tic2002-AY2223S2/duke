@@ -17,7 +17,6 @@ public class DukeException extends Throwable {
         }
     }
 
-
     public static void checkTaskExist(int index, int min) throws NoTaskException {
         if (index == min) {
             throw new NoTaskException("no task");            // To handle exception: to-do

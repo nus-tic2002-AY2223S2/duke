@@ -22,20 +22,43 @@ public class Storage {
     }
 
     public ArrayList load() throws DukeException, FileNotFoundException {
-
         Scanner s = new Scanner(filename);
         ArrayList a = new ArrayList<>();
         while (s.hasNext()) {
             Task t = new Task(s.nextLine());
             a.add(t);
         }
+
+            /*
+            String taskString = task.substring(7);
+            String taskType = String.valueOf(task.charAt(1));
+
+
+                switch(taskType) {
+                    case "T":
+                        Stringt("todo " + taskString);
+                        Command c = Parser.parse();
+                        c.execute(tasks, ui, storage);
+                        a.add(t);
+                        break;
+                    case "D":
+                        t = new Task("deadline " + taskString);
+                        a.add(t);
+                        break;
+                    case "E":
+                        t = new Task("event " + taskString);
+                        a.add(t);
+                        break;
+                    default:
+                }
+                */
         return a;
     }
 
     public static void save(TaskList tl, String filePath) throws DukeException, IOException {
         FileWriter fw = new FileWriter(filePath);
-        for (int i = 0; i < tl.getSize(); i++) {
-            fw.write(tl.tasksArray.get(i).toString() + System.lineSeparator());
+        for (int i = 1; i < tl.getSize() + 1; i++) {
+            fw.write(tl.tasksArray.get(i-1).toString() + System.lineSeparator());
         }
         fw.close();
     }

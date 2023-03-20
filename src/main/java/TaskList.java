@@ -6,14 +6,6 @@ public class TaskList {
     protected static ArrayList<Task> tasksArray;
     protected int size;
 
-/*
-    public TaskList(ArrayList A){
-        for (Object i: A) {
-            this.tasksArray.add((Task) i);
-        }
-    }
-
- */
     public TaskList(ArrayList t){
         this.tasksArray = new ArrayList<>((Collection) t);
         this.size = tasksArray.size();

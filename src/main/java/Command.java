@@ -11,7 +11,9 @@ public class Command {
     protected String start;
     protected String end;
 
-    public void execute(TaskList tasksArray, Ui ui, Storage storage) throws DukeException, IOException {
+    public void execute(TaskList tl, Ui ui, Storage storage) throws DukeException, IOException {
+
+        if (task != null) {
         switch (task) {
             // *********************
             // level 1 bye feature
@@ -23,8 +25,8 @@ public class Command {
             // level 2 list feature
             // **********************
             case LIST:
-                for (int i = 1; i < tasksArray.getSize() + 1; i++) {
-                    System.out.println(tasksArray.tasksArray.get(i - 1).toString());
+                for (int i = 1; i < tl.getSize() + 1; i++) {
+                    System.out.println(tl.tasksArray.get(i - 1).toString());
                 }
 
                 break;
@@ -37,7 +39,7 @@ public class Command {
                 // level 5 ErrorHandle
                 // *************************
                 try {
-                    tasksArray.get(taskNumber - 1).markAsDone();
+                    tl.get(taskNumber - 1).markAsDone();
                 } catch (NumberFormatException nfe) {                 // corner case: mark nonINTEGER
                     System.out.println("mark is a function key. Please indicate task number to be marked!");
                 } catch (ArrayIndexOutOfBoundsException obe) {    // corner case: mark
@@ -50,7 +52,7 @@ public class Command {
 
             case UNMARK:
                 try {
-                    tasksArray.get(taskNumber - 1).markAsNotDone();
+                    tl.get(taskNumber - 1).markAsNotDone();
                 } catch (NumberFormatException nfe) {              // to handle exception: mark nonINTEGER
                     System.out.println("unmark is a function key. Please indicate task number to be marked!");
                 } catch (ArrayIndexOutOfBoundsException obe) {  // to handle exception: mark
@@ -65,33 +67,36 @@ public class Command {
             // level 4 To-do feature
             // **********************
             case TODO:
-                tasksArray.add(new ToDo(taskDescription));
-                System.out.println("Got it. I've added this task:\n    "
-                        + taskDescription +
-                        "\nNow you have " + tasksArray.getSize() + " tasks in the list.");
-
+                if (taskDescription != null) {
+                    tl.add(new ToDo(taskDescription));
+                    System.out.println("Got it. I've added this task:\n    "
+                            + taskDescription +
+                            "\nNow you have " + tl.getSize() + " tasks in the list.");
+                }
                 break;
 
             // *************************
             // level 4 Deadline feature
             // *************************
             case DEADLINE:
-                tasksArray.add(new Deadline(taskDescription, taskDeadline));
-                System.out.println("Got it. I've added this task:\n    "
-                        + taskDescription + "/by " + taskDeadline +
-                        "\nNow you have " + tasksArray.getSize() + " tasks in the list.");
-
+                if (taskDescription != null && taskDeadline != null) {
+                    tl.add(new Deadline(taskDescription, taskDeadline));
+                    System.out.println("Got it. I've added this task:\n    "
+                            + taskDescription + "/by " + taskDeadline +
+                            "\nNow you have " + tl.getSize() + " tasks in the list.");
+                }
                 break;
 
             // *************************
             // level 4 Event feature
             // *************************
             case EVENT:
-                tasksArray.add(new Event(taskDescription, start, end));
-                System.out.println("Got it. I've added this duty:\n    "
-                        + taskDescription + "/from" + start + "/to" + end +
-                        "\nNow you have " + tasksArray.getSize() + " tasks in the list.");
-
+                if (taskDescription != null && start != null && end != null) {
+                    tl.add(new Event(taskDescription, start, end));
+                    System.out.println("Got it. I've added this duty:\n    "
+                            + taskDescription + "/from " + start + " /to " + end +
+                            "\nNow you have " + tl.getSize() + " tasks in the list.");
+                }
                 break;
 
             // *************************
@@ -100,9 +105,9 @@ public class Command {
             case DELETE:
                 try {
                     System.out.println("Noted. I've removed this task:\n    "
-                            + tasksArray.get(taskNumber - 1).toString() +
-                            "\nNow you have " + (tasksArray.getSize() - 1) + " tasks in the list.");
-                    tasksArray.remove(taskNumber - 1);
+                            + tl.get(taskNumber - 1).toString() +
+                            "\nNow you have " + (tl.getSize() - 1) + " tasks in the list.");
+                    tl.remove(taskNumber - 1);
                 } catch (NumberFormatException nfe) {                 // corner case: mark nonINTEGER
                     System.out.println("delete is a function key. Please indicate task number to be deleted!");
                 } catch (ArrayIndexOutOfBoundsException obe) {    // corner case: mark
@@ -117,8 +122,7 @@ public class Command {
 
         }
     }
-
-
+    }
 
     public boolean isExit() {
         return this.isExit;
