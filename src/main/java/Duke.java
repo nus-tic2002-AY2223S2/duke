@@ -10,6 +10,21 @@ public class Duke {
     }
 ////////////////////////////////////////////////////////////////////////////////////
 
+    public static void validateQuestion(String input, Task[] list) throws DukeException {
+
+        String[] splitted = input.split(" ", 2);
+        if (!splitted[0].equals("bye") && !splitted[0].equals("todo") && !splitted[0].equals("deadline") && !splitted[0].equals("event") && !splitted[0].equals("list") && !splitted[0].equals("mark") && !splitted[0].equals("unmark") && !splitted[0].equals("delete")) {
+            throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+        }
+        if (splitted.length < 2 && !splitted[0].equalsIgnoreCase("list")) {
+            throw new DukeException("☹ OOPS!!! The description of a " + splitted[0] + " cannot be empty.");
+        }
+        if (splitted[0].equalsIgnoreCase("mark") || splitted[0].equalsIgnoreCase("unmark")) {
+            if (list[Integer.parseInt(splitted[1]) - 1] == null) {
+                throw new DukeException("☹ OOPS!!! Index is over the size of items in the list");
+            }
+        }
+    }
 
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -36,6 +51,26 @@ public class Duke {
                 continue;
             }
 
+            if (question.equals("list")) { //loop to print out the items in list[]
+                System.out.println("________________________________________________");
+                System.out.println("Here are the tasks in your list:");
+                for (int i = 0; i < taskIndex; i++) {
+                    System.out.println(i + 1 + ". " + list[i].toString());
+                }
+                System.out.println("________________________________________________");
+                continue;
+            }
+
+            try
+            {
+                validateQuestion(question, list);
+            }
+            catch(DukeException error)
+            {
+                System.out.println(error);
+                continue;
+            }
+
             if (question.contains("mark")) {
                 if (checkMark(question)) {
                     String[] splitted = question.split(" ");
@@ -50,17 +85,20 @@ public class Duke {
                 }
             }
 
-            if (question.equals("list")) { //loop to print out the items in list[]
-                System.out.println("________________________________________________");
-                System.out.println("Here are the tasks in your list:");
-                for (int i = 0; i < taskIndex; i++) {
-                    System.out.println(i + 1 + ". " + list[i].toString());
-                }
-                System.out.println("________________________________________________");
-            }
+
 
             else { //store the string
                 //split
+//                try
+//                {
+//                    validateQuestion(question, list);
+//                }
+//                catch(DukeException error)
+//                {
+//                    System.out.println(error);
+//                    continue;
+//                }
+
                 String[] splitted = question.split(" ", 2);
 
                 //catch for "to-do"
