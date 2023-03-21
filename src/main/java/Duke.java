@@ -100,7 +100,7 @@ public class Duke {
             }
             else if (!separatedInput[1].contains("/by"))
             {
-                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a /by for deadline");
+                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a \"/by\" for deadline");
             }
             else if(separatedInput[1].split("/by").length < 2)
             {
@@ -119,11 +119,11 @@ public class Duke {
             }
             else if (!separatedInput[1].contains("/from"))
             {
-                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a /from for deadline");
+                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a \"/from\" for deadline");
             }
             else if (!separatedInput[1].contains("/to"))
             {
-                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a /to for deadline");
+                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a \"/to\" for deadline");
             }
             else
             {
