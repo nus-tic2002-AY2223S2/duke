@@ -1,8 +1,17 @@
+package duke;
+
+import duke.exception.DukeException;
+import duke.storage.Storage;
+import duke.task.Task;
+import duke.task.TaskList;
+import duke.util.Parser;
+import duke.util.Ui;
+
 import java.io.File;
 
 /**
  * @author Ng Kwang Hai Jeffrey (A0227137H)
- * Implemented individual feature 1: C-Priority
+ * Implemented individual feature 1: C-duke.task.Priority
  */
 public class Duke {
     private Storage storage;
@@ -10,7 +19,7 @@ public class Duke {
     private Ui ui;
 
     /**
-     * The Duke class represents the main component of the Duke application.
+     * The duke.Duke class represents the main component of the duke.Duke application.
      *
      * @param filename the name of the file to store the data.
      * @throws DukeException if there is an error creating the directory or initializing the storage.
@@ -24,7 +33,7 @@ public class Duke {
             if (isDirCreated) {
                 System.out.println("Directory created!");
             } else {
-                throw new DukeException("OOPS! Failed to create directory, please check your folder permission!");
+                throw new DukeException("☹ OOPS!!! Failed to create directory, please check your folder permission!");
             }
         }
         storage = new Storage(filename);
@@ -35,7 +44,7 @@ public class Duke {
     }
 
     /**
-     * The run method handles the main functionality of the Duke application.
+     * The run method handles the main functionality of the duke.Duke application.
      * It reads user input and performs the actions based on the command entered by the user.
      */
     public void run() {
@@ -43,13 +52,16 @@ public class Duke {
         String userInput = "";
         Task t;
         tasks = new TaskList();
-        ui.showWelcome(); //Display logo
+
+        //attempt to load data from save file.
         try {
             tasks = new TaskList(storage.load());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             ui.showLoadingError();
         }
+
+        ui.showWelcome(); //Display logo
 
         while (!userInput.equals("bye")) {
             //Read user input.
@@ -77,7 +89,7 @@ public class Duke {
                     t = parser.createToDo(userInput);
                     tasks.addTask(t);
                 } else if (parser.isDeadlineCommand(userInput)) {
-                    //Create Deadline task
+                    //Create duke.task.Deadline task
                     t = parser.createDeadline(userInput);
                     tasks.addTask(t);
                 } else if (parser.isEventCommand(userInput)) {

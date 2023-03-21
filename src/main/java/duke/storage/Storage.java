@@ -1,3 +1,12 @@
+package duke.storage;
+
+import duke.task.Deadline;
+import duke.exception.DukeException;
+import duke.task.Event;
+import duke.task.ToDo;
+import duke.task.Task;
+import duke.task.TaskList;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,7 +22,7 @@ public class Storage {
     private String filename;
 
     /**
-     * Constructor for Storage class
+     * Constructor for duke.storage.Storage class
      *
      * @param filename the name of the file to be created if it doesn't exist
      */
@@ -76,13 +85,14 @@ public class Storage {
         List<Task> tasks = new ArrayList<>();
         Task t;
         try {
-
-            System.out.println("File exist, loading data.");
             //Try to load the file
             Scanner myReader = new Scanner(duke_save);
+            if(myReader.hasNextLine()){
+                System.out.println("File exist, loading data.");
+            }
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
-                System.out.println(data);
+                //System.out.println(data);
                 String[] formatSaveDataSplit = data.split("\\|");
                 //Remove all blank spaces
                 for (int i = 0; i < formatSaveDataSplit.length; i++) {

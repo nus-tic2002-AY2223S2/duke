@@ -1,3 +1,11 @@
+package duke.util;
+
+import duke.exception.DukeException;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.ToDo;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,9 +34,11 @@ public class Parser {
                 formatString = userInput.replace("deadline", "").trim();
                 String[] formatDeadlineSplit = formatString.split("/by");
                 formatDeadlineSplit[0] = formatDeadlineSplit[0].trim();
-
+                if (!userInput.matches(".*/by.*")){
+                    throw new DukeException("Please make sure the sequence is correct /by, please try again");
+                }
                 if (formatDeadlineSplit.length < 2) {
-                    throw new DukeException("deadline is missing by details, please try again");
+                    throw new DukeException("deadline is missing /by details, please try again");
                 } else if (formatDeadlineSplit.length > 2) {
                     throw new DukeException("deadline has too many parameters, please try again");
                 } else {
@@ -39,10 +49,13 @@ public class Parser {
             case "event":
                 formatString = userInput.replace("event", "").trim();
                 String[] formatEventSplit = formatString.split("/from | /to");
+                if (!userInput.matches(".*from.*to.*")){
+                    throw new DukeException("Please make sure the sequence is correct /from /to, please try again");
+                }
                 if (formatEventSplit.length < 3) {
-                    throw new DukeException("Event is missing either from or to, please try again");
+                    throw new DukeException("duke.task.Event is missing either from or to, please try again");
                 } else if (formatEventSplit.length > 3) {
-                    throw new DukeException("Event has too many parameters, please try again");
+                    throw new DukeException("duke.task.Event has too many parameters, please try again");
                 } else {
                     formatEventSplit[0] = formatEventSplit[0].trim();
                     formatEventSplit[1] = formatEventSplit[1].trim();
@@ -114,11 +127,11 @@ public class Parser {
     }
 
     /**
-     * The createDeadline method creates a Deadline task based on the user input.
+     * The createDeadline method creates a duke.task.Deadline task based on the user input.
      *
      * @param userInput the user input to be parsed.
-     * @return the new Deadline task that was created.
-     * @throws DukeException if the description of the Deadline task is empty.
+     * @return the new duke.task.Deadline task that was created.
+     * @throws DukeException if the description of the duke.task.Deadline task is empty.
      */
     public Task createDeadline(String userInput) throws DukeException {
         String[] formattedString = formatString(userInput, "deadline");
@@ -130,11 +143,11 @@ public class Parser {
     }
 
     /**
-     * The createEvent method creates a Event task based on the user input.
+     * The createEvent method creates a duke.task.Event task based on the user input.
      *
      * @param userInput the user input to be parsed.
-     * @return the new Event task that was created.
-     * @throws DukeException if the description of the Event task is empty.
+     * @return the new duke.task.Event task that was created.
+     * @throws DukeException if the description of the duke.task.Event task is empty.
      */
     public Task createEvent(String userInput) throws DukeException {
         String[] formattedString = formatString(userInput, "event");

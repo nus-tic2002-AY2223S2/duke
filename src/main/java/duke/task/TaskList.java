@@ -1,3 +1,7 @@
+package duke.task;
+
+import duke.exception.DukeException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,43 +65,53 @@ public class TaskList {
      * @param userInput a string representing the user input to be processed.
      * @throws DukeException if the input is invalid.
      */
-    public void updateTask(String userInput) {
-        int listNumber;
+    public void updateTask(String userInput) throws DukeException {
+        int itemNumber;
         String[] stringSplit;
         try {
             stringSplit = userInput.split(" ");
             int input_value = Integer.parseInt(stringSplit[1]);
-            listNumber = input_value - 1;
+            itemNumber = input_value - 1;
             String status = stringSplit[0];
 
             switch (status) {
                 case "mark":
                     if (stringSplit.length == 2) { //E.g. Mark 1
+                        tasks.get(itemNumber).setStatusAsMarked();
                         System.out.println("Nice! I've marked this task as done:");
-                        this.tasks.get(listNumber).setStatusAsMarked();
-                        System.out.println(this.tasks.get(listNumber));
+                        System.out.println(tasks.get(itemNumber));
                     } else if (stringSplit.length == 4) { //E.g. Mark 1 as HIGH
                         String priority = stringSplit[3];
-                        this.tasks.get(listNumber).setPriority(priority);
+                        tasks.get(itemNumber).setPriority(priority);
+                        System.out.println("OK, Priority set as " + priority);
+                        System.out.println(tasks.get(itemNumber));
                     }
                     break;
                 case "unmark":
+                    tasks.get(itemNumber).setStatusAsUnmarked();
                     System.out.println("OK, I've marked this task as not done yet:");
-                    this.tasks.get(listNumber).setStatusAsUnmarked();
-                    System.out.println(this.tasks.get(listNumber));
+                    System.out.println(tasks.get(itemNumber));
                     break;
                 case "delete":
+
+                    //Check if item number exist or not.
+                    try{
+                        tasks.get(itemNumber);
+                    }catch (IndexOutOfBoundsException e){
+                        throw new DukeException("☹ OOPS!!! Task number not found, please try again");
+                    }
+
                     System.out.println("Noted. I've removed this task:");
-                    System.out.println(this.tasks.get(listNumber));
-                    this.tasks.remove(listNumber);
-                    System.out.println("Now you have " + this.tasks.size() + " tasks in the list.");
+                    System.out.println(tasks.get(itemNumber));
+                    tasks.remove(itemNumber);
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                     break;
                 default:
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
 
             }
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Task number not found, please try again.");
+            throw new DukeException("☹ OOPS!!! Task number not found, please try again");
         } catch (NumberFormatException e) {
             System.out.println("☹ OOPS!!! Please enter only numbers.");
         } catch (Exception e) {

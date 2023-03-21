@@ -1,3 +1,7 @@
+package duke.task;
+
+import duke.exception.DukeException;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -28,10 +32,10 @@ public class Task {
      * @return a string of the priority of the task.
      */
     public String getPriority() {
-        if (this.priority == null) {
+        if (priority == null) {
             return " ";
         }
-        switch (this.priority) {
+        switch (priority) {
             case LOW:
                 return "L";
             case MEDIUM:
@@ -56,24 +60,24 @@ public class Task {
             case "HIGH":
             case "H":
                 priority = Priority.HIGH;
-                System.out.println("Priority set as HIGH");
+
                 break;
             case "MEDIUM":
             case "M":
                 priority = Priority.MEDIUM;
-                System.out.println("Priority set as MEDIUM");
+
                 break;
             case "LOW":
             case "L":
                 priority = Priority.LOW;
-                System.out.println("Priority set as LOW");
+
                 break;
             case " ":
             case "":
                 priority = null;
                 break;
             default:
-                throw new DukeException("OOPS! Please use either HIGH,MEDIUM,LOW when setting priority");
+                throw new DukeException("☹ OOPS!!! Please use either HIGH,MEDIUM,LOW when setting priority");
 
         }
     }

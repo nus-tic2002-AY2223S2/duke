@@ -1,3 +1,5 @@
+package duke.util;
+
 import java.util.Scanner;
 
 public class Ui {
@@ -17,7 +19,7 @@ public class Ui {
     }
 
     public void showLoadingError() {
-        System.out.println("Error loading save file, please check if the file is in the correct path");
+        System.out.println("☹ OOPS!!! Error loading save file, please check if the file is in the correct path");
     }
 
     public String readCommand() {

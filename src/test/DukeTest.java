@@ -1,6 +1,10 @@
+import duke.exception.DukeException;
+import duke.task.Task;
+import duke.task.TaskList;
+import duke.util.Parser;
+import duke.util.Ui;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DukeTest {
@@ -34,7 +38,7 @@ public class DukeTest {
                 t = parser.createToDo(userInput);
                 tasks.addTask(t);
             } else if (parser.isDeadlineCommand(userInput)) {
-                //Create Deadline task
+                //Create duke.task.Deadline task
                 t = parser.createDeadline(userInput);
                 tasks.addTask(t);
 
