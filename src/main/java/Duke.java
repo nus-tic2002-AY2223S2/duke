@@ -148,10 +148,6 @@ public class Duke {
             {
                 throw new DukeException("☹ OOPS!!! The value after " + separatedInput[0] + " cannot be empty.");
             }
-            else if (separatedInput.length > 2)
-            {
-                throw new DukeException("☹ OOPS!!! There can only by 1 value after " + separatedInput[0] + ".");
-            }
             else if (!isNumber(separatedInput[1]))
             {
                 throw new DukeException("☹ OOPS!!! The value after " + separatedInput[0] + " must be a number.");
