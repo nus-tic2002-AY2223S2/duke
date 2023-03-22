@@ -5,13 +5,12 @@ public class Task {
     protected String task;
     protected String[] wordsInSentences;
     protected String[] wordsInDescription;
-    protected String[]  partsInDescription;
+    protected String[] partsInDescription;
     protected boolean isDone;
 
 
-
     //constructor
-    public Task(String description){
+    public Task(String description) {
         this.description = description;
         this.isDone = false;
         this.wordsInSentences = description.split(" ");
@@ -28,19 +27,19 @@ public class Task {
     */
 
     //get method
-    public String getStatusIcon(){
+    public String getStatusIcon() {
         return (isDone ? "X" : " "); //mark done task with X
     }
 
-    public String toString(){
+    public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
     }
 
-    public void markAsDone(){
+    public void markAsDone() {
         this.isDone = true;
     }
 
-    public void markAsNotDone(){
+    public void markAsNotDone() {
         this.isDone = false;
     }
 }

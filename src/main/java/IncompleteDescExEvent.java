@@ -6,7 +6,6 @@ public class IncompleteDescExEvent extends IncompleteDescriptionException{
         }
 
         public String toString() {
-
             return ("Events must contain 1 task, 1 /from and 1 /to");
         }
 

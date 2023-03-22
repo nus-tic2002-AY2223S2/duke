@@ -6,7 +6,7 @@ public class TaskList {
     protected static ArrayList<Task> tasksArray;
     protected int size = 0;
 
-    public TaskList(ArrayList t){
+    public TaskList(ArrayList t) {
         this.tasksArray = new ArrayList<>((Collection) t);
         this.size = tasksArray.size();
     }
@@ -22,17 +22,17 @@ public class TaskList {
 
     public void add(ToDo todo) {
         tasksArray.add(todo);
-        size ++;
+        size++;
     }
 
     public void add(Deadline deadline) {
         tasksArray.add(deadline);
-        size ++;
+        size++;
     }
 
     public void add(Event event) {
         tasksArray.add(event);
-        size ++;
+        size++;
     }
 
     public Task get(int taskNumber) {
@@ -42,6 +42,6 @@ public class TaskList {
 
     public void remove(int i) {
         tasksArray.remove(tasksArray.get(i));
-        size --;
+        size--;
     }
 }

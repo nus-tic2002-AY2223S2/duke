@@ -9,10 +9,11 @@ public class Deadline extends Task {
     public Deadline(String description, String deadline) {
         super(description);
         // *************************
-        // level 8 DATES AND TIMES
+        // level 8 Dates and Times
         // *************************
         this.byString = LocalDateTime.parse(deadline);
     }
+
     public LocalDateTime getBy() {
         return this.byString;
     }

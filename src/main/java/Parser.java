@@ -1,17 +1,17 @@
 import java.util.Arrays;
 
 public class Parser {
- /*   public static boolean isToDoCommand(String command) {
-        String[] wordsInSentences = command.split(" ");
-        if (String.valueOf(wordsInSentences[0].toUpperCase()) == "todo") {
-            return true;
-        } else return false;
-    }
+    /*   public static boolean isToDoCommand(String command) {
+           String[] wordsInSentences = command.split(" ");
+           if (String.valueOf(wordsInSentences[0].toUpperCase()) == "todo") {
+               return true;
+           } else return false;
+       }
 
-    public static ToDo createTodo(String command) {
+       public static ToDo createTodo(String command) {
 
-    }
-*/
+       }
+   */
     // *************************
     // level 6 ENUM
     // *************************
@@ -127,7 +127,7 @@ public class Parser {
                         }
                         DukeException.checkTaskExist(indexFrom, 1);
                         c.taskDescription = taskJob;
-                        c.start = partsInDescription[1].substring(1, partsInDescription[1].length()-1);
+                        c.start = partsInDescription[1].substring(1, partsInDescription[1].length() - 1);
                         c.end = partsInDescription[2].substring(1);
                     } catch (ArrayIndexOutOfBoundsException obe) {
                         System.out.println("An event must contain a start period (/from) and a end period (/to)!");
