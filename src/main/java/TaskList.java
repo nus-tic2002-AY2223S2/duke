@@ -4,7 +4,7 @@ import java.util.Collection;
 public class TaskList {
 
     protected static ArrayList<Task> tasksArray;
-    protected int size;
+    protected int size = 0;
 
     public TaskList(ArrayList t){
         this.tasksArray = new ArrayList<>((Collection) t);
