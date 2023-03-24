@@ -4,6 +4,8 @@ import Exception.DukeException;
 import Task.Event;
 import Storage.*;
 import Parser.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class EVENT extends Command{
     private final String inputCommand;
@@ -16,15 +18,15 @@ public class EVENT extends Command{
         if(Parser.commandLength(inputCommand) < 2){
             throw new DukeException("☹ OOPS!!! The description of a event cannot be empty.");
         }
-        String beforeFrom,afterFrom;
-        beforeFrom = Parser.restCommand(inputCommand).split("/from",2)[0];
-        afterFrom = Parser.restCommand(inputCommand).split("/from",2)[1];
-        afterFrom = afterFrom.replace("/to","to:");
+        String restCommand;
+        restCommand = Parser.restCommand(inputCommand);
+        String[] eventDetails = Parser.getEvent(restCommand);
         Event event;
-        if(Parser.restCommand(inputCommand).length()==2){
-            event = new Event(beforeFrom,afterFrom);
-        }else {
-            event = new Event(beforeFrom,"");
+        try{
+            event = new Event(eventDetails[0],
+                    LocalDateTime.parse(eventDetails[1].trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        }catch (Exception e){
+            throw new DukeException("☹ OOPS!!! Please key in the correct pattern! (event XXX /from \"yyyy-MM-dd HH:mm\")");
         }
         storage.taskAdd(event);
     }

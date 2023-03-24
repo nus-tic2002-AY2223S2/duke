@@ -6,6 +6,7 @@ import Parser.*;
 
 public class MARK extends Command{
     private final String inputCommand;
+
     public static final Storage storage = Storage.getStorage();
 
     public MARK(String inputCommand) {

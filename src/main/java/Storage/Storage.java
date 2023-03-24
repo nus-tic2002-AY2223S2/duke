@@ -1,7 +1,6 @@
 package Storage;
 
 import Exception.DukeException;
-import Task.*;
 import UI.*;
 import TasksList.*;
 import java.io.File;
@@ -14,10 +13,9 @@ public class Storage extends TasksList {
     private final String filePath;
     private static final Storage storage = new Storage();
 
-    public static Storage getStorage() {
-        return storage;
-    }
-
+    /**
+     * make Storage constructor , initialise filepath and create new file
+     */
     public Storage() {
         String dir = System.getProperty("user.dir");
         java.nio.file.Path path = java.nio.file.Paths.get(dir, "data", "duke.txt");
@@ -25,28 +23,25 @@ public class Storage extends TasksList {
         fileCreate();
     }
 
-    public void printList() {
-        String space = " ";
-        Ui.showLine();
-        System.out.println(space + "Here are the tasks in your list:");
-        int taskNum = 0;
-        for (Task list : tasksList) {
-            taskNum++;
-            System.out.println(space + taskNum + "." + list.toString());
-        }
-        Ui.showLine();
+    /**
+     * @return instance storage
+     */
+    public static Storage getStorage() {
+        return storage;
     }
 
+    /**
+     * create file and see whether file create successful or not.
+     *
+     * IOException in RuntimeException
+     */
     public void fileCreate() {
         try {
             File file = new File(this.filePath);
-            //System.out.println("full path: " + file.getAbsolutePath());
-            //System.out.println("file exists?: " + file.exists());
-            // check source file exists, create if it does not exist
             if (file.createNewFile()) {
-                System.out.println("File created: " + file.getName());
+                System.out.println("File created,file path: " + file.getAbsolutePath());
             }else{
-                System.out.println("File already exist.");
+                System.out.println("File already exist,file path: " + file.getAbsolutePath());
             }
             Ui.showLine();
         } catch (IOException e) {
@@ -55,10 +50,11 @@ public class Storage extends TasksList {
     }
 
     /**
-     * Write all Tasks to file
+     * Write all Tasks to disk file
      *
      * @param textToAdd each line of tasks
-     * @throws DukeException Duke exception
+     *
+     * IOException in RuntimeException
      */
     public void writeToFile(String textToAdd) throws DukeException {
         try {
@@ -71,9 +67,9 @@ public class Storage extends TasksList {
     }
 
     /**
-     * Read Tasks(one line by one line) from file
+     * Read Tasks(one line by one line) from disk file(duke.txt)
      *
-     * @throws DukeException Duke exception
+     * FileNotFoundException in RuntimeException
      */
     public void readFile() {
         try {

@@ -4,6 +4,8 @@ import Task.Deadline;
 import Exception.DukeException;
 import Storage.*;
 import Parser.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DEADLINE extends Command{
     private final String inputCommand;
@@ -17,15 +19,17 @@ public class DEADLINE extends Command{
         if(Parser.commandLength(inputCommand) < 2){
             throw new DukeException("☹ OOPS!!! The description of a deadline cannot be empty.");
         }
-        String beforeBy,afterBy;
-        beforeBy = Parser.restCommand(inputCommand).split("/by")[0];
-        afterBy = Parser.restCommand(inputCommand).split("/by")[1];
+        String restCommand;
+        restCommand = Parser.restCommand(inputCommand);
+        String[] deadlineDetails = Parser.getDeadline(restCommand);
         Deadline deadline;
-        if(Parser.restCommand(inputCommand).length()==2){
-            deadline = new Deadline(beforeBy,afterBy);
-        }else {
-            deadline = new Deadline(beforeBy,"");
+        try{
+            deadline = new Deadline(deadlineDetails[0],
+                    LocalDateTime.parse(deadlineDetails[1].trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        }catch (Exception e){
+            throw new DukeException("☹ OOPS!!! Please key in the correct pattern!(deadline XXX /by \"yyyy-MM-dd HH:mm\")");
         }
+
         storage.taskAdd(deadline);
     }
 }
