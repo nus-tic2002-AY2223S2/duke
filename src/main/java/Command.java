@@ -1,7 +1,5 @@
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 public class Command {
 
@@ -12,6 +10,7 @@ public class Command {
     protected LocalDateTime taskDeadline;
     protected LocalDateTime start;
     protected LocalDateTime end;
+    protected String findItem;
 
     public void execute(TaskList tl, Ui ui, Storage storage) throws DukeException, IOException {
 
@@ -116,6 +115,19 @@ public class Command {
                     } catch (
                             IndexOutOfBoundsException obe) {          // corner case: mark 0,  taskNumber > taskArray.size
                         System.out.println("Please give a valid task number that you want to delete!");
+                    }
+                    break;
+
+                // *************************
+                // level 9 Find feature
+                // *************************
+                case FIND:
+                    if (findItem != null) {
+                        for (int i = 0; i < tl.getSize(); i++) {
+                            if (tl.tasksArray.get(i).description.contains(findItem)) {
+                                System.out.println(tl.tasksArray.get(i).toString());
+                            }
+                        }
                     }
                     break;
                 default:

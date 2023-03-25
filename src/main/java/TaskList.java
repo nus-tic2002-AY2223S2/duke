@@ -43,4 +43,13 @@ public class TaskList {
         tasksArray.remove(tasksArray.get(i));
         size--;
     }
+
+    public String getType(int taskNumber) {
+        return String.valueOf(tasksArray.get(taskNumber).getClass());
+    }
+
+    public void add(Task task) {
+        tasksArray.add(task);
+        size++;
+    }
 }

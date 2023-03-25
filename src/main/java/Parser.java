@@ -1,10 +1,11 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Parser {
-    /*   public static boolean isToDoCommand(String command) {
+    /*\      public static boolean isToDoCommand(String command) {
            String[] wordsInSentences = command.split(" ");
            if (String.valueOf(wordsInSentences[0].toUpperCase()) == "todo") {
                return true;
@@ -19,7 +20,7 @@ public class Parser {
     // level 6 ENUM
     // *************************
     public enum taskEnum {
-        LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE
+        LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE, FIND
     }
 
     public static Command parse(String fullCommand) throws DukeException {
@@ -175,6 +176,23 @@ public class Parser {
                     } catch (
                             IndexOutOfBoundsException obe) {          // corner case: mark 0,  taskNumber > taskArray.size
                         System.out.println("Please give a valid task number that you want to delete!");
+                    }
+                    break;
+
+                // *************************
+                // level 9 Find feature
+                // *************************
+                case FIND:
+                    String findItem = new String();
+                    try {
+                        DukeException.checkDescriptionExist(wordsInDescription.length, 2);  // handle exception: no word
+                        // if there is find task: skip "find" and put description in taskArray
+                        for (int i = 1; i < wordsInDescription.length; i++) {
+                            findItem += wordsInDescription[i] + " ";
+                        }
+                        c.findItem = findItem;
+                    } catch (DukeException de) {
+                        System.out.println("☹ OOPS!!! The description of a FIND cannot be empty.");
                     }
                     break;
                 default:
