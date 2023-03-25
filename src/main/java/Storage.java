@@ -1,13 +1,13 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
 
 // *************************
 // level 7 Save
@@ -18,7 +18,6 @@ public class Storage {
     java.nio.file.Path path = java.nio.file.Paths.get(root, "weipinglim", "duke", "data");
     boolean directoryExists = java.nio.file.Files.exists(path);
     */
-
     protected File filename;
 
     // create a data file in filePath
@@ -50,11 +49,14 @@ public class Storage {
                         String[] partInString = taskString.split("by:");
                         String date = partInString[1].substring(0, partInString[1].length() - 1);
                         String taskJob = partInString[0].substring(0, partInString[0].length() - 1);
+
                         SimpleDateFormat sdf = new SimpleDateFormat("MMM d yyyy 'at' hh:mm");
-                        SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                        SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
                         Date d = sdf.parse(date);
                         String formattedTime = output.format(d);
-                        Deadline dl = new Deadline(taskJob, formattedTime);
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        LocalDateTime deadLine = LocalDateTime.parse(formattedTime,formatter);
+                        Deadline dl = new Deadline(taskJob, deadLine);
                         if (task.charAt(4) == 'X') {
                             dl.markAsDone();
                         }
@@ -68,12 +70,18 @@ public class Storage {
                         String startDate = partInString[1].substring(0, partInString[1].length() - 1);
                         String endDate = partInString[2].substring(0, partInString[2].length() - 1);
                         SimpleDateFormat sdf = new SimpleDateFormat("MMM d yyyy 'at' hh:mm");
-                        SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                        SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
                         Date start = sdf.parse(startDate);
                         Date end = sdf.parse(endDate);
                         String formattedStartTime = output.format(start);
                         String formattedEndTime = output.format(end);
-                        Event e = new Event(taskJob, formattedStartTime, formattedEndTime);
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+                        LocalDateTime startLDT = LocalDateTime.parse(formattedStartTime,formatter);
+                        LocalDateTime endLDT = LocalDateTime.parse(formattedEndTime,formatter);
+
+                        Event e = new Event(taskJob, startLDT, endLDT);
+
                         if (task.charAt(4) == 'X') {
                             e.markAsDone();
                         }

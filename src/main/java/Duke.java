@@ -1,18 +1,14 @@
+
+
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.io.File;
 
 public class Duke {
     public static String filePath;
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
-
 
     public Duke(String filePath) {
         this.filePath = filePath;
@@ -54,18 +50,6 @@ public class Duke {
                 ui.showLine();
             }
         }
-    }
-
-    public TaskList getTasks() {
-        return this.tasks;
-    }
-
-    public Storage getStorage() {
-        return this.storage;
-    }
-
-    public Ui getUi() {
-        return this.ui;
     }
 
     public static void main(String[] args) {

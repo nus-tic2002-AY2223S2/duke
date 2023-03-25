@@ -3,16 +3,19 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class Deadline extends Task {
-    protected String taskString;
     protected LocalDateTime byString;
 
-    public Deadline(String description, String deadline) {
+    public Deadline(String description, LocalDateTime deadLine) {
         super(description);
+        this.byString = deadLine;
         // *************************
         // level 8 Dates and Times
         // *************************
-        this.byString = LocalDateTime.parse(deadline);
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        //this.byString = LocalDateTime.parse(deadline,formatter);
+        //this.byString = LocalDateTime.parse(deadline);
     }
+
 
     public LocalDateTime getBy() {
         return this.byString;

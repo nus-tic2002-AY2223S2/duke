@@ -6,14 +6,16 @@ public class Event extends Task {
     protected LocalDateTime start;
     protected LocalDateTime end;
 
-    public Event(String description, String start, String end) {
+    public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
+        this.start = start;
+        this.end = end;
         // *************************
         // level 8 Dates and Times
         // *************************
-        this.start = LocalDateTime.parse(start);
-        this.end = LocalDateTime.parse(end);
-
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        //this.start = LocalDateTime.parse(start,formatter);
+        //this.end = LocalDateTime.parse(end,formatter);
     }
 
     public String toString() {

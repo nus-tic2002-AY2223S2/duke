@@ -1,3 +1,6 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 
 public class Parser {
@@ -16,7 +19,7 @@ public class Parser {
     // level 6 ENUM
     // *************************
     public enum taskEnum {
-        LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE;
+        LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE
     }
 
     public static Command parse(String fullCommand) throws DukeException {
@@ -99,7 +102,17 @@ public class Parser {
                         }
                         DukeException.checkTaskExist(indexBy, 1);
                         c.taskDescription = taskJob;
-                        c.taskDeadline = partsInDescription[1].substring(1);
+
+                        // *************************
+                        // level 8 Dates and Times
+                        // *************************
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        try {
+                            c.taskDeadline = LocalDateTime.parse(partsInDescription[1].substring(1), formatter);
+                        } catch (DateTimeParseException dtpe) {
+                            System.out.println("write the deadline in yyyy-MM-dd HH:mm format");
+                        }
+
                     } catch (ArrayIndexOutOfBoundsException obe) {
                         System.out.println("A deadline command must provide a deadline date (/by)!");
                     } catch (IncompleteDescriptionException ide) {
@@ -110,7 +123,6 @@ public class Parser {
                         System.out.println("☹ OOPS!!! The description of a deadline cannot be empty.");
                     }
                     break;
-
 
                 // *************************
                 // level 4 Event feature
@@ -127,8 +139,18 @@ public class Parser {
                         }
                         DukeException.checkTaskExist(indexFrom, 1);
                         c.taskDescription = taskJob;
-                        c.start = partsInDescription[1].substring(1, partsInDescription[1].length() - 1);
-                        c.end = partsInDescription[2].substring(1);
+
+                        // *************************
+                        // level 8 Dates and Times
+                        // *************************
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        try {
+                            c.start = LocalDateTime.parse(partsInDescription[1].substring(1, partsInDescription[1].length() - 1), formatter);
+                            c.end = LocalDateTime.parse(partsInDescription[2].substring(1), formatter);
+                        } catch (DateTimeParseException dtpe) {
+                            System.out.println("write the event date & time in yyyy-MM-dd HH:mm format");
+                        }
+
                     } catch (ArrayIndexOutOfBoundsException obe) {
                         System.out.println("An event must contain a start period (/from) and a end period (/to)!");
                     } catch (IncompleteDescriptionException ide) {
@@ -157,7 +179,6 @@ public class Parser {
                     break;
                 default:
             }
-
         }
         return c;
     }
