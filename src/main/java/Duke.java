@@ -1,5 +1,3 @@
-
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -11,7 +9,7 @@ public class Duke {
     private Ui ui;
 
     public Duke(String filePath) {
-        this.filePath = filePath;
+        Duke.filePath = filePath;
         ui = new Ui();
         storage = new Storage(filePath);
         try {
@@ -22,9 +20,9 @@ public class Duke {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+
         }
     }
 
@@ -40,7 +38,7 @@ public class Duke {
                 ui.showLine();
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, ui, storage);
-                storage.save(tasks, filePath);
+                Storage.save(tasks, filePath);
                 isExit = c.isExit();
             } catch (DukeException e) {
                 ui.showError(e.getMessage());
@@ -53,9 +51,7 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-
         new Duke("data/tasks.txt").run();
-
     }
 
 }

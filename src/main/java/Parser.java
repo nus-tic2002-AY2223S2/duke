@@ -1,7 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Parser {
@@ -20,7 +19,7 @@ public class Parser {
     // level 6 ENUM
     // *************************
     public enum taskEnum {
-        LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE, FIND
+        LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE, FIND, STAT
     }
 
     public static Command parse(String fullCommand) throws DukeException {
@@ -195,6 +194,11 @@ public class Parser {
                         System.out.println("☹ OOPS!!! The description of a FIND cannot be empty.");
                     }
                     break;
+
+                case STAT:
+
+                    break;
+
                 default:
             }
         }

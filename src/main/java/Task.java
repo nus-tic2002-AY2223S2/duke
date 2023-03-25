@@ -1,23 +1,13 @@
 public class Task {
     protected String description;
-    //protected String[] wordsInSentences;
-    //protected String[] wordsInDescription;
-    //protected String[] partsInDescription;
     protected boolean isDone;
 
     //constructor
     public Task(String description) {
         this.description = description;
         this.isDone = false;
-        //this.wordsInSentences = description.split(" ");
-        //this.wordsInDescription = description.split(" ");
-        //this.partsInDescription = description.split("/by|/from|/to");
     }
 
-    //public Task(Task task) {
-    //}
-
-    //get method
     public String getStatusIcon() {
         return (isDone ? "X" : " "); //mark done task with X
     }

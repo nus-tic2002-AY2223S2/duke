@@ -1,6 +1,5 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 public class Event extends Task {
     protected LocalDateTime start;
@@ -10,12 +9,6 @@ public class Event extends Task {
         super(description);
         this.start = start;
         this.end = end;
-        // *************************
-        // level 8 Dates and Times
-        // *************************
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        //this.start = LocalDateTime.parse(start,formatter);
-        //this.end = LocalDateTime.parse(end,formatter);
     }
 
     public String toString() {

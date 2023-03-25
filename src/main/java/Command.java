@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Scanner;
 
 public class Command {
 
@@ -11,6 +12,7 @@ public class Command {
     protected LocalDateTime start;
     protected LocalDateTime end;
     protected String findItem;
+    protected String statItem;
 
     public void execute(TaskList tl, Ui ui, Storage storage) throws DukeException, IOException {
 
@@ -27,7 +29,7 @@ public class Command {
                 // **********************
                 case LIST:
                     for (int i = 1; i < tl.getSize() + 1; i++) {
-                        System.out.println(tl.tasksArray.get(i - 1).toString());
+                        System.out.println(i + "." + TaskList.tasksArray.get(i - 1).toString());
                     }
                     break;
 
@@ -123,13 +125,69 @@ public class Command {
                 // *************************
                 case FIND:
                     if (findItem != null) {
-                        for (int i = 0; i < tl.getSize(); i++) {
-                            if (tl.tasksArray.get(i).description.contains(findItem)) {
-                                System.out.println(tl.tasksArray.get(i).toString());
+                        for (int i = 1; i <= tl.getSize(); i++) {
+                            if (TaskList.tasksArray.get(i - 1).description.contains(findItem)) {
+                                System.out.println(i + "." + TaskList.tasksArray.get(i - 1).toString());
                             }
                         }
                     }
                     break;
+
+                // *************************
+                // level 9 Add Individual Feature: C-Statistics
+                // *************************
+                case STAT:
+                    System.out.println("Please select the number to get different Statistics:\n1. Stats for Tasks done.\n2. Stats for Tasks not done.\n" +
+                            "3. Stats for Todo.\n4. Stats for Deadline.\n5. Stats for Events" );
+                    Scanner in = new Scanner(System.in);
+                    this.statItem = in.nextLine();
+                    if (Integer.parseInt(statItem) == 1 ) {
+                        int stats = 0;
+                        for (int i = 1; i <= tl.getSize(); i++) {
+                            if (TaskList.tasksArray.get(i - 1).isDone) {
+                                stats ++;
+                            }
+                        }
+                        System.out.println("Number of Tasks done = " + stats);
+                    }
+                    else if (Integer.parseInt(statItem) == 2 ) {
+                        int stats = 0;
+                        for (int i = 1; i <= tl.getSize(); i++) {
+                            if (!TaskList.tasksArray.get(i - 1).isDone) {
+                                stats ++;
+                            }
+                        }
+                        System.out.println("Number of Tasks not done = " + stats);
+                    }
+                    else if (Integer.parseInt(statItem) == 3 ) {
+                        int stats = 0;
+                        for (int i = 1; i <= tl.getSize(); i++) {
+                            if (TaskList.tasksArray.get(i - 1) instanceof ToDo) {
+                                stats++;
+                            }
+                        }
+                        System.out.println("Number of Todo Task = " + stats);
+                    }
+                    else if (Integer.parseInt(statItem) == 4 ) {
+                        int stats = 0;
+                        for (int i = 1; i <= tl.getSize(); i++) {
+                            if (TaskList.tasksArray.get(i - 1) instanceof Deadline) {
+                                stats++;
+                            }
+                        }
+                        System.out.println("Number of Deadline Task = " + stats);
+                    }
+                    else if (Integer.parseInt(statItem) == 5 ) {
+                        int stats = 0;
+                        for (int i = 1; i <= tl.getSize(); i++) {
+                            if (TaskList.tasksArray.get(i - 1) instanceof Event) {
+                                stats++;
+                            }
+                        }
+                        System.out.println("Number of Event Task = " + stats);
+                    }
+                    break;
+
                 default:
             }
         }
