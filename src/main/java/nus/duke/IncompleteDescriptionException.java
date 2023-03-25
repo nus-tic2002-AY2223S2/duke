@@ -1,3 +1,4 @@
+package nus.duke;
 
 public class IncompleteDescriptionException extends DukeException {
     private String message;

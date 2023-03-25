@@ -1,3 +1,5 @@
+package nus.duke;
+
 public class IncompleteDescExEvent extends IncompleteDescriptionException{
 
         private String msg;

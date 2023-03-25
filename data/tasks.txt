@@ -1,7 +1,4 @@
-[E][ ] abcd (from:Jan 1 2020 at 08:00 to:Jan 1 2020 at 06:00)
-[D][ ] abc (by:Jan 1 2020 at 11:00)
-[D][X] abc (by:Jan 1 2020 at 11:00)
-[D][ ] abc (by:Jan 1 2020 at 11:00)
+[E][X] abcd (from:Jan 1 2020 at 08:00 to:Jan 1 2020 at 06:00)
 [D][ ] abc (by:Jan 1 2020 at 11:00)
 [E][ ] abcd (from:Jan 1 2020 at 08:00 to:Jan 1 2020 at 06:00)
 [T][X] play 
@@ -9,3 +6,4 @@
 [T][ ] play game 
 [T][ ] homework 
 [E][X] exam (from:May 2 2023 at 09:00 to:May 2 2023 at 10:00)
+[T][ ] coding 
