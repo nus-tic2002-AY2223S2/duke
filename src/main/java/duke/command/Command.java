@@ -1,15 +1,10 @@
 package duke.command;
 
-import duke.exception.IllegalDeadlineException;
-import duke.exception.IllegalEventException;
-import duke.exception.IllegalTaskException;
-import duke.exception.IllegalTodoException;
 import duke.parser.Parser;
-import duke.storage.DukeFileWriter;
+import duke.storage.Storage;
 import duke.task.Task;
 import duke.task.TaskList;
 import duke.type.CommandType;
-import duke.type.TaskType;
 import duke.ui.Ui;
 
 import static duke.parser.Parser.*;
@@ -26,6 +21,11 @@ public class Command {
         this.isExit = false;
     }
 
+    /**
+     * This method execute the user command
+     *
+     * @param tasks A TaskList object representing list of tasks of the user.
+     */
     public void execute(TaskList tasks){
         switch (commandType) {
             case EXIT:
@@ -56,6 +56,12 @@ public class Command {
         }
     }
 
+    /**
+     * This method add task into users list of tasks.
+     *
+     * @param taskList A TaskList object representing list of tasks of the user.
+     * @param command A string representing user command.
+     */
     private void addTask(TaskList taskList, String command) {
         Task task = getTask(command);
         if (task != null) {
@@ -64,10 +70,16 @@ public class Command {
             String addedTask = Ui.getNewTaskString(taskList, task);
             Ui.printCommand(addedTask);
 
-            DukeFileWriter.appendInFile(command + "@" + task.isDone() + System.lineSeparator());
+            Storage.appendInFile(command + "@" + task.isDone() + System.lineSeparator());
         }
     }
 
+    /**
+     * This method delete task from users list of tasks.
+     *
+     * @param taskList A TaskList object representing list of tasks of the user.
+     * @param command A string representing user command.
+     */
     private static void deleteTask(TaskList taskList, String command) {
         try{
             String numberStr = command.split(" ")[1].trim();
@@ -77,8 +89,8 @@ public class Command {
             String deletedTask = Ui.getDeletedTaskString(taskList, task);
             Ui.printCommand(deletedTask);
 
-            String taskStr = getTaskList(taskList);
-            DukeFileWriter.writeInFile(taskStr);
+            String taskStr = taskList.getTaskList();
+            Storage.writeInFile(taskStr);
         }
         catch (IndexOutOfBoundsException ex) {
             System.out.println("IndexOutOfBoundsException for task: " + command);
@@ -88,6 +100,12 @@ public class Command {
         }
     }
 
+    /**
+     * This method mark task as done or not done.
+     *
+     * @param taskList A TaskList object representing list of tasks of the user.
+     * @param task A Task object representing task that needs to marked as done or not done.
+     */
     private static void markTask(TaskList taskList, Task task){
         if (task != null) {
             String printStr = "";
@@ -99,13 +117,18 @@ public class Command {
                 printStr = "OK, I've marked this task as not done yet:";
             }
 
-            String taskStr = getTaskList(taskList);
-            DukeFileWriter.writeInFile(taskStr);
+            String taskStr = taskList.getTaskList();
+            Storage.writeInFile(taskStr);
 
             Ui.printCommand(printStr + System.lineSeparator() + "\t" + task);
         }
     }
 
+    /**
+     * This method returns if it's an exit command.
+     *
+     * @return A boolean representing whether to exit the program or not.
+     */
     public boolean isExit() {
         return isExit;
     }

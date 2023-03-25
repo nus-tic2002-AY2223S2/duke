@@ -1,6 +1,5 @@
 package duke.parser;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -24,6 +23,12 @@ import duke.ui.Ui;
  */
 public class Parser {
 
+    /**
+     * This method parse the user command
+     *
+     * @param command A string representing user command.
+     * @return A Command object representing user input.
+     */
     public static Command parse(String command) {
         CommandType commandType = getCommandType(command);
         Command c = new Command(commandType, command);
@@ -31,6 +36,12 @@ public class Parser {
     }
 
 
+    /**
+     * This method parse the user TODO command and create Todo object
+     *
+     * @param command A string representing the user command.
+     * @return A Todo object parsed from the user input.
+     */
     public static Todo parseTodo(String command) throws IndexOutOfBoundsException, IllegalTodoException, NumberFormatException {
         String[] commandStr = command.split(" ");
         if (commandStr.length < 2) {
@@ -53,6 +64,12 @@ public class Parser {
         return todo;
     }
 
+    /**
+     * This method parse the user Deadline command and create Deadline object
+     *
+     * @param command A string representing the user command.
+     * @return A Deadline object parsed from the user input.
+     */
     public static Deadline parseDeadline(String command) throws IndexOutOfBoundsException, IllegalDeadlineException {
         String[] deadlines = command.split("/by");
         if (deadlines.length < 2) {
@@ -79,6 +96,12 @@ public class Parser {
         return deadline;
     }
 
+    /**
+     * This method parse the user Event command and create Event object
+     *
+     * @param command A string representing the user command.
+     * @return A Event object parsed from the user input.
+     */
     public static Event parseEvent(String command) throws IndexOutOfBoundsException, IllegalEventException {
         String[] events = command.split("/from");
         if (events.length < 2) {
@@ -113,9 +136,14 @@ public class Parser {
     }
 
 
-
-
-
+    /**
+     * This method parse the user Mark/Unmark command and modify Task object
+     *
+     * @param taskList A TaskList object representing list of tasks.
+     * @param command A string representing the user command.
+     * @param commandType A string representing the type of user command.
+     * @return A modified Task object based on user input.
+     */
     public static Task getMarkTask(TaskList taskList, String command, CommandType commandType) {
         command = command.toUpperCase();
         Task task = null;
@@ -139,14 +167,13 @@ public class Parser {
         return task;
     }
 
-    public static String getTaskList(TaskList taskList) {
-        String printStr = "";
-        for (int i = 0; i < taskList.getSize(); i++) {
-            printStr +=  taskList.getItem(i).toCommand() + "@" + taskList.getItem(i).isDone() + System.lineSeparator();
-        }
-        return printStr;
-    }
 
+    /**
+     * This method parse user command and returns the type of task
+     *
+     * @param command A string representing the user command.
+     * @return A TaskType representing the type of Task
+     */
     public static TaskType getTaskType(String command) {
         if (command.toUpperCase().startsWith("TODO")) {
             return TaskType.TODO;
@@ -159,6 +186,12 @@ public class Parser {
         }
     }
 
+    /**
+     * This method parse user command and returns the type of command
+     *
+     * @param command A string representing the user command.
+     * @return A CommandType representing the type of Command
+     */
     public static CommandType getCommandType(String command) {
         if (command.isEmpty()){
             return CommandType.EMPTY;
@@ -178,6 +211,12 @@ public class Parser {
     }
 
 
+    /**
+     * This method parse user command, creates and returns task
+     *
+     * @param command A string representing the user command.
+     * @return A Task object created based on user command.
+     */
     public static Task getTask(String command) {
         Task task = null;
         try {
@@ -209,7 +248,12 @@ public class Parser {
         return task;
     }
 
-
+    /**
+     * This method format valid date/datetime string into another format.
+     *
+     * @param datetime A string representing the date.
+     * @return A datetime String in the format 'MMM d yyyy haa' if it's valid date input.
+     */
     public static String formatDateTime(String datetime) {
         String formattedDate = datetime;
         try {

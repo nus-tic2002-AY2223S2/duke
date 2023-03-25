@@ -38,5 +38,18 @@ public class TaskList {
         tasklist.add(task);
     }
 
+    /**
+     * This method create the task list in a format to be saved in file
+     *
+     * @return A formatted String of tasks
+     */
+    public String getTaskList() {
+        String printStr = "";
+        for (int i = 0; i < tasklist.size(); i++) {
+            Task item = tasklist.get(i);
+            printStr +=  item.toCommand() + "@" + item.isDone() + System.lineSeparator();
+        }
+        return printStr;
+    }
 
 }
