@@ -18,6 +18,10 @@ public class TaskList {
         }
     }
 
+    public TaskList() {
+
+    }
+
     public ArrayList<Task> getItems() {
         return tasklist;
     }

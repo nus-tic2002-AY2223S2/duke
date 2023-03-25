@@ -1,5 +1,7 @@
 package duke.parser;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -30,7 +32,7 @@ public class Parser {
      * @return A Command object representing user input.
      */
     public static Command parse(String command) {
-        CommandType commandType = getCommandType(command);
+        CommandType commandType = parseCommandType(command);
         Command c = new Command(commandType, command);
         return c;
     }
@@ -192,7 +194,7 @@ public class Parser {
      * @param command A string representing the user command.
      * @return A CommandType representing the type of Command
      */
-    public static CommandType getCommandType(String command) {
+    public static CommandType parseCommandType(String command) {
         if (command.isEmpty()){
             return CommandType.EMPTY;
         }else if (command.equalsIgnoreCase("BYE")) {
@@ -252,16 +254,21 @@ public class Parser {
      * This method format valid date/datetime string into another format.
      *
      * @param datetime A string representing the date.
-     * @return A datetime String in the format 'MMM d yyyy haa' if it's valid date input.
+     * @return A datetime String in the format 'MMM d yyyy' if it's valid date input.
      */
     public static String formatDateTime(String datetime) {
         String formattedDate = datetime;
+
+        SimpleDateFormat fromUser = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat myFormat = new SimpleDateFormat("MMM d yyyy");
+
         try {
-            LocalDate date = LocalDate.parse(datetime);
-            formattedDate = date.format(DateTimeFormatter.ofPattern("MMM d yyyy haa"));
-        } catch (DateTimeParseException e) {
+
+            formattedDate = myFormat.format(fromUser.parse(datetime));
+        } catch (ParseException e) {
             Ui.printCommand("☹ OOPS!!! Invalid DateTime format (DateTimeParseException) --> " + datetime);
         }
+
         return formattedDate;
     }
 

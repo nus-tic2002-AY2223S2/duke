@@ -18,7 +18,19 @@ public class Command {
     public Command(CommandType commandType, String command) {
         this.commandType = commandType;
         this.command = command;
-        this.isExit = false;
+        if (commandType == CommandType.EXIT) {
+            this.isExit = true;
+        }else {
+            this.isExit = false;
+        }
+    }
+
+    public CommandType getCommandType() {
+        return commandType;
+    }
+
+    public String getCommand() {
+        return command;
     }
 
     /**
@@ -30,7 +42,6 @@ public class Command {
         switch (commandType) {
             case EXIT:
                 //Exit program
-                isExit = true;
                 Ui.exitCommand();
                 break;
             case LIST:
