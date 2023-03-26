@@ -7,7 +7,7 @@ public class TaskListTest {
     @Test
     public void getTaskListTest() {
         TaskList tasklist = new TaskList();
-        assertEquals("", tasklist.getTaskList());
+        assertEquals("", tasklist.getTaskListString());
     }
 
     @Test

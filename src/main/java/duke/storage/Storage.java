@@ -38,5 +38,15 @@ public class Storage {
         DukeFileReaderAndWriter.appendInFile(textToAppend);
     }
 
+    /**
+     * This method edit text at the given lineNumber of the file at the source.
+     *
+     * @param lineNumber An int text representing the lineNumber to be edited.
+     * @param editedText A String text representing the edited text.
+     */
+    public static void editFile(int lineNumber, String editedText){
+        DukeFileReaderAndWriter.editFile(lineNumber, editedText);
+    }
+
 }
 

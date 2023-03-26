@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 import java.util.Scanner;
 
 public class DukeFileReaderAndWriter {
@@ -47,6 +51,20 @@ public class DukeFileReaderAndWriter {
             FileWriter fw = new FileWriter(Storage.FILE_PATH, true); // create a FileWriter in append mode
             fw.write(textToAppend);
             fw.close();
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+    }
+
+
+    public static void editFile(int lineNumber, String data) {
+        try {
+            createFile();
+
+            Path path = Path.of(Storage.FILE_PATH);
+            List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+            lines.set(lineNumber, data);
+            Files.write(path, lines, StandardCharsets.UTF_8);
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e.getMessage());
         }

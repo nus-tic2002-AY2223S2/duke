@@ -2,9 +2,6 @@ package duke.parser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 import duke.command.Command;
 import duke.exception.IllegalTaskException;
@@ -25,6 +22,12 @@ import duke.ui.Ui;
  */
 public class Parser {
 
+    public static final String DESCRIPTION_COMMAND = "/description";
+    public static final String BY_COMMAND = "/by";
+    public static final String FROM_COMMAND = "/from";
+    public static final String TO_COMMAND = "/to";
+
+
     /**
      * This method parse the user command
      *
@@ -37,6 +40,17 @@ public class Parser {
         return c;
     }
 
+    /**
+     * This method parse index from the user command
+     *
+     * @param command A string representing user command.
+     * @return index of the task
+     */
+    public static int parseIndex(String command) {
+        String numberStr = command.split(" ")[1].trim();
+        int index = Integer.parseInt(numberStr) - 1;
+        return index;
+    }
 
     /**
      * This method parse the user TODO command and create Todo object
@@ -73,7 +87,7 @@ public class Parser {
      * @return A Deadline object parsed from the user input.
      */
     public static Deadline parseDeadline(String command) throws IndexOutOfBoundsException, IllegalDeadlineException {
-        String[] deadlines = command.split("/by");
+        String[] deadlines = command.split(BY_COMMAND);
         if (deadlines.length < 2) {
             throw new IllegalDeadlineException();
         }
@@ -105,7 +119,7 @@ public class Parser {
      * @return A Event object parsed from the user input.
      */
     public static Event parseEvent(String command) throws IndexOutOfBoundsException, IllegalEventException {
-        String[] events = command.split("/from");
+        String[] events = command.split(FROM_COMMAND);
         if (events.length < 2) {
             throw new IllegalEventException();
         }
@@ -115,7 +129,7 @@ public class Parser {
         }
         String description = events[0].replaceFirst(commandStr[0], "").trim();
 
-        String[] dates = events[1].split("/to");
+        String[] dates = events[1].split(TO_COMMAND);
         if (dates.length < 2) {
             throw new IllegalEventException();
         }
@@ -207,7 +221,9 @@ public class Parser {
             return CommandType.UNMARK;
         }else if (command.toUpperCase().startsWith("DELETE")) {
             return CommandType.DELETE;
-        }else {
+        }else if (command.toUpperCase().startsWith("EDIT")) {
+            return CommandType.EDIT;
+        } else {
             return CommandType.ADD;
         }
     }
@@ -249,6 +265,53 @@ public class Parser {
         }
         return task;
     }
+
+
+    /**
+     * This method parse edit command and edit the task
+     *
+     * @param command A string representing the user command.
+     */
+    public static void parseEditTask(String command, Task task) {
+        try {
+
+            if (command.contains(DESCRIPTION_COMMAND)) {
+                String taskElements[] = command.split(DESCRIPTION_COMMAND);
+                String description = taskElements[taskElements.length - 1].trim();
+                task.setDescription(description);
+            }
+
+            TaskType taskType = task.getType();
+            switch (taskType) {
+                case DEADLINE:
+                    if (command.contains(BY_COMMAND)) {
+                        String taskElements[] = command.split(BY_COMMAND);
+                        String by = formatDateTime(taskElements[taskElements.length - 1].trim());
+                        Deadline deadline = (Deadline) task;
+                        deadline.setBy(by);
+                    }
+                    break;
+                case EVENT:
+                    Event event = (Event) task;
+                    if (command.contains(FROM_COMMAND)) {
+                        String taskElements[] = command.split(FROM_COMMAND);
+                        String from = formatDateTime(taskElements[taskElements.length - 1].trim());
+                        event.setEndDateTime(from);
+                    } else if (command.contains(TO_COMMAND)) {
+                        String taskElements[] = command.split(TO_COMMAND);
+                        String to = formatDateTime(taskElements[taskElements.length - 1].trim());
+                        event.setStartDateTime(to);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println("IndexOutOfBoundsException : " + command);
+        }
+    }
+
+
 
     /**
      * This method format valid date/datetime string into another format.

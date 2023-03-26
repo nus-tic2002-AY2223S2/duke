@@ -84,11 +84,22 @@ public class Ui {
      * @param taskList A TaskList object representing the list of tasks.
      * @param task A Task object representing the deleted task.
      */
-    public static String getDeletedTaskString(TaskList taskList, Task task) {
-        String addedTask = "Noted. I've removed this task: " + System.lineSeparator();
-        addedTask += "\t\t" + task + System.lineSeparator();
-        addedTask += "\t" + "Now you have " + taskList.getSize() + " tasks in the list.";
-        return addedTask;
+    public static void printDeletedTaskString(TaskList taskList, Task task) {
+        String deletedTaskStr = "Noted. I've removed this task: " + System.lineSeparator();
+        deletedTaskStr += "\t\t" + task + System.lineSeparator();
+        deletedTaskStr += "\t" + "Now you have " + taskList.getSize() + " tasks in the list.";
+        Ui.printCommand(deletedTaskStr);
+    }
+
+    /**
+     * This method prints edited task.
+     *
+     * @param task A Task object representing the edited task.
+     */
+    public static void printEditedTaskString(Task task) {
+        String editedTaskStr = "Noted. I've edited this task: " + System.lineSeparator();
+        editedTaskStr += "\t\t" + task + System.lineSeparator();
+        Ui.printCommand(editedTaskStr);
     }
 
 
@@ -98,10 +109,10 @@ public class Ui {
      * @param taskList A TaskList object representing the list of tasks.
      * @param task A Task object representing the new task.
      */
-    public static String getNewTaskString(TaskList taskList, Task task) {
-        String addedTask = "Got it. I've added this task: " + System.lineSeparator();
-        addedTask += "\t\t" + task + System.lineSeparator();
-        addedTask += "\t" + "Now you have " + taskList.getSize() + " tasks in the list.";
-        return addedTask;
+    public static void printNewTaskString(TaskList taskList, Task task) {
+        String addedTaskStr = "Got it. I've added this task: " + System.lineSeparator();
+        addedTaskStr += "\t\t" + task + System.lineSeparator();
+        addedTaskStr += "\t" + "Now you have " + taskList.getSize() + " tasks in the list.";
+        Ui.printCommand(addedTaskStr);
     }
 }

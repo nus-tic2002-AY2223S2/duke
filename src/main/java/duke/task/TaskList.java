@@ -47,12 +47,23 @@ public class TaskList {
      *
      * @return A formatted String of tasks
      */
-    public String getTaskList() {
+    public String getTaskListString() {
         String printStr = "";
         for (int i = 0; i < tasklist.size(); i++) {
             Task item = tasklist.get(i);
             printStr +=  item.toCommand() + "@" + item.isDone() + System.lineSeparator();
         }
+        return printStr;
+    }
+
+    /**
+     * This method create the task in a format to be saved in file
+     *
+     * @return A formatted String of task
+     */
+    public String getTaskString(int index) {
+        Task task = tasklist.get(index);
+        String printStr =  task.toCommand() + "@" + task.isDone();
         return printStr;
     }
 
