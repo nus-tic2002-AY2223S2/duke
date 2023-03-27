@@ -98,7 +98,7 @@ public class TaskList {
                     try{
                         tasks.get(itemNumber);
                     }catch (IndexOutOfBoundsException e){
-                        throw new DukeException("☹ OOPS!!! Task number not found, please try again");
+                        throw new DukeException("☹ OOPS!!! Task number not found, please try again.");
                     }
 
                     System.out.println("Noted. I've removed this task:");
@@ -111,7 +111,7 @@ public class TaskList {
 
             }
         } catch (IndexOutOfBoundsException e) {
-            throw new DukeException("☹ OOPS!!! Task number not found, please try again");
+            throw new DukeException("☹ OOPS!!! Task number not found, please try again.");
         } catch (NumberFormatException e) {
             System.out.println("☹ OOPS!!! Please enter only numbers.");
         } catch (Exception e) {

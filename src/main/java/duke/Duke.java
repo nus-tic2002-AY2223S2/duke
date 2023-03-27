@@ -62,7 +62,6 @@ public class Duke {
         }
 
         ui.showWelcome(); //Display logo
-
         while (!userInput.equals("bye")) {
             //Read user input.
             userInput = ui.readCommand();
@@ -89,7 +88,7 @@ public class Duke {
                     t = parser.createToDo(userInput);
                     tasks.addTask(t);
                 } else if (parser.isDeadlineCommand(userInput)) {
-                    //Create duke.task.Deadline task
+                    //Create Deadline task
                     t = parser.createDeadline(userInput);
                     tasks.addTask(t);
                 } else if (parser.isEventCommand(userInput)) {

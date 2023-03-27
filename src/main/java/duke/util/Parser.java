@@ -34,13 +34,11 @@ public class Parser {
                 formatString = userInput.replace("deadline", "").trim();
                 String[] formatDeadlineSplit = formatString.split("/by");
                 formatDeadlineSplit[0] = formatDeadlineSplit[0].trim();
-                if (!userInput.matches(".*/by.*")){
-                    throw new DukeException("Please make sure the sequence is correct /by, please try again");
-                }
+
                 if (formatDeadlineSplit.length < 2) {
-                    throw new DukeException("deadline is missing /by details, please try again");
+                    throw new DukeException("☹ OOPS!!! Deadline is missing /by details, please try again");
                 } else if (formatDeadlineSplit.length > 2) {
-                    throw new DukeException("deadline has too many parameters, please try again");
+                    throw new DukeException("☹ OOPS!!! Deadline has too many parameters, please try again");
                 } else {
                     formatDeadlineSplit[1] = formatDeadlineSplit[1].replace("by", "").trim();
                     return formatDeadlineSplit;
@@ -50,12 +48,12 @@ public class Parser {
                 formatString = userInput.replace("event", "").trim();
                 String[] formatEventSplit = formatString.split("/from | /to");
                 if (!userInput.matches(".*from.*to.*")){
-                    throw new DukeException("Please make sure the sequence is correct /from /to, please try again");
+                    throw new DukeException("☹ OOPS!!! Please make sure the sequence is correct /from /to, please try again.");
                 }
                 if (formatEventSplit.length < 3) {
-                    throw new DukeException("duke.task.Event is missing either from or to, please try again");
+                    throw new DukeException("☹ OOPS!!! Event is missing either from or to, please try again.");
                 } else if (formatEventSplit.length > 3) {
-                    throw new DukeException("duke.task.Event has too many parameters, please try again");
+                    throw new DukeException("☹ OOPS!!! Event has too many parameters, please try again.");
                 } else {
                     formatEventSplit[0] = formatEventSplit[0].trim();
                     formatEventSplit[1] = formatEventSplit[1].trim();
@@ -168,17 +166,17 @@ public class Parser {
     public String convertToDateTime(String datetime) throws DukeException {
 
         DateFormat df = new SimpleDateFormat("d/M/yyyy HHmm");
-        DateFormat outputformat = new SimpleDateFormat("dd MMM yyyy haa");
+        DateFormat newDateFormat = new SimpleDateFormat("dd MMM yyyy haa");
 
-        String output;
+        String outputString;
         Date date;
         try {
             date = df.parse(datetime);
-            output = outputformat.format(date);
+            outputString = newDateFormat.format(date);
         } catch (ParseException e) {
-            throw new DukeException("Invalid DateTime format, Please follow this format: d/M/yyyy HHmm");
+            throw new DukeException("☹ OOPS!!! Invalid DateTime format, Please follow this format: d/M/yyyy HHmm");
         }
-        return output;
+        return outputString;
     }
 
 }
