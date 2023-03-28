@@ -4,6 +4,10 @@ import Parser.Parser;
 
 public enum Constant implements Execute {
     BYE{
+        /**
+         * create new instance and implement execute method
+         * @param inputCommand
+         */
         public void execute(String inputCommand){
             new BYE().execute();
         }

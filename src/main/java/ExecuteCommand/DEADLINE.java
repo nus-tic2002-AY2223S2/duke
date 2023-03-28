@@ -15,6 +15,10 @@ public class DEADLINE extends Command{
         this.inputCommand = inputCommand;
     }
 
+    /**
+     * add deadline task to tasklist and save
+     * @throws DukeException
+     */
     public void execute()throws DukeException {
         if(Parser.commandLength(inputCommand) < 2){
             throw new DukeException("☹ OOPS!!! The description of a deadline cannot be empty.");

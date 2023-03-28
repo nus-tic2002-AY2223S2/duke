@@ -12,6 +12,10 @@ public class DELETE extends Command{
         this.inputCommand = inputCommand;
     }
 
+    /**
+     * delete task and save
+     * @throws DukeException
+     */
     public void execute() throws DukeException{
         if(Parser.commandLength(inputCommand) < 2){
             throw new DukeException("☹ OOPS!!! Deleted number can not be empty.");

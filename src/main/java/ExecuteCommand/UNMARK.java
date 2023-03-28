@@ -12,6 +12,10 @@ public class UNMARK extends Command{
         this.inputCommand = inputCommand;
     }
 
+    /**
+     * unmark task number and save
+     * @throws DukeException
+     */
     @Override
     public void execute() throws DukeException {
         if(Parser.commandLength(inputCommand) < 2){

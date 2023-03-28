@@ -16,6 +16,10 @@ public class Ui {
         Ui.showLine();
     }
 
+    /**
+     * user key in full command
+     * @return full command
+     */
     public static String getUserCommand() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
@@ -25,6 +29,9 @@ public class Ui {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * @param s print the string
+     */
     public static void Echo(String s) {
         String space = " ";
         Ui.showLine();
@@ -32,6 +39,9 @@ public class Ui {
         Ui.showLine();
     }
 
+    /**
+     * @param e print the exception message
+     */
     public static void showError(DukeException e){
         Ui.Echo(e.getMessage());
     }

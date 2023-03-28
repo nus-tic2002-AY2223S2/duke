@@ -90,7 +90,8 @@ public class TasksList {
                 break;
             case "E":
                 task = new Event(body[2],
-                        LocalDateTime.parse(body[3].replace("T"," "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                        LocalDateTime.parse(body[3].replace("T"," "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                        LocalDateTime.parse(body[4].replace("T"," "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
                 if (body[1].equals("1")) {
                     task.Mark();
                 }

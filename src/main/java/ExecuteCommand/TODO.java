@@ -13,6 +13,10 @@ public class TODO extends Command{
         this.inputCommand = inputCommand;
     }
 
+    /**
+     * Add this todo task to tasklists
+     * @throws DukeException
+     */
     public void execute()throws DukeException {
         if(Parser.commandLength(inputCommand) < 2){
             throw new DukeException("☹ OOPS!!! The description of a todo cannot be empty.");
