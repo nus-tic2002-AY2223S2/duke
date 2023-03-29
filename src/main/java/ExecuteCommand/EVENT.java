@@ -28,8 +28,9 @@ public class EVENT extends Command {
         restCommand = Parser.restCommand(inputCommand);
         String[] eventDetails = Parser.getEvent(restCommand);
         Event event;
-        if(LocalDateTime.parse(eventDetails[1].trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")).isAfter
-                (LocalDateTime.parse(eventDetails[2].trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))){
+        LocalDateTime d1 = LocalDateTime.parse(eventDetails[1].trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        LocalDateTime d2 = LocalDateTime.parse(eventDetails[2].trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        if(d1.isAfter(d2)){
             throw new DukeException("Please key in the correct LocateDateTime again!");
         }
         try {
