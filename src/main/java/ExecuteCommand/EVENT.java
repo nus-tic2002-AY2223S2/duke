@@ -17,8 +17,8 @@ public class EVENT extends Command {
     }
 
     /**
-     * generate event task and add in tasks list
-     * @throws Duke Exception
+     * generate event task and add in taskslist
+     * @throws DukeException
      */
     public void execute() throws DukeException {
         if (Parser.commandLength(inputCommand) < 2) {
@@ -28,10 +28,9 @@ public class EVENT extends Command {
         restCommand = Parser.restCommand(inputCommand);
         String[] eventDetails = Parser.getEvent(restCommand);
         Event event;
-        LocalDateTime d1 = LocalDateTime.parse(eventDetails[1].trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-        LocalDateTime d2 = LocalDateTime.parse(eventDetails[2].trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-        if(d1.isAfter(d2)){
-            throw new DukeException("Please check the date and time again!");
+        if(LocalDateTime.parse(eventDetails[1].trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")).isAfter
+                (LocalDateTime.parse(eventDetails[2].trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))){
+            throw new DukeException("Please key in the correct LocateDateTime again!");
         }
         try {
             event = new Event(eventDetails[0],
