@@ -12,11 +12,15 @@ public class Duke {
         System.out.println("Greetings from\n" + logo);
         System.out.println("So... how can I assist you?");
 
-
-        String line;
+        String line = " ";
         Scanner in = new Scanner(System.in);
-        line = in.nextLine();
-        System.out.println(line);
+        while(!line.equals("bye")) {
+            line = in.nextLine();
+            if (line.equals("bye")) {
+                System.out.println("Bye. Hope to see you soon!");
+            }
+            else System.out.println(line);
+        }
     }
 }
 
