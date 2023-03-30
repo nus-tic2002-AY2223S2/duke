@@ -2,6 +2,7 @@ package duke.task;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
 import static duke.parser.Parser.getTask;
 
 /**
@@ -38,7 +39,7 @@ public class TaskList {
         return tasklist.size();
     }
 
-    public void addItem(Task task){
+    public void addItem(Task task) {
         tasklist.add(task);
     }
 
@@ -51,7 +52,7 @@ public class TaskList {
         String printStr = "";
         for (int i = 0; i < tasklist.size(); i++) {
             Task item = tasklist.get(i);
-            printStr +=  item.toCommand() + "@" + item.isDone() + System.lineSeparator();
+            printStr += item.toCommand() + "@" + item.isDone() + System.lineSeparator();
         }
         return printStr;
     }
@@ -63,7 +64,7 @@ public class TaskList {
      */
     public String getTaskString(int index) {
         Task task = tasklist.get(index);
-        String printStr =  task.toCommand() + "@" + task.isDone();
+        String printStr = task.toCommand() + "@" + task.isDone();
         return printStr;
     }
 

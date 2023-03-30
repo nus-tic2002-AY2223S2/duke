@@ -31,7 +31,7 @@ public class Event extends Task {
         return getType().name() + " " + description + " /from " + startDateTime + " /to " + endDateTime;
     }
 
-    public TaskType getType(){
+    public TaskType getType() {
         return TaskType.EVENT;
     }
 }

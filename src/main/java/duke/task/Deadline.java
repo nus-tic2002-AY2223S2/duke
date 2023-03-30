@@ -24,7 +24,7 @@ public class Deadline extends Task {
         return getType().name() + " " + description + " /by " + by;
     }
 
-    public TaskType getType(){
+    public TaskType getType() {
         return TaskType.DEADLINE;
     }
 }

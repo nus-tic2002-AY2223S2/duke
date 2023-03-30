@@ -155,8 +155,8 @@ public class Parser {
     /**
      * This method parse the user Mark/Unmark command and modify Task object
      *
-     * @param taskList A TaskList object representing list of tasks.
-     * @param command A string representing the user command.
+     * @param taskList    A TaskList object representing list of tasks.
+     * @param command     A string representing the user command.
      * @param commandType A string representing the type of user command.
      * @return A modified Task object based on user input.
      */
@@ -164,20 +164,18 @@ public class Parser {
         command = command.toUpperCase();
         Task task = null;
         boolean markAsDone = commandType == CommandType.MARK ? true : false;
-        try{
+        try {
             String numberStr = command.split(" ")[1].trim();
             int index = Integer.parseInt(numberStr) - 1;
             task = taskList.getItem(index);
             if (markAsDone) {
                 task.markAsDone();
-            }else {
+            } else {
                 task.unMarkDone();
             }
-        }
-        catch (IndexOutOfBoundsException ex) {
+        } catch (IndexOutOfBoundsException ex) {
             System.out.println("IndexOutOfBoundsException : " + command);
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             ex.printStackTrace();
         }
         return task;
@@ -193,11 +191,11 @@ public class Parser {
     public static TaskType getTaskType(String command) {
         if (command.toUpperCase().startsWith("TODO")) {
             return TaskType.TODO;
-        }else if (command.toUpperCase().startsWith("DEADLINE")) {
+        } else if (command.toUpperCase().startsWith("DEADLINE")) {
             return TaskType.DEADLINE;
-        }else if (command.toUpperCase().startsWith("EVENT")) {
+        } else if (command.toUpperCase().startsWith("EVENT")) {
             return TaskType.EVENT;
-        }else {
+        } else {
             return TaskType.UNKNOWN;
         }
     }
@@ -209,19 +207,19 @@ public class Parser {
      * @return A CommandType representing the type of Command
      */
     public static CommandType parseCommandType(String command) {
-        if (command.isEmpty()){
+        if (command.isEmpty()) {
             return CommandType.EMPTY;
-        }else if (command.equalsIgnoreCase("BYE")) {
+        } else if (command.equalsIgnoreCase("BYE")) {
             return CommandType.EXIT;
-        }else if (command.equalsIgnoreCase("LIST")){
+        } else if (command.equalsIgnoreCase("LIST")) {
             return CommandType.LIST;
-        }else if (command.toUpperCase().startsWith("MARK")) {
+        } else if (command.toUpperCase().startsWith("MARK")) {
             return CommandType.MARK;
-        }else if (command.toUpperCase().startsWith("UNMARK")) {
+        } else if (command.toUpperCase().startsWith("UNMARK")) {
             return CommandType.UNMARK;
-        }else if (command.toUpperCase().startsWith("DELETE")) {
+        } else if (command.toUpperCase().startsWith("DELETE")) {
             return CommandType.DELETE;
-        }else if (command.toUpperCase().startsWith("EDIT")) {
+        } else if (command.toUpperCase().startsWith("EDIT")) {
             return CommandType.EDIT;
         } else {
             return CommandType.ADD;
@@ -252,15 +250,15 @@ public class Parser {
                 default:
                     throw new IllegalTaskException();
             }
-        }catch (IllegalTodoException e){
+        } catch (IllegalTodoException e) {
             Ui.printCommand("☹ OOPS!!! The description of a todo cannot be empty.");
-        }catch (IllegalDeadlineException e){
+        } catch (IllegalDeadlineException e) {
             Ui.printCommand("☹ OOPS!!! The description or date of a deadline cannot be empty.");
-        }catch (IllegalEventException e){
+        } catch (IllegalEventException e) {
             Ui.printCommand("☹ OOPS!!! The description or start date or end date of an event cannot be empty.");
-        }catch (IllegalTaskException e){
+        } catch (IllegalTaskException e) {
             Ui.printCommand("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
-        }catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             System.out.println("IndexOutOfBoundsException for task: " + command);
         }
         return task;
@@ -310,7 +308,6 @@ public class Parser {
             System.out.println("IndexOutOfBoundsException : " + command);
         }
     }
-
 
 
     /**

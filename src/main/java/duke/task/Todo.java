@@ -18,7 +18,7 @@ public class Todo extends Task {
         return getType().name() + " " + description;
     }
 
-    public TaskType getType(){
+    public TaskType getType() {
         return TaskType.TODO;
     }
 }

@@ -9,7 +9,6 @@ public class Storage {
     public static final String FILE_PATH = "data/duke.txt";
 
 
-
     /**
      * This method load scanner from the file at the source.
      *
@@ -25,7 +24,7 @@ public class Storage {
      *
      * @param textToAdd A String text representing the task to be added to the file.
      */
-    public static void writeInFile(String textToAdd){
+    public static void writeInFile(String textToAdd) {
         DukeFileReaderAndWriter.writeInFile(textToAdd);
     }
 
@@ -34,7 +33,7 @@ public class Storage {
      *
      * @param textToAppend A String text representing the task to be appended to the file.
      */
-    public static void appendInFile(String textToAppend){
+    public static void appendInFile(String textToAppend) {
         DukeFileReaderAndWriter.appendInFile(textToAppend);
     }
 
@@ -44,7 +43,7 @@ public class Storage {
      * @param lineNumber An int text representing the lineNumber to be edited.
      * @param editedText A String text representing the edited text.
      */
-    public static void editFile(int lineNumber, String editedText){
+    public static void editFile(int lineNumber, String editedText) {
         DukeFileReaderAndWriter.editFile(lineNumber, editedText);
     }
 

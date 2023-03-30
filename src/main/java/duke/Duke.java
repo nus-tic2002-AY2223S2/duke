@@ -21,7 +21,7 @@ public class Duke {
     public void run() {
         ui.welcome();
         boolean isExit = false;
-        while(!isExit) {
+        while (!isExit) {
             String fullCommand = ui.readCommand();
             Command command = Parser.parse(fullCommand);
             command.execute(tasks);

@@ -4,7 +4,6 @@ import duke.parser.Parser;
 import duke.storage.Storage;
 import duke.task.*;
 import duke.type.CommandType;
-import duke.type.TaskType;
 import duke.ui.Ui;
 
 import static duke.parser.Parser.*;
@@ -20,7 +19,7 @@ public class Command {
         this.command = command;
         if (commandType == CommandType.EXIT) {
             this.isExit = true;
-        }else {
+        } else {
             this.isExit = false;
         }
     }
@@ -38,7 +37,7 @@ public class Command {
      *
      * @param tasks A TaskList object representing list of tasks of the user.
      */
-    public void execute(TaskList tasks){
+    public void execute(TaskList tasks) {
         switch (commandType) {
             case EXIT:
                 //Exit program
@@ -74,10 +73,10 @@ public class Command {
      * This method edit task from users list of tasks.
      *
      * @param taskList A TaskList object representing list of tasks of the user.
-     * @param command A string representing user command.
+     * @param command  A string representing user command.
      */
     private void editTask(TaskList taskList, String command) {
-        try{
+        try {
             int index = parseIndex(command);
             Task task = taskList.getItem(index);
 
@@ -86,11 +85,9 @@ public class Command {
 
             String taskStr = taskList.getTaskString(index);
             Storage.editFile(index, taskStr);
-        }
-        catch (IndexOutOfBoundsException ex) {
+        } catch (IndexOutOfBoundsException ex) {
             System.out.println("IndexOutOfBoundsException : " + command);
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             ex.printStackTrace();
         }
     }
@@ -99,7 +96,7 @@ public class Command {
      * This method add task into users list of tasks.
      *
      * @param taskList A TaskList object representing list of tasks of the user.
-     * @param command A string representing user command.
+     * @param command  A string representing user command.
      */
     private void addTask(TaskList taskList, String command) {
         Task task = getTask(command);
@@ -116,10 +113,10 @@ public class Command {
      * This method delete task from users list of tasks.
      *
      * @param taskList A TaskList object representing list of tasks of the user.
-     * @param command A string representing user command.
+     * @param command  A string representing user command.
      */
     private void deleteTask(TaskList taskList, String command) {
-        try{
+        try {
             int index = parseIndex(command);
             Task task = taskList.removeItem(index);
 
@@ -127,11 +124,9 @@ public class Command {
             Storage.writeInFile(taskStr);
 
             Ui.printDeletedTaskString(taskList, task);
-        }
-        catch (IndexOutOfBoundsException ex) {
+        } catch (IndexOutOfBoundsException ex) {
             System.out.println("IndexOutOfBoundsException for task: " + command);
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             ex.printStackTrace();
         }
     }
@@ -140,15 +135,15 @@ public class Command {
      * This method mark task as done or not done.
      *
      * @param taskList A TaskList object representing list of tasks of the user.
-     * @param task A Task object representing task that needs to marked as done or not done.
+     * @param task     A Task object representing task that needs to marked as done or not done.
      */
-    private void markTask(TaskList taskList, Task task){
+    private void markTask(TaskList taskList, Task task) {
         if (task != null) {
             String printStr = "";
             if (task.isDone()) {
                 task.markAsDone();
                 printStr = "Nice! I've marked this task as done:";
-            }else {
+            } else {
                 task.unMarkDone();
                 printStr = "OK, I've marked this task as not done yet:";
             }
