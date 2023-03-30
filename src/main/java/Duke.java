@@ -31,7 +31,7 @@ public class Duke {
                 storage[inputCount] = line;
                 inputCount++;
                 System.out.println("added: " + line);
-            };
+            }
         }
     }
 }
