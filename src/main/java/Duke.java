@@ -16,7 +16,8 @@ public class Duke {
     //              Once NumberFormatException is caught, return FALSE as it is not a Number                       //
     //  Reference:  https://stackoverflow.com/questions/1102891/how-to-check-if-a-string-is-numeric-in-java        //
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static boolean isNumber(String strToCheck) {
+    public static boolean isNumber(String strToCheck)
+    {
         try {
             Integer.parseInt(strToCheck);
             return true;
@@ -170,18 +171,19 @@ public class Duke {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
 
         //variable initialization
         Scanner scanObj = new Scanner(System.in); //scanner
         var lists = new ArrayList<Task>(); //string initialize Task arraylist
 
-/*        String logo = " ____        _        \n"
+        String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);*/
+        System.out.println("Hello from\n" + logo);
 
         System.out.println(uiDivider);
         System.out.println("Hello! I'm Duke");
@@ -226,7 +228,8 @@ public class Duke {
                 }
 
             }
-            else if (checkInputForUnmarkAction(input)) {
+            else if (checkInputForUnmarkAction(input))
+            {
                 //This condition checks if the Unmark Action needs to be executed
 
                 //retrieve the index to be unmarked
