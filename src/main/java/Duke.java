@@ -14,12 +14,24 @@ public class Duke {
 
         String line = " ";
         Scanner in = new Scanner(System.in);
+
+        String[] storage = new String[100];
+        int inputCount = 0;
         while(!line.equals("bye")) {
             line = in.nextLine();
             if (line.equals("bye")) {
                 System.out.println("Bye. Hope to see you soon!");
             }
-            else System.out.println(line);
+            else if (line.equals("list")) {
+                for(int i = 0; i < inputCount; i++) {
+                    System.out.println(i+1 + ". " + storage[i]);
+                }
+            }
+            else {
+                storage[inputCount] = line;
+                inputCount++;
+                System.out.println("added: " + line);
+            };
         }
     }
 }
