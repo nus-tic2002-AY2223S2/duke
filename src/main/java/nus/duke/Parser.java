@@ -98,7 +98,6 @@ public class Parser {
                         DukeException.checkPartsRequirement(partsInDescription.length, 2);
                         // if there is deadline task: skip "deadline" and extract the task and by
                         int indexBy = Arrays.asList(wordsInDescription).indexOf("/by");
-                        //duty = new String();
                         for (int i = 1; i < indexBy; i++) {
                             taskJob += wordsInDescription[i] + " ";
                         }
@@ -118,7 +117,7 @@ public class Parser {
                     } catch (ArrayIndexOutOfBoundsException obe) {
                         System.out.println("A deadline command must provide a deadline date (/by)!");
                     } catch (IncompleteDescriptionException ide) {
-                        System.out.println(ide);
+                        System.out.println("A deadline must contain only 1 task and only 1 deadline date (/by)!");
                     } catch (NoTaskException nte) {
                         System.out.println("There is no Task .");
                     } catch (DukeException de) {
@@ -135,7 +134,6 @@ public class Parser {
                         DukeException.checkDescriptionExist(wordsInDescription.length, 2); //handle exception: event only)
                         DukeException.checkPartsRequirement(partsInDescription.length, 3);
                         // if there is event duty: skip "event" and put the duty in taskArray
-                        //String duty = new String();
                         for (int i = 1; i < indexFrom; i++) {
                             taskJob += wordsInDescription[i] + " ";
                         }

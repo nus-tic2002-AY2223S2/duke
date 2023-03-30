@@ -127,6 +127,7 @@ public class Command {
                 // *************************
                 case FIND:
                     if (findItem != null) {
+                        System.out.println("Here are the matching tasks in your list:");
                         for (int i = 1; i <= tl.getSize(); i++) {
                             if (TaskList.tasksArray.get(i - 1).description.contains(findItem)) {
                                 System.out.println(i + "." + TaskList.tasksArray.get(i - 1).toString());
@@ -198,4 +199,23 @@ public class Command {
     public boolean isExit() {
         return this.isExit;
     }
+
+    public void detectDuplicates(TaskList tl) {
+        for (int i = 0; i < tl.getSize() - 1; i++ ) {
+            if (tl.get(i).description.equals(tl.get(tl.getSize() - 1).description)) {
+                System.out.println("\nImportant message: Duplicate task detected! Are you sure you want to add this task? (Y/N)" );
+                Scanner in = new Scanner(System.in);
+                String answer = in.nextLine().toUpperCase();
+                if (answer.equals("N")) {
+                    tl.remove(tl.getSize()-1);
+                    System.out.println("Duplicate task is removed!");
+                } else {
+                    System.out.println("Duplicate task is added!");
+                }
+                break;
+            }
+        }
+    }
+
+
 }

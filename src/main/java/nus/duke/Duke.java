@@ -40,6 +40,7 @@ public class Duke {
                 ui.showLine();
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, ui, storage);
+                c.detectDuplicates(tasks);
                 Storage.save(tasks, filePath);
                 isExit = c.isExit();
             } catch (DukeException e) {
