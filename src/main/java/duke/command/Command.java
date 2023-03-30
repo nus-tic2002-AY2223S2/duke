@@ -103,7 +103,7 @@ public class Command {
         if (task != null) {
             taskList.addItem(task);
 
-            Storage.appendInFile(command + "@" + task.isDone() + System.lineSeparator());
+            Storage.appendInFile(command + IS_EXIT_SEPARATOR + task.isDone() + System.lineSeparator());
 
             Ui.printNewTaskString(taskList, task);
         }

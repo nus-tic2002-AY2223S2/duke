@@ -27,6 +27,8 @@ public class Parser {
     public static final String FROM_COMMAND = "/from";
     public static final String TO_COMMAND = "/to";
 
+    public static final String IS_EXIT_SEPARATOR = "@";
+
 
     /**
      * This method parse the user command
@@ -36,8 +38,8 @@ public class Parser {
      */
     public static Command parse(String command) {
         CommandType commandType = parseCommandType(command);
-        Command c = new Command(commandType, command);
-        return c;
+        Command commandObj = new Command(commandType, command);
+        return commandObj;
     }
 
     /**
@@ -46,10 +48,17 @@ public class Parser {
      * @param command A string representing user command.
      * @return index of the task
      */
-    public static int parseIndex(String command) {
+    public static int parseIndex(String command) throws IndexOutOfBoundsException, NumberFormatException {
         String numberStr = command.split(" ")[1].trim();
         int index = Integer.parseInt(numberStr) - 1;
         return index;
+    }
+
+    private static void parseAndMarkTask(String markString, Task task) {
+        boolean markAsDone = Boolean.parseBoolean(markString);
+        if (markAsDone) {
+            task.markAsDone();
+        }
     }
 
     /**
@@ -59,22 +68,19 @@ public class Parser {
      * @return A Todo object parsed from the user input.
      */
     public static Todo parseTodo(String command) throws IndexOutOfBoundsException, IllegalTodoException, NumberFormatException {
-        String[] commandStr = command.split(" ");
-        if (commandStr.length < 2) {
+        String[] commandStringList = command.split(" ");
+        if (commandStringList.length < 2) {
             throw new IllegalTodoException();
         }
 
-        String[] taskStr = commandStr[1].split("@");
+        String[] taskStringList = commandStringList[1].split(IS_EXIT_SEPARATOR);
+        String description = taskStringList[0].trim();
 
-        String description = taskStr[0].trim();
         Todo todo = new Todo(description);
 
-        if (taskStr.length > 1) {
-            String markAsDone = taskStr[1].trim();
-            boolean mark = Boolean.parseBoolean(markAsDone);
-            if (mark) {
-                todo.markAsDone();
-            }
+        if (taskStringList.length > 1) {
+            String markString = taskStringList[1].trim();
+            parseAndMarkTask(markString, todo);
         }
 
         return todo;
@@ -87,26 +93,23 @@ public class Parser {
      * @return A Deadline object parsed from the user input.
      */
     public static Deadline parseDeadline(String command) throws IndexOutOfBoundsException, IllegalDeadlineException {
-        String[] deadlines = command.split(BY_COMMAND);
-        if (deadlines.length < 2) {
+        String[] commandStringList = command.split(BY_COMMAND);
+        if (commandStringList.length < 2) {
             throw new IllegalDeadlineException();
         }
-        String[] commandStr = deadlines[0].split(" ");
-        if (commandStr.length < 2) {
+        String[] taskStringList = commandStringList[0].split(" ");
+        if (taskStringList.length < 2) {
             throw new IllegalDeadlineException();
         }
-        String description = deadlines[0].replaceFirst(commandStr[0], "").trim();
+        String description = commandStringList[0].replaceFirst(taskStringList[0], "").trim();
 
-        String[] byStr = deadlines[1].split("@");
-        String by = formatDateTime(byStr[0].trim());
+        String[] deadlineStringList = commandStringList[1].split(IS_EXIT_SEPARATOR);
+        String by = formatDateTime(deadlineStringList[0].trim());
         Deadline deadline = new Deadline(description, by);
 
-        if (byStr.length > 1) {
-            String markAsDone = byStr[1].trim();
-            boolean mark = Boolean.parseBoolean(markAsDone);
-            if (mark) {
-                deadline.markAsDone();
-            }
+        if (deadlineStringList.length > 1) {
+            String markString = deadlineStringList[1].trim();
+            parseAndMarkTask(markString, deadline);
         }
 
         return deadline;
@@ -119,33 +122,31 @@ public class Parser {
      * @return A Event object parsed from the user input.
      */
     public static Event parseEvent(String command) throws IndexOutOfBoundsException, IllegalEventException {
-        String[] events = command.split(FROM_COMMAND);
-        if (events.length < 2) {
+        String[] commandStringList = command.split(FROM_COMMAND);
+        if (commandStringList.length < 2) {
             throw new IllegalEventException();
         }
-        String[] commandStr = events[0].split(" ");
-        if (commandStr.length < 2) {
+        String[] taskStringList = commandStringList[0].split(" ");
+        if (taskStringList.length < 2) {
             throw new IllegalEventException();
         }
-        String description = events[0].replaceFirst(commandStr[0], "").trim();
 
-        String[] dates = events[1].split(TO_COMMAND);
+        String description = commandStringList[0].replaceFirst(taskStringList[0], "").trim();
+
+        String[] dates = commandStringList[1].split(TO_COMMAND);
         if (dates.length < 2) {
             throw new IllegalEventException();
         }
         String fromDate = formatDateTime(dates[0].trim());
 
-        String[] toStr = dates[1].split("@");
-        String toDate = formatDateTime(toStr[0].trim());
+        String[] toDateStringList = dates[1].split(IS_EXIT_SEPARATOR);
+        String toDate = formatDateTime(toDateStringList[0].trim());
 
         Event event = new Event(description, fromDate, toDate);
 
-        if (toStr.length > 1) {
-            String markAsDone = toStr[1].trim();
-            boolean mark = Boolean.parseBoolean(markAsDone);
-            if (mark) {
-                event.markAsDone();
-            }
+        if (toDateStringList.length > 1) {
+            String markString = toDateStringList[1].trim();
+            parseAndMarkTask(markString, event);
         }
 
         return event;
@@ -164,9 +165,9 @@ public class Parser {
         command = command.toUpperCase();
         Task task = null;
         boolean markAsDone = commandType == CommandType.MARK ? true : false;
+
         try {
-            String numberStr = command.split(" ")[1].trim();
-            int index = Integer.parseInt(numberStr) - 1;
+            int index = parseIndex(command);
             task = taskList.getItem(index);
             if (markAsDone) {
                 task.markAsDone();
@@ -178,6 +179,7 @@ public class Parser {
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
         }
+
         return task;
     }
 
@@ -318,12 +320,10 @@ public class Parser {
      */
     public static String formatDateTime(String datetime) {
         String formattedDate = datetime;
-
         SimpleDateFormat fromUser = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat myFormat = new SimpleDateFormat("MMM d yyyy");
 
         try {
-
             formattedDate = myFormat.format(fromUser.parse(datetime));
         } catch (ParseException e) {
             Ui.printCommand("☹ OOPS!!! Invalid DateTime format (DateTimeParseException) --> " + datetime);
