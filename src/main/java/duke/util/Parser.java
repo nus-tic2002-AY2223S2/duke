@@ -27,7 +27,7 @@ public class Parser {
             case "todo":
                 stringSplit[0] = userInput.replace("todo", "").trim();
                 if (stringSplit[0].equals("")) {
-                    throw new DukeException("☹ OOPS!!! The description of a todo cannot be empty.");
+                    throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
                 }
                 break;
             case "deadline":
@@ -36,9 +36,9 @@ public class Parser {
                 formatDeadlineSplit[0] = formatDeadlineSplit[0].trim();
 
                 if (formatDeadlineSplit.length < 2) {
-                    throw new DukeException("☹ OOPS!!! Deadline is missing /by details, please try again");
+                    throw new DukeException("OOPS!!! Deadline is missing /by details, please try again");
                 } else if (formatDeadlineSplit.length > 2) {
-                    throw new DukeException("☹ OOPS!!! Deadline has too many parameters, please try again");
+                    throw new DukeException("OOPS!!! Deadline has too many parameters, please try again");
                 } else {
                     formatDeadlineSplit[1] = formatDeadlineSplit[1].replace("by", "").trim();
                     return formatDeadlineSplit;
@@ -48,12 +48,12 @@ public class Parser {
                 formatString = userInput.replace("event", "").trim();
                 String[] formatEventSplit = formatString.split("/from | /to");
                 if (!userInput.matches(".*from.*to.*")){
-                    throw new DukeException("☹ OOPS!!! Please make sure the sequence is correct /from /to, please try again.");
+                    throw new DukeException("OOPS!!! Please make sure the sequence is correct /from /to, please try again.");
                 }
                 if (formatEventSplit.length < 3) {
-                    throw new DukeException("☹ OOPS!!! Event is missing either from or to, please try again.");
+                    throw new DukeException("OOPS!!! Event is missing either from or to, please try again.");
                 } else if (formatEventSplit.length > 3) {
-                    throw new DukeException("☹ OOPS!!! Event has too many parameters, please try again.");
+                    throw new DukeException("OOPS!!! Event has too many parameters, please try again.");
                 } else {
                     formatEventSplit[0] = formatEventSplit[0].trim();
                     formatEventSplit[1] = formatEventSplit[1].trim();
@@ -118,7 +118,7 @@ public class Parser {
         String[] stringSplit = new String[1];
         stringSplit[0] = userInput.replace("todo", "").trim();
         if (stringSplit[0].equals("")) {
-            throw new DukeException("☹ OOPS!!! The description of a todo cannot be empty.");
+            throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
         } else {
             return new ToDo(stringSplit[0], "T");
         }
@@ -151,9 +151,17 @@ public class Parser {
         String[] formattedString = formatString(userInput, "event");
         String description = formattedString[0];
 
+
+
         String from = convertToDateTime(formattedString[1]);
         String to = convertToDateTime(formattedString[2]);
-        return new Event(description, "E", from, to);
+        boolean isDateTimeCorrect = compareDateTime(from,to);
+
+        if (!isDateTimeCorrect){
+            throw new DukeException("OOPS!!! Invalid DateTime, 'From' date/time cannot be after 'To' date/time. Please try again!");
+        }else{
+            return new Event(description, "E", from, to);
+        }
     }
 
 
@@ -174,9 +182,27 @@ public class Parser {
             date = df.parse(datetime);
             outputString = newDateFormat.format(date);
         } catch (ParseException e) {
-            throw new DukeException("☹ OOPS!!! Invalid DateTime format, Please follow this format: d/M/yyyy HHmm");
+            throw new DukeException("OOPS!!! Invalid DateTime format, Please follow this format: d/M/yyyy HHmm");
         }
         return outputString;
+    }
+
+    public boolean compareDateTime(String from, String to) throws DukeException {
+
+        DateFormat df = new SimpleDateFormat("dd MMM yyyy haa");
+        Date dateFrom;
+        Date dateTo;
+
+        try{
+            dateFrom =  df.parse(from);
+            dateTo = df.parse(to);
+
+        }catch (ParseException e) {
+            throw new DukeException("OOPS!!! Invalid DateTime format, Please follow this format: d/M/yyyy HHmm");
+        }
+
+
+        return dateFrom.before(dateTo);
     }
 
 }

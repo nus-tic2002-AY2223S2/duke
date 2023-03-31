@@ -19,7 +19,7 @@ public class Ui {
     }
 
     public void showLoadingError() {
-        System.out.println("☹ OOPS!!! Error loading save file, please check if the file is in the correct path");
+        System.out.println("OOPS!!! Error loading save file, please check if the file is in the correct path");
     }
 
     public String readCommand() {

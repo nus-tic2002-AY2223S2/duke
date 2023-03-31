@@ -37,6 +37,11 @@ application {
     mainClassName = "seedu.duke.Duke"
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': application.mainClassName
+    }
+}
 shadowJar {
     archiveBaseName = "duke"
     archiveClassifier = null

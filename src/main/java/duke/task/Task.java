@@ -56,6 +56,9 @@ public class Task {
      * @throws DukeException if the input string does not match "HIGH", "H", "MEDIUM", "M", "LOW", "L".
      */
     public void setPriority(String p) throws DukeException {
+
+        assert p != null : "priority is null!";
+        
         switch (p) {
             case "HIGH":
             case "H":
@@ -77,7 +80,7 @@ public class Task {
                 priority = null;
                 break;
             default:
-                throw new DukeException("☹ OOPS!!! Please use either HIGH,MEDIUM,LOW when setting priority");
+                throw new DukeException("OOPS!!! Please use either HIGH,MEDIUM,LOW when setting priority");
 
         }
     }

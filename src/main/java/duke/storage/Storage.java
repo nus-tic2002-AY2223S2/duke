@@ -38,7 +38,7 @@ public class Storage {
                 if (isFileCreated) {
                     System.out.println("New save file created: " + duke_save.getAbsoluteFile());
                 } else {
-                    throw new DukeException("☹ OOPS!!! Failed to create file, Please check the path and folder permission");
+                    throw new DukeException("OOPS!!! Failed to create file, Please check the path and folder permission");
                 }
             } catch (IOException | DukeException io) {
                 System.out.println(io.getMessage());
@@ -47,7 +47,7 @@ public class Storage {
     }
 
     /**
-     * Save user's task list into a file.
+     * Save user's task into a file.
      *
      * @param userTask the user's task list
      */
@@ -92,14 +92,17 @@ public class Storage {
             }
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
-                //System.out.println(data);
                 String[] formatSaveDataSplit = data.split("\\|");
+                assert formatSaveDataSplit.length < 0 : "Empty save data!";
+
                 //Remove all blank spaces
                 for (int i = 0; i < formatSaveDataSplit.length; i++) {
                     formatSaveDataSplit[i] = formatSaveDataSplit[i].trim();
                 }
 
                 String description = formatSaveDataSplit[3];
+
+
 
                 if (formatSaveDataSplit.length == 4) {
                     t = new ToDo(description, "T");
@@ -130,7 +133,7 @@ public class Storage {
             }
             myReader.close();
         } catch (Exception e) {
-            System.out.println("☹ OOPS!!! an error occurred while reading the save file.");
+            System.out.println("OOPS!!! an error occurred while reading the save file.");
         }
         return tasks;
     }

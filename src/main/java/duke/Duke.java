@@ -19,7 +19,7 @@ public class Duke {
     private Ui ui;
 
     /**
-     * The duke.Duke class represents the main component of the duke.Duke application.
+     * The Duke class represents the main component of the duke.Duke application.
      *
      * @param filename the name of the file to store the data.
      * @throws DukeException if there is an error creating the directory or initializing the storage.
@@ -33,7 +33,7 @@ public class Duke {
             if (isDirCreated) {
                 System.out.println("Directory created!");
             } else {
-                throw new DukeException("☹ OOPS!!! Failed to create directory, please check your folder permission!");
+                throw new DukeException("OOPS!!! Failed to create directory, please check your folder permission!");
             }
         }
         storage = new Storage(filename);
@@ -44,7 +44,7 @@ public class Duke {
     }
 
     /**
-     * The run method handles the main functionality of the duke.Duke application.
+     * The run method handles the main functionality of the Duke application.
      * It reads user input and performs the actions based on the command entered by the user.
      */
     public void run() {
@@ -99,7 +99,7 @@ public class Duke {
                     //List out all the elements based on the user's find keyword.
                     tasks.listFindTasks(userInput);
                 } else {
-                    throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    throw new DukeException("OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
