@@ -16,190 +16,105 @@ public class Command {
     protected String findItem;
     protected String statItem;
 
-    public void execute(TaskList tl, Ui ui, Storage storage) throws DukeException, IOException {
-
-        if (task != null) {
-            switch (task) {
-                // *********************
-                // level 1 bye feature
-                // *********************
-                case BYE:
-                    this.isExit = true;
-                    break;
-                // **********************
-                // level 2 list feature
-                // **********************
-                case LIST:
-                    for (int i = 1; i < tl.getSize() + 1; i++) {
-                        System.out.println(i + "." + TaskList.tasksArray.get(i - 1).toString());
-                    }
-                    break;
-
-                // ***************************
-                // level 3 mark/unmark feature
-                // ***************************
-                case MARK:
-                    // *************************
-                    // level 5 ErrorHandle
-                    // *************************
-                    try {
-                        tl.get(taskNumber - 1).markAsDone();
-                    } catch (NumberFormatException nfe) {                 // corner case: mark nonINTEGER
-                        System.out.println("mark is a function key. Please indicate task number to be marked!");
-                    } catch (ArrayIndexOutOfBoundsException obe) {    // corner case: mark
-                        System.out.println("mark feature must contain a task number");
-                    } catch (
-                            IndexOutOfBoundsException obe) {          // corner case: mark 0,  taskNumber > taskArray.size
-                        System.out.println("Please give a valid task number that you want to mark!");
-                    }
-                    break;
-
-                case UNMARK:
-                    try {
-                        tl.get(taskNumber - 1).markAsNotDone();
-                    } catch (NumberFormatException nfe) {              // to handle exception: mark nonINTEGER
-                        System.out.println("unmark is a function key. Please indicate task number to be marked!");
-                    } catch (ArrayIndexOutOfBoundsException obe) {  // to handle exception: mark
-                        System.out.println("unmark feature must contain a task number");
-                    } catch (
-                            IndexOutOfBoundsException obe) {        // to handle exception:  taskNumber > taskArray.size
-                        System.out.println("Please give a valid task number that you want to unmark!");
-                    }
-                    break;
-
-                // **********************
-                // level 4 To-do feature
-                // **********************
-                case TODO:
-                    if (taskDescription != null) {
-                        tl.add(new ToDo(taskDescription));
-                        System.out.println("Got it. I've added this task:\n    "
-                                + taskDescription +
-                                "\nNow you have " + tl.getSize() + " tasks in the list.");
-                    }
-                    break;
-
-                // *************************
-                // level 4 Deadline feature
-                // *************************
-                case DEADLINE:
-                    if (taskDescription != null && taskDeadline != null) {
-                        tl.add(new Deadline(taskDescription, taskDeadline));
-                        System.out.println("Got it. I've added this task:\n    "
-                                + taskDescription + "/by " + taskDeadline +
-                                "\nNow you have " + tl.getSize() + " tasks in the list.");
-                    }
-                    break;
-
-                // *************************
-                // level 4 Event feature
-                // *************************
-                case EVENT:
-                    if (taskDescription != null && start != null && end != null) {
-                        tl.add(new Event(taskDescription, start, end));
-                        System.out.println("Got it. I've added this duty:\n    "
-                                + taskDescription + "/from " + start + " /to " + end +
-                                "\nNow you have " + tl.getSize() + " tasks in the list.");
-                    }
-                    break;
-
-                // *************************
-                // level 5 Delete feature
-                // *************************
-                case DELETE:
-                    try {
-                        System.out.println("Noted. I've removed this task:\n    "
-                                + tl.get(taskNumber - 1).toString() +
-                                "\nNow you have " + (tl.getSize() - 1) + " tasks in the list.");
-                        tl.remove(taskNumber - 1);
-                    } catch (NumberFormatException nfe) {                 // corner case: mark nonINTEGER
-                        System.out.println("delete is a function key. Please indicate task number to be deleted!");
-                    } catch (ArrayIndexOutOfBoundsException obe) {    // corner case: mark
-                        System.out.println("delete feature must contain a task number");
-                    } catch (
-                            IndexOutOfBoundsException obe) {          // corner case: mark 0,  taskNumber > taskArray.size
-                        System.out.println("Please give a valid task number that you want to delete!");
-                    }
-                    break;
-
-                // *************************
-                // level 9 Find feature
-                // *************************
-                case FIND:
-                    if (findItem != null) {
-                        System.out.println("Here are the matching tasks in your list:");
-                        for (int i = 1; i <= tl.getSize(); i++) {
-                            if (TaskList.tasksArray.get(i - 1).description.contains(findItem)) {
-                                System.out.println(i + "." + TaskList.tasksArray.get(i - 1).toString());
-                            }
-                        }
-                    }
-                    break;
-
-                // *************************
-                // level 9 Add Individual Feature: C-Statistics
-                // *************************
-                case STAT:
-                    System.out.println("Please select the number to get different Statistics:\n1. Stats for Tasks done.\n2. Stats for Tasks not done.\n" +
-                            "3. Stats for Todo.\n4. Stats for Deadline.\n5. Stats for Events" );
-                    Scanner in = new Scanner(System.in);
-                    this.statItem = in.nextLine();
-                    if (Integer.parseInt(statItem) == 1 ) {
-                        int stats = 0;
-                        for (int i = 1; i <= tl.getSize(); i++) {
-                            if (TaskList.tasksArray.get(i - 1).isDone) {
-                                stats ++;
-                            }
-                        }
-                        System.out.println("Number of Tasks done = " + stats);
-                    }
-                    else if (Integer.parseInt(statItem) == 2 ) {
-                        int stats = 0;
-                        for (int i = 1; i <= tl.getSize(); i++) {
-                            if (!TaskList.tasksArray.get(i - 1).isDone) {
-                                stats ++;
-                            }
-                        }
-                        System.out.println("Number of Tasks not done = " + stats);
-                    }
-                    else if (Integer.parseInt(statItem) == 3 ) {
-                        int stats = 0;
-                        for (int i = 1; i <= tl.getSize(); i++) {
-                            if (TaskList.tasksArray.get(i - 1) instanceof ToDo) {
-                                stats++;
-                            }
-                        }
-                        System.out.println("Number of Todo Task = " + stats);
-                    }
-                    else if (Integer.parseInt(statItem) == 4 ) {
-                        int stats = 0;
-                        for (int i = 1; i <= tl.getSize(); i++) {
-                            if (TaskList.tasksArray.get(i - 1) instanceof Deadline) {
-                                stats++;
-                            }
-                        }
-                        System.out.println("Number of Deadline Task = " + stats);
-                    }
-                    else if (Integer.parseInt(statItem) == 5 ) {
-                        int stats = 0;
-                        for (int i = 1; i <= tl.getSize(); i++) {
-                            if (TaskList.tasksArray.get(i - 1) instanceof Event) {
-                                stats++;
-                            }
-                        }
-                        System.out.println("Number of Event Task = " + stats);
-                    }
-                    break;
-
-                default:
-            }
-        }
-    }
-
     public boolean isExit() {
         return this.isExit;
     }
 
+    public void displayAddTask(TaskList tl, Ui ui) {
+        System.out.println("Got it. I've added this task:\n    "
+                + ui.displayCommand() +
+                "\nNow you have " + tl.getSize() + " tasks in the list.");
+    }
+
+    public void displayDeleteTask(TaskList tl) {
+        System.out.println("Noted. I've removed this task:\n    "
+                + tl.get(taskNumber - 1).toString() +
+                "\nNow you have " + (tl.getSize() - 1) + " tasks in the list.");
+    }
+
+    public void displayMarkTask(TaskList tl) {
+        System.out.println("Noted. I've " + Parser.wordsInDescription[0] + " task " + taskNumber);
+    }
+
+    public void unMarkCommand(TaskList tl) throws InvalidCodeException {
+        if (taskNumber == 0) {
+            throw new InvalidCodeException("Invalid code exception");
+        }
+        try {
+            tl.get(taskNumber - 1).markAsNotDone();
+        } catch (IndexOutOfBoundsException obe) {          // corner case: mark 0,  taskNumber > taskArray.size
+            System.out.println("Please give a valid task number that you want to unmark!");
+        }
+    }
+
+    public void markCommand(TaskList tl) throws InvalidCodeException {
+        // ***************************
+        // level 3 mark/unmark feature
+        // ***************************
+        if (this.taskNumber == 0) {
+            throw new InvalidCodeException("Invalid code exception");
+        }
+        try {
+            tl.get(this.taskNumber - 1).markAsDone();
+        } catch (IndexOutOfBoundsException obe) {          // corner case: mark 0,  taskNumber > taskArray.size
+            System.out.println("Please give a valid task number that you want to mark!");
+        }
+    }
+
+    // ********************************************
+    // level 9 Add Individual Feature: C-Statistics
+    // ********************************************
+    public void displayStatistic(TaskList tl) {
+        System.out.println("Please select the number to get different Statistics:\n1. Stats for Tasks done.\n2. Stats for Tasks not done.\n" +
+                "3. Stats for Todo.\n4. Stats for Deadline.\n5. Stats for Events");
+        Scanner in = new Scanner(System.in);
+        this.statItem = in.nextLine();
+        if (Integer.parseInt(statItem) == 1) {
+            int stats = 0;
+            for (int i = 1; i <= tl.getSize(); i++) {
+                if (TaskList.tasksArray.get(i - 1).isDone) {
+                    stats++;
+                }
+            }
+            System.out.println("Number of Tasks done = " + stats);
+        } else if (Integer.parseInt(statItem) == 2) {
+            int stats = 0;
+            for (int i = 1; i <= tl.getSize(); i++) {
+                if (!TaskList.tasksArray.get(i - 1).isDone) {
+                    stats++;
+                }
+            }
+            System.out.println("Number of Tasks not done = " + stats);
+        } else if (Integer.parseInt(statItem) == 3) {
+            int stats = 0;
+            for (int i = 1; i <= tl.getSize(); i++) {
+                if (TaskList.tasksArray.get(i - 1) instanceof ToDo) {
+                    stats++;
+                }
+            }
+            System.out.println("Number of Todo Task = " + stats);
+        } else if (Integer.parseInt(statItem) == 4) {
+            int stats = 0;
+            for (int i = 1; i <= tl.getSize(); i++) {
+                if (TaskList.tasksArray.get(i - 1) instanceof Deadline) {
+                    stats++;
+                }
+            }
+            System.out.println("Number of Deadline Task = " + stats);
+        } else if (Integer.parseInt(statItem) == 5) {
+            int stats = 0;
+            for (int i = 1; i <= tl.getSize(); i++) {
+                if (TaskList.tasksArray.get(i - 1) instanceof Event) {
+                    stats++;
+                }
+            }
+            System.out.println("Number of Event Task = " + stats);
+        }
+    }
+
+    // **************************************************
+    // level 10 Add Individual Feature: C-DetectDuplicate
+    // **************************************************
     public void detectDuplicates(TaskList tl) {
         for (int i = 0; i < tl.getSize() - 1; i++ ) {
             if (tl.get(i).description.equals(tl.get(tl.getSize() - 1).description)) {
@@ -218,4 +133,106 @@ public class Command {
     }
 
 
+    public void execute(TaskList tl, Ui ui, Storage storage) throws DukeException, IOException, InvalidCodeException {
+
+        if (task == null) {
+            throw new InvalidCodeException("Invalid code exception");
+        }
+
+        switch (task) {
+            // *********************
+            // level 1 bye feature
+            // *********************
+            case BYE:
+                this.isExit = true;
+                break;
+            // **********************
+            // level 2 list feature
+            // **********************
+            case LIST:
+                for (int i = 1; i < tl.getSize() + 1; i++) {
+                    System.out.println(i + "." + TaskList.tasksArray.get(i - 1).toString());
+                }
+                break;
+
+            case MARK:
+                markCommand(tl);
+                displayMarkTask(tl);
+                break;
+
+            case UNMARK:
+                unMarkCommand(tl);
+                displayMarkTask(tl);
+                break;
+
+            // **********************
+            // level 4 To-do feature
+            // **********************
+            case TODO:
+                if (taskDescription == null) {
+                    throw new InvalidCodeException("Invalid code exception");
+                }
+                tl.add(new ToDo(taskDescription));
+                displayAddTask(tl, ui);
+                break;
+
+            // *************************
+            // level 4 Deadline feature
+            // *************************
+            case DEADLINE:
+                if (taskDescription == null || taskDeadline == null) {
+                    throw new InvalidCodeException("Invalid code exception");
+                }
+                tl.add(new Deadline(taskDescription, taskDeadline));
+                displayAddTask(tl, ui);
+
+                break;
+
+            // *************************
+            // level 4 Event feature
+            // *************************
+            case EVENT:
+                if (taskDescription == null || start == null || end == null) {
+                    throw new InvalidCodeException("Invalid code exception");
+                }
+                tl.add(new Event(taskDescription, start, end));
+                displayAddTask(tl, ui);
+                break;
+
+            // *************************
+            // level 5 Delete feature
+            // *************************
+            case DELETE:
+                if (taskNumber == 0) {
+                    throw new InvalidCodeException("Invalid code exception");
+                }
+                try {
+                    displayDeleteTask(tl);
+                    tl.remove(taskNumber - 1);
+                } catch (IndexOutOfBoundsException obe) {          // corner case: mark 0,  taskNumber > taskArray.size
+                    System.out.println("Please give a valid task number that you want to delete!");
+                }
+                break;
+
+            // *************************
+            // level 9 Find feature
+            // *************************
+            case FIND:
+                if (findItem != null) {
+                    System.out.println("Here are the matching tasks in your list:");
+                    for (int i = 1; i <= tl.getSize(); i++) {
+                        if (TaskList.tasksArray.get(i - 1).description.contains(findItem)) {
+                            System.out.println(i + "." + TaskList.tasksArray.get(i - 1).toString());
+                        }
+                    }
+                }
+                break;
+
+            case STAT:
+                displayStatistic(tl);
+                break;
+
+            default:
+        }
+    }
 }

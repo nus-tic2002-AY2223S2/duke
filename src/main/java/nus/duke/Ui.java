@@ -30,6 +30,14 @@ public class Ui {
         return sentences;
     }
 
+    public String displayCommand() {
+        String display = "";
+        for(int i = 1; i < Parser.wordsInDescription.length; i++) {
+            display += Parser.wordsInDescription[i] + " ";
+        }
+        return display;
+    }
+
     public void showLine() {
         System.out.println("\n_________________________________________\n");
     }

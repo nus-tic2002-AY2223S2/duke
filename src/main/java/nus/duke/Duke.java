@@ -47,6 +47,8 @@ public class Duke {
                 ui.showError(e.getMessage());
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            } catch (InvalidCodeException e) {
+                ui.showError(e.getMessage());
             } finally {
                 ui.showLine();
             }

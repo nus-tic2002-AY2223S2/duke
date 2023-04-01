@@ -27,6 +27,61 @@ public class Storage {
         this.filename = new File(filePath);
     }
 
+    public void loadTodoInStorage (String taskString,String task, ArrayList a) {
+        if (taskString != null) {
+            ToDo td = new ToDo(taskString);
+            markStorageTaskIfDone(task, td);
+            a.add(td);
+        }
+    }
+
+    public void markStorageTaskIfDone (String task, Task t) {
+        if (task.charAt(4) == 'X') {
+            t.markAsDone();
+        }
+    }
+    public void loadDeadlineInStorage  (String taskString, String task, ArrayList a) throws ParseException {
+        if (taskString != null) {
+            String[] partInString = taskString.split("by:");
+            String date = partInString[1].substring(0, partInString[1].length() - 1);
+            String taskJob = partInString[0].substring(0, partInString[0].length() - 1);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM d yyyy 'at' hh:mm");
+            SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+            Date d = sdf.parse(date);
+            String formattedTime = output.format(d);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime deadLine = LocalDateTime.parse(formattedTime,formatter);
+
+            Deadline dl = new Deadline(taskJob, deadLine);
+            markStorageTaskIfDone(task, dl);
+            a.add(dl);
+        }
+    }
+
+    public void loadEventInStorage  (String taskString, String task, ArrayList a) throws ParseException {
+        if (taskString != null) {
+            String[] partInString = taskString.split("from:|to:");
+            String taskJob = partInString[0].substring(0, partInString[0].length() - 1);
+            String startDate = partInString[1].substring(0, partInString[1].length() - 1);
+            String endDate = partInString[2].substring(0, partInString[2].length() - 1);
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM d yyyy 'at' hh:mm");
+            SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
+            Date start = sdf.parse(startDate);
+            Date end = sdf.parse(endDate);
+            String formattedStartTime = output.format(start);
+            String formattedEndTime = output.format(end);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+            LocalDateTime startLDT = LocalDateTime.parse(formattedStartTime,formatter);
+            LocalDateTime endLDT = LocalDateTime.parse(formattedEndTime,formatter);
+
+            Event e = new Event(taskJob, startLDT, endLDT);
+            markStorageTaskIfDone(task, e);
+            a.add(e);
+        }
+    }
+
     public ArrayList load() throws DukeException, IOException, ParseException {
         Scanner s = new Scanner(filename);
         ArrayList a = new ArrayList<Task>();
@@ -38,57 +93,13 @@ public class Storage {
 
             switch (taskType) {
                 case "T":
-                    if (taskString != null) {
-                        ToDo td = new ToDo(taskString);
-                        if (task.charAt(4) == 'X') {
-                            td.markAsDone();
-                        }
-                        a.add(td);
-                    }
+                    loadTodoInStorage(taskString,task, a);
                     break;
                 case "D":
-                    if (taskString != null) {
-                        String[] partInString = taskString.split("by:");
-                        String date = partInString[1].substring(0, partInString[1].length() - 1);
-                        String taskJob = partInString[0].substring(0, partInString[0].length() - 1);
-
-                        SimpleDateFormat sdf = new SimpleDateFormat("MMM d yyyy 'at' hh:mm");
-                        SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-                        Date d = sdf.parse(date);
-                        String formattedTime = output.format(d);
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                        LocalDateTime deadLine = LocalDateTime.parse(formattedTime,formatter);
-                        Deadline dl = new Deadline(taskJob, deadLine);
-                        if (task.charAt(4) == 'X') {
-                            dl.markAsDone();
-                        }
-                        a.add(dl);
-                    }
+                    loadDeadlineInStorage(taskString, task, a);
                     break;
                 case "E":
-                    if (taskString != null) {
-                        String[] partInString = taskString.split("from:|to:");
-                        String taskJob = partInString[0].substring(0, partInString[0].length() - 1);
-                        String startDate = partInString[1].substring(0, partInString[1].length() - 1);
-                        String endDate = partInString[2].substring(0, partInString[2].length() - 1);
-                        SimpleDateFormat sdf = new SimpleDateFormat("MMM d yyyy 'at' hh:mm");
-                        SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd' 'HH:mm");
-                        Date start = sdf.parse(startDate);
-                        Date end = sdf.parse(endDate);
-                        String formattedStartTime = output.format(start);
-                        String formattedEndTime = output.format(end);
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
-                        LocalDateTime startLDT = LocalDateTime.parse(formattedStartTime,formatter);
-                        LocalDateTime endLDT = LocalDateTime.parse(formattedEndTime,formatter);
-
-                        Event e = new Event(taskJob, startLDT, endLDT);
-
-                        if (task.charAt(4) == 'X') {
-                            e.markAsDone();
-                        }
-                        a.add(e);
-                    }
+                    loadEventInStorage(taskString, task, a);
                     break;
                 default:
             }
