@@ -120,6 +120,9 @@ public class TasksList {
                 System.out.println(space + taskNum + "." + tasks);
             }
         }
+        if(taskNum == 0){
+            System.out.println(space + "No tasks found in the task lists!");
+        }
         Ui.showLine();
     }
 
@@ -134,7 +137,7 @@ public class TasksList {
             }
         }
         if(taskNum == 0){
-            System.out.println("No tasks found in the form of a schedule!");
+            System.out.println(space + "No tasks found in the form of a schedule!");
         }
         Ui.showLine();
     }
