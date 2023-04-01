@@ -1,7 +1,7 @@
-package TasksList;
+package taskslist;
 
-import Task.*;
-import UI.Ui;
+import task.*;
+import ui.Ui;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class TasksList {
     }
 
     /**
-     * To add all tasks from user input into tasksList
+     * Adds all tasks from user input into tasksList
      * @param task a Task object
      */
     public void taskAdd(Task task){
@@ -23,7 +23,7 @@ public class TasksList {
                 "\n Now you have " + tasksList.size() + " tasks in the list.");
     }
     /**
-     * Mark task from taskList
+     * Marks task from taskList
      * @param index , mark a specified task number
      */
     public void mark(int index){
@@ -33,7 +33,7 @@ public class TasksList {
     }
 
     /**
-     * unMark task from taskList
+     * unMarks task from taskList
      * @param index , unmark a specified task number
      */
     public void unmark(int index){
@@ -43,7 +43,7 @@ public class TasksList {
     }
 
     /**
-     * delete task from taskList
+     * Deletes task from taskList
      * @param index , delete a specified task number
      */
     public void deleteTask(int index){
@@ -66,7 +66,7 @@ public class TasksList {
     }
 
     /**
-     * Parse all tasks(String) from disk file to Task object
+     * Parses all tasks(String) from disk file to Task object
      *
      * @param nextLine each line of tasks saved in disk file
      * @return a Task object
@@ -101,7 +101,7 @@ public class TasksList {
     }
 
     /**
-     * To load all tasks from disk file and add into tasksList
+     * Loads all tasks from disk file and add into tasksList
      *
      * @param task a Task object
      */
@@ -109,8 +109,38 @@ public class TasksList {
         tasksList.add(task);
     }
 
+    public void findTask(String restCommand){
+        String space = " ";
+        Ui.showLine();
+        System.out.println(space + "Here are the matching tasks in your list:");
+        int taskNum = 0;
+        for (Task tasks : tasksList) {
+            if(tasks.getDescription().contains(restCommand)){
+                taskNum++;
+                System.out.println(space + taskNum + "." + tasks);
+            }
+        }
+        Ui.showLine();
+    }
+
+    public void scheduleView(LocalDateTime scheduleDate){
+        String space = " ";
+        Ui.showLine();
+        int taskNum = 0;
+        for (Task tasks : tasksList) {
+            if(scheduleDate.equals(tasks.getStartData()) || scheduleDate.equals(tasks.getEndData())){
+                taskNum++;
+                System.out.println(space + taskNum + "." + tasks);
+            }
+        }
+        if(taskNum == 0){
+            System.out.println("No tasks found in the form of a schedule!");
+        }
+        Ui.showLine();
+    }
+
     /**
-     * Print and show all tasks in the list to User
+     * Prints and show all tasks in the list to User
      */
     public void showToUser() {
         String space = " ";

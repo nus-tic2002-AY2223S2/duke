@@ -1,8 +1,8 @@
-package Storage;
+package storage;
 
-import Exception.DukeException;
-import UI.*;
-import TasksList.*;
+import exception.DukeException;
+import ui.*;
+import taskslist.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -31,26 +31,29 @@ public class Storage extends TasksList {
     }
 
     /**
-     * create file and see whether file create successful or not.
+     * Creates file and see whether file create successful or not.
      *
      * IOException in RuntimeException
      */
     public void fileCreate() {
         try {
             File file = new File(this.filePath);
-            if (file.createNewFile()) {
+            boolean isCreateNewFile = file.createNewFile();
+            if (isCreateNewFile) {
                 System.out.println("File created,file path: " + file.getAbsolutePath());
             }else{
                 System.out.println("File already exist,file path: " + file.getAbsolutePath());
             }
-            Ui.showLine();
         } catch (IOException e) {
             throw new DukeException("☹ OOPS!!! An error for file create occurred.");
+        }
+        finally {
+            Ui.showLine();
         }
     }
 
     /**
-     * Write all Tasks to disk file
+     * Writes all Tasks to disk file
      *
      * @param textToAdd each line of tasks
      *

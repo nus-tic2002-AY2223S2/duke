@@ -1,39 +1,42 @@
-package Parser;
+package parser;
 
-import enumCommand.Constant;
+import Enum.enumConstant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import Exception.DukeException;
+import exception.DukeException;
 
 public class Parser {
-    private static final HashMap<String,Constant> getConstantMap = getNewMap();
+    private static final HashMap<String, enumConstant> getConstantMap = getNewMap();
 
-    public static Constant getCommandConstant(String inputCommand){
+    public static enumConstant getCommandConstant(String inputCommand){
         String key = keyCommand(inputCommand);
-        return getConstantMap.getOrDefault(key,Constant.UNKNOWN);
+        return getConstantMap.getOrDefault(key, enumConstant.UNKNOWN);
     }
 
     /**
-     * save keyword and its enum in map
+     * Saves keyword and its enum in map
+     *
      * @return hashmap
      */
-    public static HashMap<String, Constant> getNewMap() {
-        HashMap<String, Constant> newMap= new HashMap<>();
-        newMap.put("bye", Constant.BYE);
-        newMap.put("list", Constant.LIST);
-        newMap.put("mark", Constant.MARK);
-        newMap.put("unmark", Constant.UNMARK);
-        newMap.put("delete", Constant.DELETE);
-        newMap.put("todo", Constant.TODO);
-        newMap.put("deadline", Constant.DEADLINE);
-        newMap.put("event", Constant.EVENT);
-        newMap.put("save", Constant.SAVE);
+    public static HashMap<String, enumConstant> getNewMap() {
+        HashMap<String, enumConstant> newMap= new HashMap<>();
+        newMap.put("bye", enumConstant.BYE);
+        newMap.put("list", enumConstant.LIST);
+        newMap.put("mark", enumConstant.MARK);
+        newMap.put("unmark", enumConstant.UNMARK);
+        newMap.put("delete", enumConstant.DELETE);
+        newMap.put("todo", enumConstant.TODO);
+        newMap.put("deadline", enumConstant.DEADLINE);
+        newMap.put("event", enumConstant.EVENT);
+        newMap.put("save", enumConstant.SAVE);
+        newMap.put("find", enumConstant.FIND);
+        newMap.put("schedule",enumConstant.SCHEDULE);
         return newMap;
     }
 
     /**
-     * @param inputCommand
+     * @param inputCommand command keyed by user
      * @return first keyword from input command
      */
     public static String keyCommand(String inputCommand){
@@ -41,7 +44,7 @@ public class Parser {
     }
 
     /**
-     * @param inputCommand
+     * @param inputCommand command keyed by user
      * @return another command split by space from input command
      * @throws DukeException
      */
