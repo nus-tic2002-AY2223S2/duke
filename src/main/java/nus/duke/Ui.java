@@ -20,7 +20,14 @@ public class Ui {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
 
-        System.out.println("Hello from\n" + logo);
+        String newlogo = " __        __   _____\n"
+            + "|  |  __  |  | |  __ \\ \n"
+            + "\\  \\_/  \\_/  / | |__| | \n"
+            + " \\    __    /  |  ___/\n"
+            + "  \\__/  \\__/   |_|      creation®\n";
+
+        //System.out.println("Hello from\n" + logo);
+        System.out.println("Hello from\n" + newlogo);
         System.out.println("Hello. This is Reminder created by WP.\nWhat can i do for you?");
     }
 

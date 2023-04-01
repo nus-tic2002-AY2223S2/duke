@@ -38,10 +38,12 @@ public class Command {
 
     public void unMarkCommand(TaskList tl) throws InvalidCodeException {
         if (taskNumber == 0) {
+            System.out.println("There is no task 0.");
             throw new InvalidCodeException("Invalid code exception");
         }
         try {
             tl.get(taskNumber - 1).markAsNotDone();
+            displayMarkTask(tl);
         } catch (IndexOutOfBoundsException obe) {          // corner case: mark 0,  taskNumber > taskArray.size
             System.out.println("Please give a valid task number that you want to unmark!");
         }
@@ -52,10 +54,12 @@ public class Command {
         // level 3 mark/unmark feature
         // ***************************
         if (this.taskNumber == 0) {
+            System.out.println("There is no task 0.");
             throw new InvalidCodeException("Invalid code exception");
         }
         try {
             tl.get(this.taskNumber - 1).markAsDone();
+            displayMarkTask(tl);
         } catch (IndexOutOfBoundsException obe) {          // corner case: mark 0,  taskNumber > taskArray.size
             System.out.println("Please give a valid task number that you want to mark!");
         }
@@ -157,12 +161,10 @@ public class Command {
 
             case MARK:
                 markCommand(tl);
-                displayMarkTask(tl);
                 break;
 
             case UNMARK:
                 unMarkCommand(tl);
-                displayMarkTask(tl);
                 break;
 
             // **********************

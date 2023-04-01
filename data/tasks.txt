@@ -1,7 +1,8 @@
-[T][X] abc 
+[T][ ] abc 
 [T][X] bcd 
 [T][X] sleep 
 [T][ ] play mobile legend at night 
-[D][ ] read book (by:Nov 11 2020 at 11:00)
-[E][ ] exam TIC 2002 (from:May 2 2023 at 11:00 to:May 3 2023 at 11:00)
-[E][ ] coding (from:Jan 1 2021 at 11:00 to:Feb 2 2021 at 11:00)
+[D][X] read book (by:Nov 11 2020 at 11:00)
+[E][X] exam TIC 2002 (from:May 2 2023 at 11:00 to:May 3 2023 at 11:00)
+[E][X] coding (from:Jan 1 2021 at 11:00 to:Feb 2 2021 at 11:00)
+[T][ ] 123 
