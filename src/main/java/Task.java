@@ -23,11 +23,23 @@ public class Task {
         }
     }
 
+    public String saveStatusIcon() {
+        if (isDone) {
+            return "| 1 |";
+        } else {
+            return "| 0 |";
+        }
+    }
+
     //https://www.freecodecamp.org/news/java-array-methods-how-to-print-an-array-in-java/
     @Override
     public String toString(){
         return getStatusIcon() + " " + description;
     }
 
+
+    public String toSave(){
+        return saveStatusIcon() + " " + description;
+    }
 
 }
