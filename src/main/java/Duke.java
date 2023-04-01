@@ -1,8 +1,17 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 
+//DUKE
 public class Duke {
+
+    //DUKE
     public static void main(String[] args) throws DukeException{
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -15,11 +24,14 @@ public class Duke {
         System.out.println("Hello! I'm Duke, the chatbot");
         System.out.println("What can I do for you?");
         //Create new array of tasks
-        //Task[] tasks = new Task[100];
         ArrayList<Task> tasks = new ArrayList<Task>();
         //Create int count
         int countTasks = 0;
         boolean toRun = true;
+
+        //Store tasks into file
+        createFile();
+
         //Take an input/command
         while(toRun) {
             Scanner in = new Scanner(System.in);
@@ -64,7 +76,7 @@ public class Duke {
                            System.out.println("Please give a task number to edit");
                        }
                        break;
-                   case "deadline" :
+                   case "deadline" : /* Level 4*/
                        String[] givenBy = command.split("/by"); // split the command at /by
                        String lastDay = givenBy[1]; // get the due date/day
                        String deadLineTask = givenBy[0].replace("deadline", "").trim(); //remove deadline to get the task
@@ -72,15 +84,14 @@ public class Duke {
                        storeTask(tasks, newTask, countTasks); //stores the new task into the list of tasks
                        ++countTasks;
                        break;
-                   case "todo" :
-                       //String todoTask = command.replace("todo",""); //remove todo to get the task
+                   case "todo" : /* Level 4*/
                        String[] splitTask = command.split(" ",2); //split by min 2 array
                        String todoTask = splitTask[1]; //get description
                        Task newtodoTask = new ToDo(todoTask);
                        storeTask(tasks, newtodoTask, countTasks); //stores the new task into the list of tasks
                        ++countTasks;
                        break;
-                   case "event" :
+                   case "event" : /* Level 4*/
                        String[] givenFrom = command.split("/from"); // split the command at /from
                        String eventTask = givenFrom[0].replace("event", "").trim();//remove event to get the task
                        String[] fromTo = givenFrom[1].split("/to"); //split at /to to get from and to
@@ -90,7 +101,7 @@ public class Duke {
                        storeTask(tasks, newEventTask, countTasks); //stores the new task into the list of tasks
                        ++countTasks;
                        break;
-                   case "delete" :
+                   case "delete" : /* Level 6*/
                        String[] splitDelete = command.split(" ",2); //split by min 2 array
                        String deleteTask = splitDelete[1].trim(); //get the position
                        int selectedNum = Integer.parseInt(deleteTask)-1; // from string to integer
@@ -100,7 +111,7 @@ public class Duke {
                    default:
                        checkCommand(command);
                }
-           } catch (DukeException e) {
+           } catch (DukeException e) { /* Level 5*/
                System.out.println("☹ OOPS!!! The description of a "  + firstCommand +" cannot be empty!");
                continue;
            } catch (ArrayIndexOutOfBoundsException e) {
@@ -110,16 +121,72 @@ public class Duke {
                System.out.println("☹ OOPS!!! The number is either greater than the number of tasks in the list.");
                continue;
            }
+            //save list into file
+            saveToFile(tasks); /* Level 7*/
 
         }
 
     }
+
+    //Create File START /* Level 7*/
+    public static void createFile() {
+        String directoryPath = "data";
+
+        try {
+            File dir = new File(directoryPath);
+
+            if (dir.exists()) {
+                System.out.println("File is already created");
+            } else {
+                dir.mkdirs();
+                System.out.println("File created successfully");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Save to file Error");
+        }
+
+    }
+    //Create File END
+
+    //Save tasks to file START
+    public static void saveToFile(ArrayList<Task> list) {
+        String filePath = "data\\duke.txt";
+        try {
+            File f = new File(filePath);
+            if (f.exists()) {
+                System.out.println("File is already created");
+            } else {
+                f.createNewFile();
+                System.out.println("File created successfully");
+            }
+
+            FileWriter fileWriter = new FileWriter(filePath);
+            BufferedWriter bW = new BufferedWriter(fileWriter);
+            String toSaveList = "";
+
+            for (int i = 0; i < list.size(); i++) {
+                toSaveList = list.get(i).toSave();
+                bW.write(toSaveList);
+                bW.newLine();
+                //System.out.println("Task saved successfully");
+            }
+
+            bW.close();
+
+        } catch (IOException e) {
+            System.out.println("Save to file Error");
+        }
+    }
+    //Save tasks to file END
+
     //store into array
     public static void storeTask(ArrayList<Task> yourTasks, Task newTask, int countTasks) {
-        //yourTasks[countTasks] = newTask;
         yourTasks.add(newTask);
         //print message
         addedTask(newTask, countTasks);
+
+
     }
     //end of storing into array
 
@@ -129,10 +196,8 @@ public class Duke {
 
         //check if description is empty
         if (givenCommand.contains("deadline")) {
-                //throw new DukeException("☹ OOPS!!! The description of a " + givenCommand+ " cannot be empty.");
                 System.out.println("☹ OOPS!!! The description of a "  + givenCommand +" cannot be empty.");
         } else {
-            //throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             System.out.println("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
     }
@@ -155,17 +220,16 @@ public class Duke {
     }
     public static void status(ArrayList<Task> chosenTask, boolean toMark, int digit) {
         if(toMark) {
-            //chosenTask[digit].mark();
             chosenTask.get(digit).mark();
             System.out.println("Nice! I've marked this task as done:");
         } else {
-            //chosenTask[digit].notMark();
             chosenTask.get(digit).notMark();
             System.out.println("Ok, I've marked this task as not done yet:");
         }
         toMark = false;
         String list = Integer.toString(digit+1);
         System.out.println(list + ". " + chosenTask.get(digit));
+
     }
 
     public static void addedTask(Task chosenTask, int count){
