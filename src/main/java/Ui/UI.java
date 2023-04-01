@@ -1,6 +1,9 @@
 package ui;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
+
 import exception.DukeException;
 public class Ui {
     public static void showWelcome(){
@@ -20,21 +23,37 @@ public class Ui {
      * Show to the user about Duke menu
      */
     public static void showUserMenu(){
+        Set<String> hashSet = new HashSet<>();
+        String space = " ";
         System.out.println("Please key in command followed as below:");
-        String LIST_ALL_TASKS = "1. List all existing tasks, enter list\n";
-        String TODO_TASK = "2. Add a todo task, enter todo XXX\n";
-        String DEADLINE_TASK = "3. Add a deadline task, enter deadline XXX /by \"yyyy-MM-dd HH:mm\"\n";
-        String EVENT_TASK = "4. Add a event task, enter event XXX /from \"yyyy-MM-dd HH:mm\" /to \"yyyy-MM-dd HH:mm\"\n";
-        String MARK_TASK = "5. Mark task, enter mark [task index]\n";
-        String UNMARK_TASK = "6. Unmark task, enter unmark [task index]\n";
-        String DELETE_TASK = "7. Delete task, enter delete [task index]\n";
-        String SCHEDULE_TASK = "8. View the schedule for a specific date, enter schedule \"yyyy-MM-dd HH:mm\"\n";
-        String SAVE_TASK = "9. Save task, enter save\n";
-        String EXIT = "10. To exit Duke, enter bye\n";
-        System.out.println(LIST_ALL_TASKS + TODO_TASK + DEADLINE_TASK + EVENT_TASK
-                + MARK_TASK + UNMARK_TASK + DELETE_TASK + SCHEDULE_TASK + SAVE_TASK + EXIT);
-
+        String LIST_ALL_TASKS = "List all existing tasks, enter list\n";
+        String TODO_TASK = "Add a todo task, enter todo XXX\n";
+        String DEADLINE_TASK = "Add a deadline task, enter deadline XXX /by \"yyyy-MM-dd HH:mm\"\n";
+        String EVENT_TASK = "Add a event task, enter event XXX /from \"yyyy-MM-dd HH:mm\" /to \"yyyy-MM-dd HH:mm\"\n";
+        String MARK_TASK = "Mark task, enter mark [task index]\n";
+        String UNMARK_TASK = "Unmark task, enter unmark [task index]\n";
+        String DELETE_TASK = "Delete task, enter delete [task index]\n";
+        String FIND_TASK = "Find task, enter find XXX\n";
+        String SCHEDULE_TASK = "View the schedule for a specific date, enter schedule \"yyyy-MM-dd HH:mm\"\n";
+        String SAVE_TASK = "Save task, enter save\n";
+        String EXIT = "To exit Duke, enter bye\n";
+        hashSet.add(LIST_ALL_TASKS);
+        hashSet.add(TODO_TASK);
+        hashSet.add(DEADLINE_TASK);
+        hashSet.add(EVENT_TASK);
+        hashSet.add(MARK_TASK);
+        hashSet.add(UNMARK_TASK);
+        hashSet.add(DELETE_TASK);
+        hashSet.add(FIND_TASK);
+        hashSet.add(SCHEDULE_TASK);
+        hashSet.add(SAVE_TASK);
+        hashSet.add(EXIT);
+        for(String s: hashSet){
+            System.out.print(space + s);
+        }
+        System.out.println();
     }
+
 
     /**
      * User key in full command
