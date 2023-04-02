@@ -70,4 +70,21 @@ public class DukeFileReaderAndWriter {
         }
     }
 
+    public static String readLine(int lineNumber) {
+        String line = "";
+        try {
+            createFile();
+
+            Path path = Path.of(Storage.FILE_PATH);
+            line = Files.lines(path)
+                    .skip(lineNumber)
+                    .findFirst()
+                    .get();
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        } finally {
+            return line;
+        }
+    }
+
 }

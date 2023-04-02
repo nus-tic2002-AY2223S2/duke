@@ -60,9 +60,36 @@ public class Command {
                 //Edit task in the list
                 editTask(tasks, command);
                 break;
+            case CLONE:
+                //Clone an existing task
+                cloneTask(tasks, command);
+                break;
         }
     }
 
+    /**
+     * This method clone an existing task
+     *
+     * @param taskList A TaskList object representing list of tasks of the user.
+     * @param command  A string representing user command. Clone command should be in the format "clone [index]"
+     */
+    private void cloneTask(TaskList taskList, String command) {
+        try {
+            int index = parseIndex(command);
+            Task task = taskList.getItem(index);
+
+            taskList.addItem(task);
+
+            String clonedLine = Storage.readLine(index);
+            Storage.appendInFile(clonedLine);
+
+            Ui.printNewTaskString(taskList, task);
+        } catch (IndexOutOfBoundsException ex) {
+            Ui.printCommand("IndexOutOfBoundsException for task: " + command);
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     /**
      * This method edit task from users list of tasks.

@@ -192,6 +192,8 @@ public class Parser {
             return CommandType.DELETE;
         } else if (command.toUpperCase().startsWith("EDIT")) {
             return CommandType.EDIT;
+        } else if (command.toUpperCase().startsWith("CLONE")) {
+            return CommandType.CLONE;
         } else {
             return CommandType.ADD;
         }

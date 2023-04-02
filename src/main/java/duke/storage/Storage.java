@@ -45,5 +45,14 @@ public class Storage {
         return DukeFileReaderAndWriter.load();
     }
 
+    /**
+     * This method read text at the given lineNumber of the file at the source.
+     *
+     * @param lineNumber An int text representing the lineNumber to be read.
+     */
+    public static String readLine(int lineNumber) {
+        return DukeFileReaderAndWriter.readLine(lineNumber);
+    }
+
 }
 
