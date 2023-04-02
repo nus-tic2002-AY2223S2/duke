@@ -81,7 +81,7 @@ public class Command {
             taskList.addItem(task);
 
             String clonedLine = Storage.readLine(index);
-            Storage.appendInFile(clonedLine);
+            Storage.appendInFile(clonedLine + System.lineSeparator());
 
             Ui.printNewTaskString(taskList, task);
         } catch (IndexOutOfBoundsException ex) {
