@@ -8,17 +8,6 @@ import java.util.Scanner;
 public class Storage {
     public static final String FILE_PATH = "data/duke.txt";
 
-
-    /**
-     * This method load scanner from the file at the source.
-     *
-     * @return A Scanner object created using the File as the source.
-     */
-    public Scanner load() {
-        return DukeFileReaderAndWriter.load();
-    }
-
-
     /**
      * This method write text in the file at the source.
      *
@@ -45,6 +34,15 @@ public class Storage {
      */
     public static void editFile(int lineNumber, String editedText) {
         DukeFileReaderAndWriter.editFile(lineNumber, editedText);
+    }
+
+    /**
+     * This method load scanner from the file at the source.
+     *
+     * @return A Scanner object created using the File as the source.
+     */
+    public Scanner load() {
+        return DukeFileReaderAndWriter.load();
     }
 
 }

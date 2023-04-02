@@ -1,21 +1,20 @@
 package duke.parser;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import duke.command.Command;
-import duke.exception.IllegalTaskException;
-import duke.task.TaskList;
-import duke.type.TaskType;
 import duke.exception.IllegalDeadlineException;
 import duke.exception.IllegalEventException;
+import duke.exception.IllegalTaskException;
 import duke.exception.IllegalTodoException;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.Todo;
 import duke.type.CommandType;
+import duke.type.TaskType;
 import duke.ui.Ui;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * A <code>duke.parser.Parser</code> class deals with making sense of the user command
@@ -55,8 +54,8 @@ public class Parser {
     }
 
     private static void parseAndMarkTask(String markString, Task task) {
-        boolean markAsDone = Boolean.parseBoolean(markString);
-        if (markAsDone) {
+        boolean isMarkAsDone = Boolean.parseBoolean(markString);
+        if (isMarkAsDone) {
             task.markAsDone();
         }
     }
@@ -69,6 +68,7 @@ public class Parser {
      */
     public static Todo parseTodo(String command) throws IndexOutOfBoundsException, IllegalTodoException, NumberFormatException {
         String[] commandStringList = command.split(" ");
+        //assert commandStringList.length >= 2 : "☹ OOPS!!! The description of a todo cannot be empty.";
         if (commandStringList.length < 2) {
             throw new IllegalTodoException();
         }
@@ -154,37 +154,6 @@ public class Parser {
 
 
     /**
-     * This method parse the user Mark/Unmark command and modify Task object
-     *
-     * @param taskList    A TaskList object representing list of tasks.
-     * @param command     A string representing the user command.
-     * @param commandType A string representing the type of user command.
-     * @return A modified Task object based on user input.
-     */
-    public static Task getMarkTask(TaskList taskList, String command, CommandType commandType) {
-        command = command.toUpperCase();
-        Task task = null;
-        boolean markAsDone = commandType == CommandType.MARK ? true : false;
-
-        try {
-            int index = parseIndex(command);
-            task = taskList.getItem(index);
-            if (markAsDone) {
-                task.markAsDone();
-            } else {
-                task.unMarkDone();
-            }
-        } catch (IndexOutOfBoundsException ex) {
-            System.out.println("IndexOutOfBoundsException : " + command);
-        } catch (NumberFormatException ex) {
-            ex.printStackTrace();
-        }
-
-        return task;
-    }
-
-
-    /**
      * This method parse user command and returns the type of task
      *
      * @param command A string representing the user command.
@@ -261,56 +230,57 @@ public class Parser {
         } catch (IllegalTaskException e) {
             Ui.printCommand("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("IndexOutOfBoundsException for task: " + command);
+            Ui.printCommand("IndexOutOfBoundsException for task: " + command);
         }
         return task;
     }
 
+    /**
+     * This method check if the command is a valid edit command
+     *
+     * @param command  A string representing the user command.
+     * @param taskType Type of task to be edited.
+     * @return A boolean indicating whether the edit command is valid or not.
+     */
+    public static boolean checkValidEditCommand(String command, TaskType taskType) {
+        boolean isValid = false;
+        if (command.contains(DESCRIPTION_COMMAND)) {
+            isValid = true;
+        } else if (command.contains(BY_COMMAND) && taskType == TaskType.DEADLINE) {
+            isValid = true;
+        } else if ((command.contains(FROM_COMMAND) || command.contains(TO_COMMAND)) && taskType == TaskType.EVENT) {
+            isValid = true;
+        }
+        return isValid;
+    }
 
     /**
      * This method parse edit command and edit the task
      *
      * @param command A string representing the user command.
      */
-    public static void parseEditTask(String command, Task task) {
-        try {
-
-            if (command.contains(DESCRIPTION_COMMAND)) {
-                String taskElements[] = command.split(DESCRIPTION_COMMAND);
-                String description = taskElements[taskElements.length - 1].trim();
-                task.setDescription(description);
-            }
-
-            TaskType taskType = task.getType();
-            switch (taskType) {
-                case DEADLINE:
-                    if (command.contains(BY_COMMAND)) {
-                        String taskElements[] = command.split(BY_COMMAND);
-                        String by = formatDateTime(taskElements[taskElements.length - 1].trim());
-                        Deadline deadline = (Deadline) task;
-                        deadline.setBy(by);
-                    }
-                    break;
-                case EVENT:
-                    Event event = (Event) task;
-                    if (command.contains(FROM_COMMAND)) {
-                        String taskElements[] = command.split(FROM_COMMAND);
-                        String from = formatDateTime(taskElements[taskElements.length - 1].trim());
-                        event.setEndDateTime(from);
-                    } else if (command.contains(TO_COMMAND)) {
-                        String taskElements[] = command.split(TO_COMMAND);
-                        String to = formatDateTime(taskElements[taskElements.length - 1].trim());
-                        event.setStartDateTime(to);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        } catch (IndexOutOfBoundsException ex) {
-            System.out.println("IndexOutOfBoundsException : " + command);
+    public static void parseEditTask(String command, Task task) throws IndexOutOfBoundsException {
+        if (command.contains(DESCRIPTION_COMMAND)) {
+            String[] taskElements = command.split(DESCRIPTION_COMMAND);
+            String description = taskElements[taskElements.length - 1].trim();
+            task.setDescription(description);
+        } else if (command.contains(BY_COMMAND)) {
+            String[] taskElements = command.split(BY_COMMAND);
+            String by = formatDateTime(taskElements[taskElements.length - 1].trim());
+            Deadline deadline = (Deadline) task;
+            deadline.setBy(by);
+        } else if (command.contains(FROM_COMMAND)) {
+            Event event = (Event) task;
+            String[] taskElements = command.split(FROM_COMMAND);
+            String from = formatDateTime(taskElements[taskElements.length - 1].trim());
+            event.setEndDateTime(from);
+        } else if (command.contains(TO_COMMAND)) {
+            Event event = (Event) task;
+            String[] taskElements = command.split(TO_COMMAND);
+            String to = formatDateTime(taskElements[taskElements.length - 1].trim());
+            event.setStartDateTime(to);
         }
     }
-
 
     /**
      * This method format valid date/datetime string into another format.
@@ -331,5 +301,4 @@ public class Parser {
 
         return formattedDate;
     }
-
 }

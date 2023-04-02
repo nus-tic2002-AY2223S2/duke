@@ -10,7 +10,7 @@ import static duke.parser.Parser.getTask;
  * e.g., it has operations to add/delete tasks in the list
  */
 public class TaskList {
-    private ArrayList<Task> tasklist = new ArrayList<>();
+    private final ArrayList<Task> tasklist = new ArrayList<>();
 
     public TaskList(Scanner s) {
         while (s.hasNext()) {

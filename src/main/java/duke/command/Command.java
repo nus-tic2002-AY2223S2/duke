@@ -1,8 +1,8 @@
 package duke.command;
 
-import duke.parser.Parser;
 import duke.storage.Storage;
-import duke.task.*;
+import duke.task.Task;
+import duke.task.TaskList;
 import duke.type.CommandType;
 import duke.ui.Ui;
 
@@ -17,11 +17,7 @@ public class Command {
     public Command(CommandType commandType, String command) {
         this.commandType = commandType;
         this.command = command;
-        if (commandType == CommandType.EXIT) {
-            this.isExit = true;
-        } else {
-            this.isExit = false;
-        }
+        this.isExit = commandType == CommandType.EXIT;
     }
 
     public CommandType getCommandType() {
@@ -50,8 +46,7 @@ public class Command {
             case MARK:
             case UNMARK:
                 //Mark or Unmark duke.task.Task
-                Task task = Parser.getMarkTask(tasks, command, commandType);
-                markTask(tasks, task);
+                markTask(tasks, commandType);
                 break;
             case DELETE:
                 //Delete duke.task.Task
@@ -73,12 +68,17 @@ public class Command {
      * This method edit task from users list of tasks.
      *
      * @param taskList A TaskList object representing list of tasks of the user.
-     * @param command  A string representing user command.
+     * @param command  A string representing user command. Edit command should be in the format "edit [index] [/description || /by || /to || /from] update-text"
      */
     private void editTask(TaskList taskList, String command) {
         try {
             int index = parseIndex(command);
             Task task = taskList.getItem(index);
+
+            if (!checkValidEditCommand(command, task.getType())) {
+                Ui.printCommand("Invalid edit command : " + command);
+                return;
+            }
 
             parseEditTask(command, task);
             Ui.printEditedTaskString(task);
@@ -86,7 +86,7 @@ public class Command {
             String taskStr = taskList.getTaskString(index);
             Storage.editFile(index, taskStr);
         } catch (IndexOutOfBoundsException ex) {
-            System.out.println("IndexOutOfBoundsException : " + command);
+            Ui.printCommand("IndexOutOfBoundsException for task: " + command);
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
         }
@@ -134,13 +134,17 @@ public class Command {
     /**
      * This method mark task as done or not done.
      *
-     * @param taskList A TaskList object representing list of tasks of the user.
-     * @param task     A Task object representing task that needs to marked as done or not done.
+     * @param taskList    A TaskList object representing list of tasks of the user.
+     * @param commandType A string representing the type of user command.
      */
-    private void markTask(TaskList taskList, Task task) {
-        if (task != null) {
+    private void markTask(TaskList taskList, CommandType commandType) {
+        try {
+            int index = parseIndex(command);
+            Task task = taskList.getItem(index);
+
             String printStr = "";
-            if (task.isDone()) {
+            boolean isMarkAsDone = commandType == CommandType.MARK;
+            if (isMarkAsDone) {
                 task.markAsDone();
                 printStr = "Nice! I've marked this task as done:";
             } else {
@@ -148,10 +152,13 @@ public class Command {
                 printStr = "OK, I've marked this task as not done yet:";
             }
 
-            String taskStr = taskList.getTaskListString();
-            Storage.writeInFile(taskStr);
-
+            Storage.writeInFile(taskList.getTaskListString());
             Ui.printCommand(printStr + System.lineSeparator() + "\t" + task);
+
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println("IndexOutOfBoundsException : " + command);
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
         }
     }
 

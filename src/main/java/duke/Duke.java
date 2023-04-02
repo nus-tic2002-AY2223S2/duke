@@ -8,9 +8,9 @@ import duke.ui.Ui;
 
 public class Duke {
 
-    private Storage storage;
-    private TaskList tasks;
-    private Ui ui;
+    private final Storage storage;
+    private final TaskList tasks;
+    private final Ui ui;
 
     public Duke() {
         ui = new Ui();
@@ -18,8 +18,14 @@ public class Duke {
         tasks = new TaskList(storage.load());
     }
 
+    public static void main(String[] args) {
+        new Duke().run();
+
+    }
+
     public void run() {
         ui.welcome();
+
         boolean isExit = false;
         while (!isExit) {
             String fullCommand = ui.readCommand();
@@ -27,11 +33,6 @@ public class Duke {
             command.execute(tasks);
             isExit = command.isExit();
         }
-    }
-
-    public static void main(String[] args) {
-        new Duke().run();
-
     }
 
 }

@@ -1,7 +1,8 @@
 package duke.ui;
 
-import duke.task.TaskList;
 import duke.task.Task;
+import duke.task.TaskList;
+
 import java.util.Scanner;
 
 /**
@@ -12,36 +13,7 @@ public class Ui {
     private TaskList tasks;
 
     /**
-     * This method shows welcome message to user.
-     *
-     */
-    public void welcome(){
-        System.out.println("------------------------------------------------------------");
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println(logo);
-        System.out.println("------------------------------------------------------------");
-        System.out.println("\tHello! I'm duke.Duke");
-        System.out.println("\tWhat can I do for you?");
-        System.out.println("------------------------------------------------------------");
-    }
-
-    /**
-     * This method reads user input.
-     *
-     */
-    public String readCommand(){
-        Scanner in = new Scanner(System.in);
-        String command = in.nextLine().trim();
-        return command;
-    }
-
-    /**
      * This method prints exit message for user.
-     *
      */
     public static void exitCommand() {
         printCommand("Bye. Hope to see you again soon!");
@@ -58,7 +30,6 @@ public class Ui {
         System.out.println("------------------------------------------------------------");
     }
 
-
     /**
      * This method prints list of tasks.
      *
@@ -68,12 +39,12 @@ public class Ui {
         String printStr = "";
         for (int i = 0; i < taskList.getSize(); i++) {
             String index = Integer.toString(i + 1);
-            printStr +=  index + "." + taskList.getItem(i) + System.lineSeparator() + "\t";
+            printStr += index + "." + taskList.getItem(i) + System.lineSeparator() + "\t";
         }
 
-        if (taskList.getSize() > 0){
+        if (taskList.getSize() > 0) {
             printCommand(printStr);
-        }else {
+        } else {
             printCommand("You have 0 tasks in the list.");
         }
     }
@@ -82,7 +53,7 @@ public class Ui {
      * This method prints deleted task and number of tasks left in the task list.
      *
      * @param taskList A TaskList object representing the list of tasks.
-     * @param task A Task object representing the deleted task.
+     * @param task     A Task object representing the deleted task.
      */
     public static void printDeletedTaskString(TaskList taskList, Task task) {
         String deletedTaskStr = "Noted. I've removed this task: " + System.lineSeparator();
@@ -102,17 +73,42 @@ public class Ui {
         Ui.printCommand(editedTaskStr);
     }
 
-
     /**
      * This method prints new task added and number of tasks in the task list.
      *
      * @param taskList A TaskList object representing the list of tasks.
-     * @param task A Task object representing the new task.
+     * @param task     A Task object representing the new task.
      */
     public static void printNewTaskString(TaskList taskList, Task task) {
         String addedTaskStr = "Got it. I've added this task: " + System.lineSeparator();
         addedTaskStr += "\t\t" + task + System.lineSeparator();
         addedTaskStr += "\t" + "Now you have " + taskList.getSize() + " tasks in the list.";
         Ui.printCommand(addedTaskStr);
+    }
+
+    /**
+     * This method shows welcome message to user.
+     */
+    public void welcome() {
+        System.out.println("------------------------------------------------------------");
+        String logo = " ____        _        \n"
+                + "|  _ \\ _   _| | _____ \n"
+                + "| | | | | | | |/ / _ \\\n"
+                + "| |_| | |_| |   <  __/\n"
+                + "|____/ \\__,_|_|\\_\\___|\n";
+        System.out.println(logo);
+        System.out.println("------------------------------------------------------------");
+        System.out.println("\tHello! I'm duke.Duke");
+        System.out.println("\tWhat can I do for you?");
+        System.out.println("------------------------------------------------------------");
+    }
+
+    /**
+     * This method reads user input.
+     */
+    public String readCommand() {
+        Scanner in = new Scanner(System.in);
+        String command = in.nextLine().trim();
+        return command;
     }
 }

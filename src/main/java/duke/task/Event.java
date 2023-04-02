@@ -1,6 +1,5 @@
 package duke.task;
 
-import duke.task.Task;
 import duke.type.TaskType;
 
 public class Event extends Task {
