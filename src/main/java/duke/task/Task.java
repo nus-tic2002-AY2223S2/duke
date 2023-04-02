@@ -15,6 +15,10 @@ public abstract class Task {
         return isDone;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }

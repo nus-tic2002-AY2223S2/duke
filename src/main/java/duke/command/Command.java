@@ -6,6 +6,8 @@ import duke.task.TaskList;
 import duke.type.CommandType;
 import duke.ui.Ui;
 
+import java.util.ArrayList;
+
 import static duke.parser.Parser.*;
 
 public class Command {
@@ -45,11 +47,11 @@ public class Command {
                 break;
             case MARK:
             case UNMARK:
-                //Mark or Unmark duke.task.Task
+                //Mark or Unmark task
                 markTask(tasks, commandType);
                 break;
             case DELETE:
-                //Delete duke.task.Task
+                //Delete a task
                 deleteTask(tasks, command);
                 break;
             case ADD:
@@ -64,6 +66,30 @@ public class Command {
                 //Clone an existing task
                 cloneTask(tasks, command);
                 break;
+            case FIND:
+                //Find a task by searching for a keyword.
+                findTask(tasks, command);
+                break;
+        }
+    }
+
+    /**
+     * This method find a task by searching for a keyword.
+     *
+     * @param taskList A TaskList object representing list of tasks of the user.
+     * @param command  A string representing user command. Edit command should be in the format "find [keyword]"
+     */
+    private void findTask(TaskList taskList, String command) {
+        try {
+            String keyword = parseKeyword(command);
+            TaskList tasks = taskList.getFilteredItems(keyword);
+
+            Ui.printList(tasks);
+
+        } catch (IndexOutOfBoundsException ex) {
+            Ui.printCommand("IndexOutOfBoundsException for task: " + command);
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
         }
     }
 

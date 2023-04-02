@@ -1,7 +1,9 @@
 package duke.task;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import static duke.parser.Parser.getTask;
 
@@ -12,9 +14,9 @@ import static duke.parser.Parser.getTask;
 public class TaskList {
     private final ArrayList<Task> tasklist = new ArrayList<>();
 
-    public TaskList(Scanner s) {
-        while (s.hasNext()) {
-            Task task = getTask(s.nextLine());
+    public TaskList(ArrayList<String> lines) {
+        for (String line : lines) {
+            Task task = getTask(line);
             this.tasklist.add(task);
         }
     }
@@ -23,12 +25,30 @@ public class TaskList {
 
     }
 
+    private static TaskList listToTaskList(List<Task> list) {
+        TaskList TaskList = new TaskList();
+
+        if (list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                TaskList.addItem(list.get(i));
+                i++;
+            }
+        }
+        return TaskList;
+    }
+
     public ArrayList<Task> getItems() {
         return tasklist;
     }
 
     public Task getItem(int index) {
         return tasklist.get(index);
+    }
+
+    public TaskList getFilteredItems(String keyword) {
+        List<Task> filteredList = tasklist.stream().filter(task -> task.getDescription().contains(keyword)).collect(Collectors.toList());
+        TaskList filteredTaskList = listToTaskList(filteredList);
+        return filteredTaskList;
     }
 
     public Task removeItem(int index) {

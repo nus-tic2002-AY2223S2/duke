@@ -1,5 +1,6 @@
 package duke.storage;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -39,9 +40,9 @@ public class Storage {
     /**
      * This method load scanner from the file at the source.
      *
-     * @return A Scanner object created using the File as the source.
+     * @return An ArrayList of lines in the File at the source.
      */
-    public Scanner load() {
+    public ArrayList<String> load() {
         return DukeFileReaderAndWriter.load();
     }
 

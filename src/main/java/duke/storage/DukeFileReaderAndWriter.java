@@ -1,5 +1,7 @@
 package duke.storage;
 
+import duke.task.Task;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -7,8 +9,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static duke.parser.Parser.getTask;
 
 public class DukeFileReaderAndWriter {
 
@@ -18,18 +23,21 @@ public class DukeFileReaderAndWriter {
         file.createNewFile(); // if file already exists will do nothing
     }
 
-    public static Scanner load() {
-        Scanner s = null;
+    public static ArrayList<String> load() {
+        ArrayList<String> lines = new ArrayList<>();
         try {
             createFile();
-            File f = new File(Storage.FILE_PATH); // create a File for the given file path
-            s = new Scanner(f); // create a Scanner using the File as the source
+            File file = new File(Storage.FILE_PATH); // create a File for the given file path
+            Scanner scanner = new Scanner(file); // create a Scanner using the File as the source
+            while (scanner.hasNext()) {
+                lines.add(scanner.nextLine());
+            }
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         } catch (IOException e) {
             System.out.println("Something went wrong: " + e.getMessage());
         }
-        return s;
+        return lines;
     }
 
     public static void writeInFile(String textToAdd) {

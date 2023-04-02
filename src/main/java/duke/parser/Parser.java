@@ -53,6 +53,17 @@ public class Parser {
         return index;
     }
 
+    /**
+     * This method parse keyword from the user command
+     *
+     * @param command A string representing user command.
+     * @return extracted keyword
+     */
+    public static String parseKeyword(String command) throws IndexOutOfBoundsException {
+        String keyword = command.split(" ")[1].trim();
+        return keyword;
+    }
+
     private static void parseAndMarkTask(String markString, Task task) {
         boolean isMarkAsDone = Boolean.parseBoolean(markString);
         if (isMarkAsDone) {
@@ -194,6 +205,8 @@ public class Parser {
             return CommandType.EDIT;
         } else if (command.toUpperCase().startsWith("CLONE")) {
             return CommandType.CLONE;
+        } else if (command.toUpperCase().startsWith("FIND")) {
+            return CommandType.FIND;
         } else {
             return CommandType.ADD;
         }
