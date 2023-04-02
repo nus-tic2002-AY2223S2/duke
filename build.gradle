@@ -4,6 +4,16 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '5.1.0'
 }
 
+jar {
+    manifest {
+        attributes "Main-Class": "duke.Duke"
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -36,6 +46,6 @@ shadowJar {
     archiveClassifier = null
 }
 
-run{
+run {
     standardInput = System.in
 }
