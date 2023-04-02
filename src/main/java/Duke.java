@@ -3,7 +3,8 @@ import java.util.ArrayList;
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Helper function to check is mark/unmark is a single word or with something behind
-public class Duke {
+public class Duke
+{
     public static boolean checkMark(String input)
     {
         String[] splitted = input.split(" ");
@@ -15,7 +16,7 @@ public class Duke {
     {
 
         String[] splitted = input.split(" ", 2);
-        if (!splitted[0].equals("bye") && !splitted[0].equals("todo") && !splitted[0].equals("deadline") && !splitted[0].equals("event") && !splitted[0].equals("list") && !splitted[0].equals("mark") && !splitted[0].equals("unmark") && !splitted[0].equals("delete"))
+        if (!splitted[0].equalsIgnoreCase("bye") && !splitted[0].equalsIgnoreCase("todo") && !splitted[0].equalsIgnoreCase("deadline") && !splitted[0].equalsIgnoreCase("event") && !splitted[0].equalsIgnoreCase("list") && !splitted[0].equalsIgnoreCase("mark") && !splitted[0].equalsIgnoreCase("unmark") && !splitted[0].equalsIgnoreCase("delete"))
         {
             throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
@@ -25,7 +26,8 @@ public class Duke {
         }
         if (splitted[0].equalsIgnoreCase("mark") || splitted[0].equalsIgnoreCase("unmark"))
         {
-            if ( Integer.parseInt(splitted[1]) > list.size() ) {
+            if ( Integer.parseInt(splitted[1]) > list.size() )
+            {
                 throw new DukeException("☹ OOPS!!! Index is over the size of items in the list");
             }
         }
@@ -44,23 +46,20 @@ public class Duke {
         System.out.println("What can I do for you?\n");
         boolean isBye = false;
         Scanner Obj = new Scanner(System.in);
-        //int taskIndex = 0;
         ArrayList<Task> list = new ArrayList<Task>();
-        //Task[] list = new Task[100];
-
 
         while (!isBye)
         {
             String question = Obj.nextLine();
 
-            if (question.equals("bye"))
+            if (question.equalsIgnoreCase("bye"))
             { //if the input is bye then end the program
                 isBye = true;
                 System.out.println("Bye. Hope to see you again soon!");
                 continue;
             }
 
-            if (question.equals("list"))
+            if (question.equalsIgnoreCase("list"))
             { //loop to print out the items in list[]
                 System.out.println("________________________________________________");
                 System.out.println("Here are the tasks in your list:");
@@ -83,33 +82,25 @@ public class Duke {
 
             if (question.contains("mark"))
             {
-                if (checkMark(question)) {
+                if (checkMark(question))
+                {
                     String[] splitted = question.split(" ");
-                    if (question.contains("unmark")) {
+
+                    if (question.contains("unmark"))
+                    {
                         list.get(Integer.parseInt(splitted[1]) - 1).markAsNotDone();
                         continue;
                     }
-                    else {
+                    else
+                    {
                         list.get(Integer.parseInt(splitted[1]) - 1).markAsDone();
                         continue;
                     }
                 }
             }
 
-
-
-            else { //store the string
-                //split
-//                try
-//                {
-//                    validateQuestion(question, list);
-//                }
-//                catch(DukeException error)
-//                {
-//                    System.out.println(error);
-//                    continue;
-//                }
-
+            else
+            {
                 String[] splitted = question.split(" ", 2);
 
                 //catch for "to-do"
@@ -117,7 +108,6 @@ public class Duke {
                 {
                     Todo td  = new Todo(splitted[1]);
                     list.add(td);
-                    //taskIndex++;
                     System.out.println("Got it. I've added this task:");
                     System.out.println(td);
                 }
@@ -128,7 +118,6 @@ public class Duke {
                     String[] deadlineSplit = splitted[1].split("/by");
                     Deadline dl = new Deadline(deadlineSplit[0], deadlineSplit[1]);
                     list.add(dl);
-                    //taskIndex++;
                     System.out.println("Got it. I've added this task:");
                     System.out.println(dl);
                 }
@@ -140,7 +129,6 @@ public class Duke {
                     String[] eventSplitAgain = eventSplit[1].split("/to");
                     Event ev = new Event(eventSplit[0], eventSplitAgain[0], eventSplitAgain[1]);
                     list.add(ev);
-                    //taskIndex++;
                     System.out.println("Got it. I've added this task:");
                     System.out.println(ev);
                 }
