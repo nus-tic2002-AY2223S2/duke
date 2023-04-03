@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Duke {
 
-
+    public static String uiDivider = "____________________________________________________________";
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  Helper method                                                                                              //
@@ -16,7 +16,8 @@ public class Duke {
     //              Once NumberFormatException is caught, return FALSE as it is not a Number                       //
     //  Reference:  https://stackoverflow.com/questions/1102891/how-to-check-if-a-string-is-numeric-in-java        //
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static boolean isNumber(String strToCheck) {
+    public static boolean isNumber(String strToCheck)
+    {
         try {
             Integer.parseInt(strToCheck);
             return true;
@@ -170,41 +171,24 @@ public class Duke {
         }
     }
 
-/*************************************************************************************************************
-    /**
-     *  Global variable initialization
-     */
-    private Ui ui;
+    public static void main(String[] args)
+    {
 
-    public Duke() {
-        ui = new Ui();
-    }
-
-    public void run() {
-        ui.showWelcomeMessage();
-    }
-
-    public static void main(String[] args) {
-
-        new Duke().run();
-
-        /**
-         *  variable initialization
-         */
+        //variable initialization
         Scanner scanObj = new Scanner(System.in); //scanner
         var lists = new ArrayList<Task>(); //string initialize Task arraylist
 
-/*        String logo = " ____        _        \n"
+        String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
-        System.out.println("____________________________________________________________");
+        System.out.println(uiDivider);
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
-        System.out.println("____________________________________________________________\n");*/
+        System.out.println(uiDivider + "\n");
 
         // Get input from user
         String input = scanObj.nextLine();
@@ -212,7 +196,7 @@ public class Duke {
         // Main loop of the programme; exit upon "Bye" input
         while(!input.equals("bye"))
         {
-            System.out.println("____________________________________________________________");
+            System.out.println(uiDivider);
             if(input.equals("list"))
             {
                 System.out.println("Here are the tasks in your list:");
@@ -244,7 +228,8 @@ public class Duke {
                 }
 
             }
-            else if (checkInputForUnmarkAction(input)) {
+            else if (checkInputForUnmarkAction(input))
+            {
                 //This condition checks if the Unmark Action needs to be executed
 
                 //retrieve the index to be unmarked
@@ -326,14 +311,14 @@ public class Duke {
                     System.out.println("Caught: " + de);
                 }
             }
-            System.out.println("____________________________________________________________\n");
+            System.out.println(uiDivider + "\n");
             input = scanObj.nextLine();
         }
 
         // Motherhood Statement when bye is key-ed in
-        System.out.println("____________________________________________________________");
+        System.out.println(uiDivider);
         System.out.println("Bye. Hope to see you again soon!");
-        System.out.println("____________________________________________________________");
+        System.out.println(uiDivider);
         // End of programme
 
     }
