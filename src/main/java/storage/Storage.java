@@ -54,9 +54,9 @@ public class Storage {
     //Load tasks START
     public static ArrayList<Task> load() {
         ArrayList<Task> loadList = new ArrayList<Task>();
-        String storedPath = "data\\duke.txt";
+        
         try {
-            FileReader fR = new FileReader(storedPath);
+            FileReader fR = new FileReader(filePath);
             BufferedReader bR = new BufferedReader(fR);
 
             int count =0;
