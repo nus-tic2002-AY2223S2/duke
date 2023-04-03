@@ -81,7 +81,6 @@ public class Duke
                 System.out.println(error);
                 continue;
             }
-
             if (question.contains("mark"))
             {
                 if (checkMark(question))
