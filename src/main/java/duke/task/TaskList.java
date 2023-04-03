@@ -15,10 +15,16 @@ public class TaskList {
     private ArrayList<Task> list; //string initialize duke.Task arraylist
 
     /**
-     *  Constructor
+     *  Constructor [with inputs]
      */
     public TaskList(ArrayList<Task> inputList) {
         this.list = inputList;
+    }
+
+    /**
+     *  Constructor 2 [w/o inputs]
+     */
+    public TaskList() {
     }
 
     /**
