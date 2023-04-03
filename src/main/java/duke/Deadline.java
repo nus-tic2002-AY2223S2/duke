@@ -1,6 +1,7 @@
-////////////////////////////////////////////////
-//  DONE BY: A0227169X; ANG JIA JIN, GABRIEL  //
-////////////////////////////////////////////////
+/**
+ *  DONE BY: A0227169X; ANG JIA JIN, GABRIEL
+ */
+package duke;
 
 public class Deadline extends Task {
     ///////////////////
@@ -17,21 +18,21 @@ public class Deadline extends Task {
     }
 
     ///////////////////////////////////////////////////////
-    //  getBy() method will return the deadline of Task  //
+    //  getBy() method will return the deadline of duke.Task  //
     ///////////////////////////////////////////////////////
     public String getBy() {
         return by;
     }
 
     ///////////////////////////////////////////////////////
-    //  setBy() method will change the deadline of Task  //
+    //  setBy() method will change the deadline of duke.Task  //
     ///////////////////////////////////////////////////////
     public void setBy(String by) {
         this.by = by;
     }
 
     ///////////////////////////////////////////////////////////////
-    //  toString() method will print out Task's standard output  //
+    //  toString() method will print out duke.Task's standard output  //
     ///////////////////////////////////////////////////////////////
     @Override
     public String toString() {

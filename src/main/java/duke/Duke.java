@@ -1,6 +1,9 @@
-////////////////////////////////////////////////
-//  DONE BY: A0227169X; ANG JIA JIN, GABRIEL  //
-////////////////////////////////////////////////
+/**
+*  DONE BY: A0227169X; ANG JIA JIN, GABRIEL
+*/
+
+package duke;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -32,7 +35,7 @@ public class Duke {
     //  Helper method                                                                                //
     //  checkInputForMarkAction() method will return TRUE if needs to execute Mark function          //
     //  Assumption: Mark function will only contain input with 2 words; 'Mark' followed by a number  //
-    //              Anything besides that will be treated as a Task to be added to the list          //
+    //              Anything besides that will be treated as a duke.Task to be added to the list          //
     //              E.G. 'Mark Dairy' - goes to List                                                 //
     //              E.G. 'Mark 2' - perform Mark function                                            //
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +56,7 @@ public class Duke {
     //  Helper method                                                                                    //
     //  checkInputForUnmarkAction() method will return TRUE if needs to execute Unmark function          //
     //  Assumption: Unmark function will only contain input with 2 Words; 'Unmark' followed by a number  //
-    //              Anything besides that will be treated as a Task to be added to the list              //
+    //              Anything besides that will be treated as a duke.Task to be added to the list              //
     //              E.G. 'Unmark Dairy' - goes to List                                                   //
     //              E.G. 'Unmark 2' - perform Unmark function                                            //
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,14 +77,14 @@ public class Duke {
     //  Helper method                                                                                    //
     //  identifyFunctionsValidateInput() method will perform 2 actions:                                  //
     //  1) return Functions and the parameters                                                           //
-    //  functions: "Deadline" "Event" "To-Do" "Mark" "Unmark"                                            //
+    //  functions: "duke.Deadline" "duke.Event" "To-Do" "Mark" "Unmark"                                  //
     //  Outcome: separatedInput[0] = Functions                                                           //
     //           separatedInput[1] = Parameters                                                          //
     //                                                                                                   //
     //  2) validates the input to catch all kinds of error such as                                       //
     //  - Empty Parameters                                                                               //
     //  - Invalid functions                                                                              //
-    //  Deadline functions:                                                                              //
+    //  duke.Deadline functions:                                                                         //
     //  - Missing /by parameters                                                                         //
     //  - Missing deadline                                                                               //
     //  Events functions:                                                                                //
@@ -95,7 +98,7 @@ public class Duke {
     public static String[] identifyFunctionsValidateInput(String stringInput, ArrayList currList) throws DukeException
     {
         String[] separatedInput = stringInput.split(" ", 2);
-        if(separatedInput[0].equalsIgnoreCase("Deadline"))
+        if(separatedInput[0].equalsIgnoreCase("duke.Deadline"))
         {
             if (separatedInput.length < 2)
             {
@@ -114,7 +117,7 @@ public class Duke {
                 return separatedInput;
             }
         }
-        else if(separatedInput[0].equalsIgnoreCase("Event"))
+        else if(separatedInput[0].equalsIgnoreCase("duke.Event"))
         {
             if (separatedInput.length < 2)
             {
@@ -134,7 +137,7 @@ public class Duke {
                 return separatedInput;
             }
         }
-        else if(separatedInput[0].equalsIgnoreCase("Todo"))
+        else if(separatedInput[0].equalsIgnoreCase("duke.Todo"))
         {
             if (separatedInput.length < 2)
             {
@@ -171,12 +174,23 @@ public class Duke {
         }
     }
 
-    public static void main(String[] args)
-    {
+
+    /********************************************/
+    private Ui ui;
+
+    public Duke() {
+        ui = new Ui();
+    }
+
+    public void run() {
+        ui.showWelcomeMessage();
+
+
+        /**************************to be extracted one by one******************/
 
         //variable initialization
         Scanner scanObj = new Scanner(System.in); //scanner
-        var lists = new ArrayList<Task>(); //string initialize Task arraylist
+        var lists = new ArrayList<Task>(); //string initialize duke.Task arraylist
 
         // Get input from user
         String input = scanObj.nextLine();
@@ -202,7 +216,7 @@ public class Duke {
                     String[] separatedReturn = identifyFunctionsValidateInput(input, lists);
                     int indexInList = Integer.parseInt(separatedReturn[1]) - 1 ;
 
-                    //set Status of Task to Done
+                    //set Status of duke.Task to Done
                     lists.get(indexInList).markAsDone();
 
                     //Print output as expected
@@ -226,7 +240,7 @@ public class Duke {
                     String[] separatedReturn = identifyFunctionsValidateInput(input, lists);
                     int indexInList = Integer.parseInt(separatedReturn[1]) - 1;
 
-                    //set Status of Task to Undone
+                    //set Status of duke.Task to Undone
                     lists.get(indexInList).markAsUndone();
 
                     //Print output as expected
@@ -308,6 +322,11 @@ public class Duke {
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println(uiDivider);
         // End of programme
+    }
 
+
+    public static void main(String[] args)
+    {
+        new Duke().run();
     }
 }

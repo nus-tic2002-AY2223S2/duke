@@ -1,6 +1,9 @@
-////////////////////////////////////////////////
-//  DONE BY: A0227169X; ANG JIA JIN, GABRIEL  //
-////////////////////////////////////////////////
+/**
+ *  DONE BY: A0227169X; ANG JIA JIN, GABRIEL
+ */
+
+package duke;
+
 public class Todo extends Task {
 
     ///////////////////
@@ -11,7 +14,7 @@ public class Todo extends Task {
     }
 
     ///////////////////////////////////////////////////////////////
-    //  toString() method will print out Task's standard output  //
+    //  toString() method will print out duke.Task's standard output  //
     ///////////////////////////////////////////////////////////////
     @Override
     public String toString() {
