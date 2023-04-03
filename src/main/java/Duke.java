@@ -178,18 +178,6 @@ public class Duke {
         Scanner scanObj = new Scanner(System.in); //scanner
         var lists = new ArrayList<Task>(); //string initialize Task arraylist
 
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
-
-        System.out.println(uiDivider);
-        System.out.println("Hello! I'm Duke");
-        System.out.println("What can I do for you?");
-        System.out.println(uiDivider + "\n");
-
         // Get input from user
         String input = scanObj.nextLine();
 
