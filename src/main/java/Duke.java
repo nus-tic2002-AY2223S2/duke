@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class Duke {
 
+
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  Helper method                                                                                              //
     //  isNumber() method will check input if it is a number                                                       //
@@ -168,9 +170,27 @@ public class Duke {
         }
     }
 
+/*************************************************************************************************************
+    /**
+     *  Global variable initialization
+     */
+    private Ui ui;
+
+    public Duke() {
+        ui = new Ui();
+    }
+
+    public void run() {
+        ui.showWelcomeMessage();
+    }
+
     public static void main(String[] args) {
 
-        //variable initialization
+        new Duke().run();
+
+        /**
+         *  variable initialization
+         */
         Scanner scanObj = new Scanner(System.in); //scanner
         var lists = new ArrayList<Task>(); //string initialize Task arraylist
 
@@ -179,12 +199,12 @@ public class Duke {
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);*/
+        System.out.println("Hello from\n" + logo);
 
         System.out.println("____________________________________________________________");
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
-        System.out.println("____________________________________________________________\n");
+        System.out.println("____________________________________________________________\n");*/
 
         // Get input from user
         String input = scanObj.nextLine();

@@ -2,23 +2,24 @@
 //  DONE BY: A0227169X; ANG JIA JIN, GABRIEL  //
 ////////////////////////////////////////////////
 public class Task {
-    ///////////////////
-    //  Attributes   //
-    ///////////////////
+    /**
+    * Attributes
+    */
     protected String description;
     protected boolean isDone;
 
-    ///////////////////
-    //  Constructor  //
-    ///////////////////
+    /**
+    *  Constructor
+    */
+
     public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
 
-    ///////////////////////////////////////////////////////////////////
-    //  getDescription() method will return the description of Task  //
-    ///////////////////////////////////////////////////////////////////
+    /**
+     *  getDescription() method will return the description of Task
+     */
     public String getDescription() {
         return this.description; // returns the value stored in the description attribute
     }
