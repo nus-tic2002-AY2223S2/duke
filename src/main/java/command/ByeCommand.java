@@ -4,6 +4,10 @@ import storage.Storage;
 import task.TaskList;
 import ui.Ui;
 
+/**
+ * To exit the program
+ *
+ */
 public class ByeCommand extends Commands {
     private static boolean exit = false;
     public static boolean exit() {
