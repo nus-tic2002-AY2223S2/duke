@@ -9,12 +9,20 @@ import task.ToDo;
 import task.Event;
 import task.Task;
 
+/**
+ * Storage class
+ * -> stores the list into a file
+ */
 public class Storage {
     private static File f;
     private static String filePath;
     private static FileWriter fileWriter;
     private static BufferedWriter bW;
 
+    /**
+     *
+     * @param filePath -> gets the specific file path
+     */
     //Create File START
     public Storage(String filePath) {
         this.filePath = filePath;
@@ -42,7 +50,7 @@ public class Storage {
                 toSaveList = list.get(i).toSave();
                 bW.write(toSaveList);
                 bW.newLine();
-                //System.out.println("Task saved successfully");
+                System.out.println("Task saved successfully");
             }
             bW.close();
         } catch (IOException e) {
@@ -54,9 +62,9 @@ public class Storage {
     //Load tasks START
     public static ArrayList<Task> load() {
         ArrayList<Task> loadList = new ArrayList<Task>();
-        
+        String storedPath = "data\\duke.txt";
         try {
-            FileReader fR = new FileReader(filePath);
+            FileReader fR = new FileReader(storedPath);
             BufferedReader bR = new BufferedReader(fR);
 
             int count =0;
