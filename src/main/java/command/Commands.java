@@ -4,6 +4,9 @@ import task.TaskList;
 import ui.Ui;
 import storage.Storage;
 
+/**
+ * Command
+ */
 public class Commands {
     protected Commands command;
     public boolean exitTime=false;
