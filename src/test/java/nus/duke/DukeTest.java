@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class DukeTest {
     @Test
@@ -43,6 +45,25 @@ public class DukeTest {
         list.remove(0);
         final int newNoOfTasks = list.getSize();
         assertEquals(initialNoOfTasks - 1, newNoOfTasks );
+    }
+
+    @Test
+    public void testMarkCommand_shouldShowIsDone() {
+        final TaskList list = new TaskList();
+        String description = "abc";
+        final Task taskToAdd = new ToDo(description);
+        taskToAdd.markAsDone();
+        assertTrue(taskToAdd.isDone);
+    }
+
+    @Test
+    public void testUnmarkCommand_shouldShowFalse() {
+        final TaskList list = new TaskList();
+        String description = "abc";
+        final Task taskToAdd = new ToDo(description);
+        taskToAdd.markAsDone();
+        taskToAdd.markAsNotDone();
+        assertFalse(taskToAdd.isDone);
     }
     
 }

@@ -5,15 +5,15 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 
-public class Parser {
+/**
+ * Parser class used to parse the user command and returns the appropriate command objects.
+ */
+public abstract class Parser {
 
-    static String command = null;
-    static String[] wordsInDescription = null;
-    static String[] partsInDescription = null;
+    protected static String command = null;
+    protected static String[] wordsInDescription = null;
+    protected static String[] partsInDescription = null;
 
-
-    public static void toDoCommand(String command) {
-       }
 
     public static void parseMarkCommand(Command command) {
         // *************************
@@ -32,7 +32,7 @@ public class Parser {
         try {
             command.taskNumber = Integer.parseInt(wordsInDescription[1]);
         } catch (NumberFormatException nfe) {              // to handle exception: mark nonINTEGER
-            System.out.println("unmark is a function key. Please indicate task number to be marked!");
+            System.out.println("unmark is a function key. Please indicate task number to be unmarked!");
         } catch (ArrayIndexOutOfBoundsException obe) {  // to handle exception: mark
             System.out.println("unmark feature must contain a task number");
         }
@@ -78,9 +78,9 @@ public class Parser {
             command.taskDescription = taskJob;
             parseDeadlineDateTime(command);
         } catch (ArrayIndexOutOfBoundsException obe) {
-            System.out.println("A deadline command must provide a deadline date (/by)!");
+            System.out.println("A deadline command must provide a deadline date & time (/by)!");
         } catch (IncompleteDescriptionException ide) {
-            System.out.println("A deadline must contain only 1 task and only 1 deadline date (/by)!");
+            System.out.println("A deadline must contain only 1 task and only 1 deadline date & time (/by)!");
         } catch (NoTaskException nte) {
             System.out.println("There is no Task .");
         } catch (DukeException de) {
@@ -164,6 +164,14 @@ public class Parser {
     public enum taskEnum {
         LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE, FIND, STAT
     }
+
+    /**
+     * Parses the user input(fullCommand) and returns the appropriate command object.
+     * @param fullCommand the user input string
+     * @return the command object corresponding to the user input
+     * @throws DukeException if the user input is not a valid command
+     * @throws InvalidCodeException if the relevant attribute equal to null
+     */
 
     public static Command parse(String fullCommand) throws DukeException, InvalidCodeException {
 

@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
+/**
+ *  A class representing a command that can be executed by the task list class.
+ *  those execute command include list the task, mark the task as completed , unmark,
+ *  add the task, delete the task, search for the specific task and display the statistic.
+ */
 public class Command {
 
     protected Parser.taskEnum task;
@@ -38,7 +43,7 @@ public class Command {
 
     public void unMarkCommand(TaskList tl) throws InvalidCodeException {
         if (taskNumber == 0) {
-            System.out.println("There is no task 0.");
+            //System.out.println("There is no task 0.");
             throw new InvalidCodeException("Invalid code exception");
         }
         try {
@@ -53,10 +58,12 @@ public class Command {
         // ***************************
         // level 3 mark/unmark feature
         // ***************************
+
         if (this.taskNumber == 0) {
-            System.out.println("There is no task 0.");
+            //System.out.println("There is no task 0.");
             throw new InvalidCodeException("Invalid code exception");
         }
+
         try {
             tl.get(this.taskNumber - 1).markAsDone();
             displayMarkTask(tl);
@@ -70,7 +77,7 @@ public class Command {
     // ********************************************
     public void displayStatistic(TaskList tl) {
         System.out.println("Please select the number to get different Statistics:\n1. Stats for Tasks done.\n2. Stats for Tasks not done.\n" +
-                "3. Stats for Todo.\n4. Stats for Deadline.\n5. Stats for Events");
+                "3. Stats for Todo.\n4. Stats for Deadline.\n5. Stats for Events.\n");
         Scanner in = new Scanner(System.in);
         this.statItem = in.nextLine();
         if (Integer.parseInt(statItem) == 1) {
@@ -136,13 +143,24 @@ public class Command {
         }
     }
 
+    /**
+     * Executes the command.
+     * @param tl the list of task in a taskList
+     * @param ui the user interface for the taskList application
+     * @param storage the storage file for the taskList data
+     * @throws DukeException the command object corresponding to the user input
+     * @throws IOException if there is an error accessing the storage file
+     * @throws InvalidCodeException if the relevant attribute equal to null
+     */
 
     public void execute(TaskList tl, Ui ui, Storage storage) throws DukeException, IOException, InvalidCodeException {
+
+
+        //assert task != null : "Task cannot be null";
 
         if (task == null) {
             throw new InvalidCodeException("Invalid code exception");
         }
-
         switch (task) {
             // *********************
             // level 1 bye feature
@@ -171,10 +189,13 @@ public class Command {
             // level 4 To-do feature
             // **********************
             case TODO:
+
                 if (taskDescription == null) {
                     throw new InvalidCodeException("Invalid code exception");
                 }
+
                 tl.add(new ToDo(taskDescription));
+                //tl.testAddTask();
                 displayAddTask(tl, ui);
                 break;
 
@@ -185,9 +206,12 @@ public class Command {
                 if (taskDescription == null || taskDeadline == null) {
                     throw new InvalidCodeException("Invalid code exception");
                 }
-                tl.add(new Deadline(taskDescription, taskDeadline));
-                displayAddTask(tl, ui);
-
+                if (!taskDeadline.isBefore(LocalDateTime.now())) {
+                    tl.add(new Deadline(taskDescription, taskDeadline));
+                    displayAddTask(tl, ui);
+                } else {
+                    System.out.println("deadline shouldn't earlier than now");
+                }
                 break;
 
             // *************************

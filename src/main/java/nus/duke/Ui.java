@@ -28,7 +28,9 @@ public class Ui {
 
         //System.out.println("Hello from\n" + logo);
         System.out.println("Hello from\n" + newlogo);
-        System.out.println("Hello. This is Reminder created by WP.\nWhat can i do for you?");
+        System.out.println("Hello. This is To-do list/Reminder created by WP.\n" +
+                "Features: list, mark, unmark, todo, deadline, event, delete, find, stat, bye\n" +
+                "What can i do for you?\n");
     }
 
     public String readCommand() {

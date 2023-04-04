@@ -1,5 +1,6 @@
 package nus.duke;
 
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -9,6 +10,7 @@ public class Deadline extends Task {
     public Deadline(String description, LocalDateTime deadLine) {
         super(description);
         this.byString = deadLine;
+
     }
 
 

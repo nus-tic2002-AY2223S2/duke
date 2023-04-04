@@ -1,8 +1,14 @@
+[T][X] TIC2002 duke project 
+[D][X] TIC2002 duke project submission (by:Apr 16 2023 at 11:59)
+[E][X] (from:Apr 27 2023 at 09:00 to:Apr 30 2023 at 11:00)
 [T][ ] abc 
-[T][X] bcd 
-[T][X] sleep 
-[T][ ] play mobile legend at night 
-[D][X] read book (by:Nov 11 2020 at 11:00)
-[E][X] exam TIC 2002 (from:May 2 2023 at 11:00 to:May 3 2023 at 11:00)
-[E][X] coding (from:Jan 1 2021 at 11:00 to:Feb 2 2021 at 11:00)
-[T][ ] 123 
+[T][ ] bcd 
+[T][ ] null
+[T][ ] null
+[T][ ] null
+[D][ ] hgi (by:Jan 1 2020 at 11:00)
+[D][ ] jkl (by:Jan 1 2020 at 11:00)
+[T][ ] null
+[T][ ] null
+[D][ ] aop (by:Jan 1 2020 at 11:00)
+[D][ ] hgjf (by:Jan 1 2020 at 11:00)
