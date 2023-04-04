@@ -16,8 +16,8 @@ public class Storage {
     /**
      *  Attribute
      */
-    private String filePath;
-    private File fileItem;
+    private static String filePath;
+    private static File fileItem;
 
     /**
      *  Constructor
@@ -27,7 +27,7 @@ public class Storage {
         fileItem = new File(pathFile);
     }
 
-    public ArrayList<Task> load() throws DukeException {
+    public static ArrayList<Task> load() throws DukeException {
         if (!fileItem.exists() || !fileItem.isFile())
         {
             throw new DukeException("☹ OOPS!!! File is empty");

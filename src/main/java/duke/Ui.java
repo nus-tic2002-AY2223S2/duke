@@ -4,17 +4,22 @@
 
 package duke;
 
+import java.util.Scanner;
+
 public class Ui {
     /**
      *  Attribute
      */
+    private static String loadingError = "No file found";
     private static String uiDivider = "____________________________________________________________";
+    private static Scanner scanObj;
+    private static String input;
 
     /**
      *  Constructor
      */
     public Ui() {
-
+        scanObj = new Scanner(System.in);
     }
 
     /**
@@ -28,15 +33,41 @@ public class Ui {
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Hello from\n" + logo);
 
-        this.showLine();
-        System.out.println("Hello! I'm duke.Duke");
+        this.showDividerLine();
+        System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
-        this.showLine();
+        this.showDividerLine();
         System.out.println("\n");
     }
 
-    public static void showLine() {
+    /**
+     *  this method will print out a divider line
+     */
+    public static void showDividerLine() {
         System.out.println(uiDivider);
+    }
 
+    /**
+     *  this method will print out a loading error
+     */
+    public static void showLoadingError() {
+        System.out.println(loadingError);
+    }
+
+    /**
+     *  this method will take in an input from the user and returns it
+     */
+    public static String readCommand()
+    {
+        input = scanObj.nextLine();
+        return input;
+    }
+
+    /**
+     *  this method will take in an error and display it out
+     */
+    public static void showError(String errorMessage)
+    {
+        System.out.println("Error caught:" + errorMessage);
     }
 }

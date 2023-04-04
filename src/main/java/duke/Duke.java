@@ -4,6 +4,12 @@
 
 package duke;
 
+import duke.command.Command;
+import duke.parser.Parser;
+import duke.storage.Storage;
+import duke.task.TaskList;
+
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -177,23 +183,47 @@ public class Duke {
 
     /********************************************/
     private Ui ui;
+    private TaskList tasks;
 
-    public Duke() {
+    private Storage storage;
+
+    public Duke(String filePath) {
         ui = new Ui();
+        storage = new Storage(filePath);
+        try {
+            tasks = new TaskList(storage.load());
+        } catch (DukeException e) {
+            ui.showLoadingError();
+            tasks = new TaskList();
+        }
     }
 
     public void run() {
         ui.showWelcomeMessage();
+        boolean isItBye = false;
+        while (!isItBye) {
+            try {
+                String fullCommand = ui.readCommand();
+                ui.showDividerLine();
+                Command c = Parser.parse(fullCommand);
+                c.execute(tasks, ui, storage);
+                isItBye = c.isItBye();
+            } catch (DukeException e) {
+                ui.showError(e.getMessage());
+            } finally {
+                ui.showDividerLine();
+            }
+        }
 
 
         /**************************to be extracted one by one******************/
 
         //variable initialization
-        Scanner scanObj = new Scanner(System.in); //scanner
-        var lists = new ArrayList<Task>(); //string initialize duke.Task arraylist
+        Scanner scanObj = new Scanner(System.in); //scanner Extracted
+        var lists = new ArrayList<Task>(); //string initialize duke.Task arraylist //Extracted
 
         // Get input from user
-        String input = scanObj.nextLine();
+        String input = scanObj.nextLine(); //Extracted
 
         // Main loop of the programme; exit upon "Bye" input
         while(!input.equals("bye"))
@@ -322,11 +352,13 @@ public class Duke {
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println(uiDivider);
         // End of programme
+
+
+        /**************************end of extract 1 by 1******************/
     }
 
 
-    public static void main(String[] args)
-    {
-        new Duke().run();
+    public static void main(String[] args) {
+        new Duke("data/tasks.txt").run();
     }
 }
