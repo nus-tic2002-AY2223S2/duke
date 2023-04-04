@@ -6,7 +6,10 @@ import java.util.Arrays;
 
 import task.Task;
 
-
+/**
+ * ui class
+ * -> other important commands and takes in the command
+ */
 
 public class Ui {
     private static String logo = " ____        _        \n"
@@ -32,9 +35,6 @@ public class Ui {
         return command;
     }
 
-    //store tasks into an array START
-
-    //store tasks into an array END
     //messages START
     public static void help(){
         System.out.println("Hi, it looks like you did not type anything.");
