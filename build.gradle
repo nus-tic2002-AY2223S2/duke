@@ -10,11 +10,6 @@ repositories {
     mavenCentral()
 }
 
-javafx {
-    version = "11"
-    modules = [ 'javafx.controls' ]
-}
-
 dependencies {
     implementation 'junit:junit:4.13.1'
     String javaFxVersion = '11'

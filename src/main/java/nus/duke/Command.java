@@ -59,6 +59,7 @@ public class Command {
         // level 3 mark/unmark feature
         // ***************************
 
+        //assert taskNumber != 0 : "Task cannot be null";
         if (this.taskNumber == 0) {
             //System.out.println("There is no task 0.");
             throw new InvalidCodeException("Invalid code exception");
@@ -157,7 +158,6 @@ public class Command {
 
 
         //assert task != null : "Task cannot be null";
-
         if (task == null) {
             throw new InvalidCodeException("Invalid code exception");
         }
@@ -206,6 +206,7 @@ public class Command {
                 if (taskDescription == null || taskDeadline == null) {
                     throw new InvalidCodeException("Invalid code exception");
                 }
+                //assert !taskDeadline.isBefore(LocalDateTime.now()) : "Due date cannot be in the past";
                 if (!taskDeadline.isBefore(LocalDateTime.now())) {
                     tl.add(new Deadline(taskDescription, taskDeadline));
                     displayAddTask(tl, ui);
