@@ -58,7 +58,7 @@ public class Task {
     public void setPriority(String p) throws DukeException {
 
         assert p != null : "priority is null!";
-
+        
         switch (p) {
             case "HIGH":
             case "H":

@@ -11,6 +11,7 @@ public class DukeTest {
 
     @Test
     public void run() {
+//[D][ ][ ] return book(by: 02 Dec 2019 6PM)
         Parser parser = new Parser();
         String userInput = "deadline return book /by 2/12/2019 1800";
         Task t;
@@ -23,7 +24,16 @@ public class DukeTest {
             } else if (parser.isListCommand(userInput)) {
                 //List out all the elements stored.
                 tasks.listTasks();
-            }   else if (parser.isToDoCommand(userInput)) {
+            } else if (parser.isDeleteCommand(userInput)) {
+                //Deletes a task.
+                tasks.updateTask(userInput);
+            } else if (parser.isMarkCommand(userInput)) {
+                //Marks a task as done.
+                tasks.updateTask(userInput);
+            } else if (parser.isUnmarkCommand(userInput)) {
+                //unmarks a task as not done.
+                tasks.updateTask(userInput);
+            } else if (parser.isToDoCommand(userInput)) {
                 //Create to-do task
                 t = parser.createToDo(userInput);
                 tasks.addTask(t);
@@ -31,10 +41,12 @@ public class DukeTest {
                 //Create duke.task.Deadline task
                 t = parser.createDeadline(userInput);
                 tasks.addTask(t);
+
             } else if (parser.isEventCommand(userInput)) {
                 //Create event task
                 t = parser.createEvent(userInput);
                 tasks.addTask(t);
+
             } else {
                 throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
             }
@@ -42,7 +54,9 @@ public class DukeTest {
             System.out.println(e.getMessage());
         } finally {
             ui.showLine();
+
         }
         assertEquals("[D][ ][ ] return book(by: 02 Dec 2019 6PM)", tasks.getTask(0).toString());
+
     }
 }

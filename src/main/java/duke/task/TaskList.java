@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskList {
-    private final List<Task> tasks;
+    private List<Task> tasks;
 
     public TaskList(List<Task> task) {
         this.tasks = task;
@@ -45,28 +45,14 @@ public class TaskList {
      *
      * @param userInput a string representing the user input to be processed.
      */
-    public void listFindTasks(String userInput) throws DukeException {
+    public void listFindTasks(String userInput) {
         userInput = userInput.replace("find", "").trim();
-
-        int counter = 0;
+        System.out.println("Here are the matching tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
             if (tasks.get(i).getDescription().contains(userInput)) {
-                counter = 1;
-                break;
+                System.out.println((i + 1) + ". " + tasks.get(i));
             }
         }
-
-        if (counter > 0) {
-            System.out.println("Here are the matching tasks in your list:");
-            for (int i = 0; i < tasks.size(); i++) {
-                if (tasks.get(i).getDescription().contains(userInput)) {
-                    System.out.println((i + 1) + ". " + tasks.get(i));
-                }
-            }
-        } else {
-            throw new DukeException("OOPS!! No matching task found in your list.");
-        }
-
     }
 
     /**
@@ -109,9 +95,9 @@ public class TaskList {
                 case "delete":
 
                     //Check if item number exist or not.
-                    try {
+                    try{
                         tasks.get(itemNumber);
-                    } catch (IndexOutOfBoundsException e) {
+                    }catch (IndexOutOfBoundsException e){
                         throw new DukeException("OOPS!!! Task number not found, please try again.");
                     }
 

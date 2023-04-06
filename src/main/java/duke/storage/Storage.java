@@ -18,8 +18,8 @@ import java.util.Scanner;
  * This is a storage class that creates/saves duke's file
  */
 public class Storage {
-    private final File duke_save;
-    private final String filename;
+    private File duke_save;
+    private String filename;
 
     /**
      * Constructor for duke.storage.Storage class
@@ -87,7 +87,7 @@ public class Storage {
         try {
             //Try to load the file
             Scanner myReader = new Scanner(duke_save);
-            if (myReader.hasNextLine()) {
+            if(myReader.hasNextLine()){
                 System.out.println("File exist, loading data.");
             }
             while (myReader.hasNextLine()) {
@@ -101,6 +101,7 @@ public class Storage {
                 }
 
                 String description = formatSaveDataSplit[3];
+
 
 
                 if (formatSaveDataSplit.length == 4) {

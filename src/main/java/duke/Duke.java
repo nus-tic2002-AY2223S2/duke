@@ -14,9 +14,9 @@ import java.io.File;
  * Implemented individual feature 1: C-duke.task.Priority
  */
 public class Duke {
-    private final Storage storage;
+    private Storage storage;
     private TaskList tasks;
-    private final Ui ui;
+    private Ui ui;
 
     /**
      * The Duke class represents the main component of the duke.Duke application.

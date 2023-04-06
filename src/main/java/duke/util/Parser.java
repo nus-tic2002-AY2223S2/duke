@@ -47,7 +47,7 @@ public class Parser {
             case "event":
                 formatString = userInput.replace("event", "").trim();
                 String[] formatEventSplit = formatString.split("/from | /to");
-                if (!userInput.matches(".*from.*to.*")) {
+                if (!userInput.matches(".*from.*to.*")){
                     throw new DukeException("OOPS!!! Please make sure the sequence is correct /from /to, please try again.");
                 }
                 if (formatEventSplit.length < 3) {
@@ -152,13 +152,14 @@ public class Parser {
         String description = formattedString[0];
 
 
+
         String from = convertToDateTime(formattedString[1]);
         String to = convertToDateTime(formattedString[2]);
-        boolean isDateTimeCorrect = compareDateTime(from, to);
+        boolean isDateTimeCorrect = compareDateTime(from,to);
 
-        if (!isDateTimeCorrect) {
+        if (!isDateTimeCorrect){
             throw new DukeException("OOPS!!! Invalid DateTime, 'From' date/time cannot be after 'To' date/time. Please try again!");
-        } else {
+        }else{
             return new Event(description, "E", from, to);
         }
     }
@@ -192,11 +193,11 @@ public class Parser {
         Date dateFrom;
         Date dateTo;
 
-        try {
-            dateFrom = df.parse(from);
+        try{
+            dateFrom =  df.parse(from);
             dateTo = df.parse(to);
 
-        } catch (ParseException e) {
+        }catch (ParseException e) {
             throw new DukeException("OOPS!!! Invalid DateTime format, Please follow this format: d/M/yyyy HHmm");
         }
 
