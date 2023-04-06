@@ -3,11 +3,10 @@ T | 1 | L | jog 2.4km
 E | 0 |   | project eve | 03 May 2023 6PM | 03 May 2023 8PM
 T | 0 |   | eat food
 T | 0 |   | test
-T | 0 |   | test
-E | 0 |   | project meeting | 02 Dec 2023 6PM | 02 Dec 2023 8PM
+T | 1 |   | test
+E | 0 | H | project meeting | 02 Dec 2023 6PM | 02 Dec 2023 8PM
 E | 0 |   | project meeting | 02 Dec 2023 6PM | 02 Dec 2023 10AM
 E | 0 |   | project meeting | 02 Dec 2024 6PM | 02 Dec 2023 8PM
 E | 0 |   | project meeting | 02 Dec 2023 6PM | 02 Dec 2024 8PM
 E | 0 |   | project meeting | 02 Dec 2023 6PM | 02 Dec 2023 8PM
 E | 0 |   | project meeting | 02 Dec 2023 10PM | 02 Dec 2023 8PM
-E | 0 |   | project meeting | 02 Dec 2023 6PM | 02 Dec 2023 8PM
