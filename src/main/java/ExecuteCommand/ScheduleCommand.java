@@ -1,9 +1,8 @@
-package ExecuteCommand;
+package executecommand;
 
 import exception.DukeException;
 import parser.Parser;
 import storage.Storage;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -26,8 +25,9 @@ public class ScheduleCommand extends Command{
         }
         String restCommand;
         restCommand = Parser.restCommand(inputCommand);
+        String[] scheduleDetails = Parser.getSchedule(restCommand);
         try{
-            LocalDateTime scheduleDate = LocalDateTime.parse(restCommand, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            LocalDateTime scheduleDate = LocalDateTime.parse(scheduleDetails[0].trim(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
             storage.scheduleView(scheduleDate);
         }catch (DateTimeParseException  e){
             throw new DukeException("☹ OOPS!!! Please key in the correct pattern!(schedule \"yyyy-MM-dd HH:mm\")");

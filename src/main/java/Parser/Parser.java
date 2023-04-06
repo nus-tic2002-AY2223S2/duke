@@ -1,9 +1,9 @@
 package parser;
 
-import Enum.enumConstant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import enumeration.enumConstant;
+
+import java.util.*;
+
 import exception.DukeException;
 
 public class Parser {
@@ -50,10 +50,9 @@ public class Parser {
      */
     public static String restCommand(String inputCommand)throws DukeException {
         String restCommand;
-        try{
-            restCommand = inputCommand.split(" ",2)[1].trim();
-        }catch (ArrayIndexOutOfBoundsException e){
-            throw new DukeException("Please key in keyword again!");
+        restCommand = inputCommand.split(" ",2)[1].trim();
+        if(restCommand.equals("")){
+            throw new DukeException("The command after first word cannot be empty.");
         }
         return restCommand;
     }
@@ -63,14 +62,8 @@ public class Parser {
      * @return string array
      */
     public static String[] getDeadline(String restCommand){
-        String[] arrayDeadline;
-        List<String> list = new ArrayList<>();
-        for (String s : restCommand.split("/by", 2)) {
-            String trim = s.trim();
-            list.add(trim);
-        }
-        arrayDeadline = list.toArray(new String[2]);
-        return arrayDeadline;
+        return Arrays.stream(restCommand.split("/by", 2))
+                .map(String::trim).toArray(o -> new String[2]);
     }
 
     /**
@@ -89,6 +82,15 @@ public class Parser {
         }
         arrayEvent = list.toArray(new String[3]);
         return arrayEvent;
+    }
+
+    public static String[] getSchedule(String restCommand){
+        String[] arraySchedule;
+        List<String> list = new ArrayList<>();
+        String trim = restCommand.trim();
+        list.add(trim);
+        arraySchedule = list.toArray(new String[1]);
+        return arraySchedule;
     }
 
     /**

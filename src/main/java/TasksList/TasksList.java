@@ -7,20 +7,47 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class TasksList {
-    public ArrayList<Task> tasksList;
+    public static ArrayList<Task> tasksList;
 
     public TasksList(){
         this.tasksList = new ArrayList<>();
     }
 
+    public static ArrayList<Task> getTasksList() {
+        return tasksList;
+    }
+
     /**
      * Adds all tasks from user input into tasksList
+     *
      * @param task a Task object
      */
     public void taskAdd(Task task){
+        String space = " ";
+        Ui.showLine();
+        int taskNum = 0;
+        for (Task tasks : tasksList) {
+            if(task.getDescription().equals(tasks.getDescription())){
+                taskNum++;
+                System.out.println(space + "The task being added clashes with another task in the list.");
+                break;
+            }
+        }
+        if(taskNum == 0){
+            tasksList.add(task);
+            Ui.Echo("Got it. I've added this task: \n  " + task +
+                    "\n Now you have " + tasksList.size() + " tasks in the list.");
+        }
+        Ui.showLine();
+    }
+
+    /**
+     * Loads all tasks from disk file and add into tasksList
+     *
+     * @param task a Task object
+     */
+    public void loadTask(Task task){
         tasksList.add(task);
-        Ui.Echo("Got it. I've added this task: \n  " + task +
-                "\n Now you have " + tasksList.size() + " tasks in the list.");
     }
     /**
      * Marks task from taskList
@@ -54,7 +81,9 @@ public class TasksList {
     }
 
     /**
-     * All tasks in the tasks list have been keyed in by user converted to file save pattern, and saved in disk.
+     * All tasks in the tasks list have been keyed in by user
+     * Saved in disk file.
+     *
      * @return String, as a parameter to writeToFile method
      */
     public String tasksAddInFile(){
@@ -66,7 +95,7 @@ public class TasksList {
     }
 
     /**
-     * Parses all tasks(String) from disk file to Task object
+     * Parses and read all tasks(String) from disk file to Task object
      *
      * @param nextLine each line of tasks saved in disk file
      * @return a Task object
@@ -100,14 +129,7 @@ public class TasksList {
         return task;
     }
 
-    /**
-     * Loads all tasks from disk file and add into tasksList
-     *
-     * @param task a Task object
-     */
-    public void loadTask(Task task){
-        tasksList.add(task);
-    }
+
 
     public void findTask(String restCommand){
         String space = " ";
@@ -121,7 +143,7 @@ public class TasksList {
             }
         }
         if(taskNum == 0){
-            System.out.println(space + "No tasks found in the task lists!");
+            System.out.println(space + "No tasks found in the tasks list!");
         }
         Ui.showLine();
     }
@@ -145,16 +167,17 @@ public class TasksList {
     /**
      * Prints and show all tasks in the list to User
      */
-    public void showToUser() {
+    public static void showToUser() {
         String space = " ";
         Ui.showLine();
         System.out.println(space + "Here are the tasks in your list:");
         int taskNum = 0;
         for (Task tasks : tasksList) {
             taskNum++;
-            System.out.println(space + taskNum + "." + tasks.toString());
+            System.out.println(space + taskNum + "." + tasks);
         }
         Ui.showLine();
     }
+
 }
 

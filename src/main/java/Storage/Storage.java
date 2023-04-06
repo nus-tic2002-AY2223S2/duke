@@ -13,9 +13,7 @@ public class Storage extends TasksList {
     private final String filePath;
     private static final Storage storage = new Storage();
 
-    /**
-     * make Storage constructor , initialise filepath and create new file
-     */
+    /* make Storage constructor , initialise filepath and create new file */
     public Storage() {
         String dir = System.getProperty("user.dir");
         java.nio.file.Path path = java.nio.file.Paths.get(dir, "data", "duke.txt");
@@ -44,11 +42,9 @@ public class Storage extends TasksList {
             }else{
                 System.out.println("File already exist,file path: " + file.getAbsolutePath());
             }
+            Ui.showLine();
         } catch (IOException e) {
             throw new DukeException("☹ OOPS!!! An error for file create occurred.");
-        }
-        finally {
-            Ui.showLine();
         }
     }
 
@@ -70,7 +66,7 @@ public class Storage extends TasksList {
     }
 
     /**
-     * Read Tasks(one line by one line) from disk file(duke.txt)
+     * Read Tasks follow one line by one line from disk file
      *
      * FileNotFoundException in RuntimeException
      */
