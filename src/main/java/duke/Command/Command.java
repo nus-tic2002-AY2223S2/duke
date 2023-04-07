@@ -1,6 +1,11 @@
 package duke.Command;
 
 import duke.*;
+import duke.TasksType.Deadline;
+import duke.TasksType.Event;
+import duke.TasksType.Task;
+import duke.TasksType.Todo;
+
 import java.util.Scanner;
 
 public class Command {
@@ -97,7 +102,7 @@ public class Command {
                     Task toDelete = list.getTask(Integer.parseInt(splitted[1]) - 1);
                     list.deleteTask(Integer.parseInt(splitted[1]) - 1);
                 } else {
-                    System.out.println("duke.Task not recognised");
+                    System.out.println("duke.TasksType.Task not recognised");
                 }
             }
             loader.saveToFile(list.getList());

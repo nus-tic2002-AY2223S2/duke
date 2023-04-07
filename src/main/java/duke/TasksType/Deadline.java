@@ -1,4 +1,4 @@
-package duke;
+package duke.TasksType;
 
 public class Deadline extends Task
 {

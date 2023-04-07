@@ -1,7 +1,5 @@
 package duke;
 
-import java.util.Scanner;
-import java.util.ArrayList;
 import duke.Ui.Ui;
 import duke.Command.Command;
 //import duke.Storage;

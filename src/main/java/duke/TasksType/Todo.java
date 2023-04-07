@@ -1,4 +1,4 @@
-package duke;
+package duke.TasksType;
 
 public class Todo extends Task
 {
