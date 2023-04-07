@@ -18,10 +18,6 @@ public class Deadline extends Task {
         this.by = by;
     }
 
-    ///////////////////////////////////////////////////////
-    //  getBy() method will return the deadline of Task  //
-    ///////////////////////////////////////////////////////
-
     /**
      * @return the deadline of Task
      */

@@ -13,7 +13,7 @@ public class TaskList {
     /**
      *  Attribute
      */
-    private ArrayList<Task> list; //string initialize duke.Task arraylist
+    private ArrayList<Task> list; //string initialize Task arraylist
 
     /**
      *  Constructor [with inputs]

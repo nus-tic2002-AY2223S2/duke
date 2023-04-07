@@ -4,8 +4,7 @@
 
 package duke.storage;
 
-import duke.DukeException;
-import duke.Task;
+import duke.*;
 import duke.task.TaskList;
 
 import java.io.File;
@@ -42,7 +41,43 @@ public class Storage {
             try {
                 Scanner scan = new Scanner(fileItem);
                 while (scan.hasNext()) {
-                    Task newTask = new Task(scan.nextLine());
+                    String itemEntry = scan.nextLine();
+                    Task newTask;
+                    String [] splitEntryValue = itemEntry.split(":");
+
+                    if(splitEntryValue[0].trim().equalsIgnoreCase("T")) {
+                        /**
+                         * @param splitEntryValue[0] = T
+                         * @param splitEntryValue[1] = 1 - done, 0 - not done
+                         * @param splitEntryValue[2] = Description
+                         */
+                        newTask = new Todo(splitEntryValue[2].trim());
+
+                        //mark as done if value is 1
+                        if(splitEntryValue[1].trim().equalsIgnoreCase("1"))
+                        {
+                            newTask.markAsDone();
+                        }
+                    }
+                    else if(splitEntryValue[0].trim().equalsIgnoreCase("D")) {
+                        /**
+                         * @param splitEntryValue[0] = D
+                         * @param splitEntryValue[1] = 1 - done, 0 - not done
+                         * @param splitEntryValue[2] = Description
+                         * @param splitEntryValue[3] = 'By' attribute
+                         */
+                        newTask = new Deadline(splitEntryValue[2].trim(), splitEntryValue[3].trim());
+                    }
+                    else  {
+                        /**
+                         * @param splitEntryValue[0] = E
+                         * @param splitEntryValue[1] = 1 - done, 0 - not done
+                         * @param splitEntryValue[2] = Description
+                         * @param splitEntryValue[3] = Start
+                         * @param splitEntryValue[4] = End
+                         */
+                        newTask = new Event(splitEntryValue[2].trim(), splitEntryValue[3].trim(), splitEntryValue[4].trim());
+                    }
                     listOfTask.add(newTask);
                 }
             } catch (FileNotFoundException e) {
@@ -58,7 +93,41 @@ public class Storage {
             FileWriter newFW = new FileWriter(filePath);
             for(int i = 0; i < listOfTask.getSizeOfList(); i++)
             {
-                newFW.write(listOfTask.getElementFromList(i).toString() + System.getProperty( "line.separator" ));
+                Task itemToAdd = listOfTask.getElementFromList(i);
+                String finalLine = new String();
+                if(itemToAdd instanceof Todo) {
+                    finalLine += "T : ";
+                    if(itemToAdd.getTaskStatus().equalsIgnoreCase("X")) {
+                        finalLine += "1";
+                    }
+                    else {
+                        finalLine += "0";
+                    }
+                    finalLine += " : " + itemToAdd.getDescription();
+                }
+                else if(itemToAdd instanceof Deadline) {
+                    finalLine += "D : ";
+                    if(itemToAdd.getTaskStatus().equalsIgnoreCase("X")) {
+                        finalLine += "1";
+                    }
+                    else {
+                        finalLine += "0";
+                    }
+                    finalLine += " : " + itemToAdd.getDescription() + " : " + ((Deadline) itemToAdd).getBy();
+                }
+                else {
+                    finalLine += "E : ";
+                    if(itemToAdd.getTaskStatus().equalsIgnoreCase("X")) {
+                        finalLine += "1";
+                    }
+                    else {
+                        finalLine += "0";
+                    }
+                    finalLine += " : " + itemToAdd.getDescription() + " : " + ((Event) itemToAdd).getStart()+ " : " + ((Event) itemToAdd).getEnd();
+
+                }
+                newFW.write(finalLine);
+                newFW.write(System.getProperty( "line.separator" ));
             }
             newFW.close();
         } catch (IOException e) {
