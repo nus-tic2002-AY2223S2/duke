@@ -36,6 +36,16 @@ public class Ui {
 
         this.showDividerLine();
         System.out.println("Hello! I'm Duke");
+        System.out.println("Here's the possible instructions as follows:");
+        System.out.println(" Add Task [Please follow format] -> Add new Task into task list");
+        System.out.println(" -> Todo e.g.: 'todo <description>' ");
+        System.out.println(" -> Dateline e.g.: 'deadline <description> /by <deadline>' ");
+        System.out.println(" -> Event e.g.: 'event <description> /from <start date> /to <end date>' ");
+        System.out.println(" Mark / Unmark / Delete Task; [insert comma between numbers if want to perform Mass Operations]");
+        System.out.println(" List -> List all Tasks ");
+        System.out.println(" Bye -> Exit");
+
+        this.showDividerLine();
         System.out.println("What can I do for you?");
         this.showDividerLine();
         System.out.println("\n");
@@ -47,6 +57,13 @@ public class Ui {
     public void showDividerLine() {
         System.out.println(uiDivider);
     }
+    /**
+     *  this method will print out next line
+     */
+    public void printEmptyLine() {
+        System.out.println();
+    }
+
 
     /**
      *  this method will print out a loading error

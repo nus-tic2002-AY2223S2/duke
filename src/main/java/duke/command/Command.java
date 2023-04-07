@@ -8,6 +8,10 @@ import duke.*;
 import duke.storage.Storage;
 import duke.task.TaskList;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 public class Command {
 
     /**
@@ -46,6 +50,27 @@ public class Command {
     }
 
     /**
+     *  This method converts all values in the string to array
+     */
+    public ArrayList<Integer> convertToIntArrayList(ArrayList<String> strArrayList) {
+        ArrayList<Integer> intArrayList = new ArrayList<Integer>();
+        for(String s : strArrayList) {
+            intArrayList.add(Integer.valueOf(s));
+        }
+        return intArrayList;
+    }
+
+    /**
+     *  This method takes in an array and split them into integer Arraylist
+     */
+    public ArrayList<Integer> convertAndSortDescending(String[] inputArray) {
+        ArrayList<String> separateMultipleIndex = new ArrayList<String>(Arrays.asList(inputArray));
+        ArrayList<Integer> multipleIndexList = convertToIntArrayList(separateMultipleIndex);
+        Collections.sort(multipleIndexList, Collections.reverseOrder());
+        return multipleIndexList;
+    }
+
+    /**
      *  This method performs all the key functions of the Duke programme
      */
     public void execute(TaskList task, Ui ui, Storage storage) throws DukeException {
@@ -55,29 +80,43 @@ public class Command {
             }
             else if (commandName.equalsIgnoreCase("mark")) {
                 /**
-                 * retrieve the index to be marked &
+                 * split seperatedInput[1] by commas,
+                 * sort by descending using Collections lib,
+                 * iterate to retrieve the index to be marked &
                  * set Status of Task to Done
                  */
-                int indexInList = Integer.parseInt(seperatedInput[1]) - 1 ;
-                task.markTask(indexInList);
+                ArrayList<Integer> multipleIndexList = convertAndSortDescending(seperatedInput[1].split(","));
+                for(int i = 0; i < multipleIndexList.size(); i++) {
+                    task.markTask(multipleIndexList.get(i)-1);
+                    ui.printEmptyLine();
+                }
             }
             else if (commandName.equalsIgnoreCase("unmark")) {
                 /**
-                 * retrieve the index to be unmarked &
-                 * set Status of Task to Undone
+                 * split seperatedInput[1] by commas,
+                 * sort by descending using Collections lib,
+                 * iterate to retrieve the index to be marked &
+                 * set Status of Task to undone
                  */
-                int indexInList = Integer.parseInt(seperatedInput[1]) - 1 ;
-                task.unmarkTask(indexInList);
+                ArrayList<Integer> multipleIndexList = convertAndSortDescending(seperatedInput[1].split(","));
+                for(int i = 0; i < multipleIndexList.size(); i++) {
+                    task.unmarkTask(multipleIndexList.get(i)-1);
+                    ui.printEmptyLine();
+                }
             }
             else if (commandName.equalsIgnoreCase("delete")) {
 
                 /**
-                 * retrieve the index to be deleted &
-                 * remove the Task from the list
+                 * split seperatedInput[1] by commas,
+                 * sort by descending using Collections lib,
+                 * iterate to retrieve the index to be marked &
+                 * delete them
                  */
-                int indexInList = Integer.parseInt(seperatedInput[1]) - 1 ;
-                task.deleteTask(indexInList);
-                System.out.println("Now you have " + task.getSizeOfList() + " task(s) in the list");
+                ArrayList<Integer> multipleIndexList = convertAndSortDescending(seperatedInput[1].split(","));
+                for(int i = 0; i < multipleIndexList.size(); i++) {
+                    task.deleteTask(multipleIndexList.get(i)-1);
+                    ui.printEmptyLine();
+                }
             }
             else if (commandName.equalsIgnoreCase("deadline")) {
                 /**
@@ -88,9 +127,8 @@ public class Command {
                  */
                 String [] nextSeparated = seperatedInput[1].split("/by");
 
-                Deadline newDeadline = new Deadline(nextSeparated[0].trim(), nextSeparated[1].trim());
+                Deadline newDeadline = new Deadline(nextSeparated[0].trim(), nextSeparated[1].trim().trim());
                 task.addNewTask(newDeadline);
-                System.out.println("Now you have " + task.getSizeOfList() + " task(s) in the list");
             }
             else if(commandName.equalsIgnoreCase("event")) {
                 /**
@@ -104,13 +142,11 @@ public class Command {
 
                 Event newEvent = new Event(nextSeparated[0].trim(), separatedTiming[0].trim(), separatedTiming[1].trim());
                 task.addNewTask(newEvent);
-                System.out.println("Now you have " + task.getSizeOfList() + " task(s) in the list");
             }
             else if(commandName.equalsIgnoreCase("todo")) {
 
-                Todo newTodo = new Todo(seperatedInput[1]);
+                Todo newTodo = new Todo(seperatedInput[1].trim());
                 task.addNewTask(newTodo);
-                System.out.println("Now you have " + task.getSizeOfList() + " task(s) in the list");
             }
             else if(commandName.equalsIgnoreCase("find"))
             {

@@ -4,4 +4,4 @@ D : 1 : return money : 5th April 2024
 D : 0 : add water : Sunday
 T : 0 : throw water
 D : 0 : return money : 6th April 2024
-E : 0 : project meeting : Sun 5pm : 6pm
+T : 0 : go to the park

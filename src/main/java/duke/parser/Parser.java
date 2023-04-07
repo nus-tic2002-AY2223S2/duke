@@ -82,43 +82,43 @@ public class Parser {
      *  - Missing duration
      *  Mark / Unmark / Delete functions:
      *  - Missing value for mark & unmark
-     *  - Too much values for mark & unmark
+     *  - Each value (if more than 1, must be a number or more than 0)
      */
     public static String[] identifyFunctionsValidateInput(String stringInput) throws DukeException
     {
         String[] separatedInput = stringInput.split(" ", 2);
-        if(separatedInput[0].equalsIgnoreCase("Deadline"))
+        if(separatedInput[0].trim().equalsIgnoreCase("Deadline"))
         {
             if (separatedInput.length < 2)
             {
-                throw new DukeException("☹ OOPS!!! The description of a " + separatedInput[0] + " cannot be empty.");
+                throw new DukeException("☹ OOPS!!! The description of a " + separatedInput[0].trim() + " cannot be empty.");
             }
             else if (!separatedInput[1].contains("/by"))
             {
-                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a \"/by\" for deadline");
+                throw new DukeException("☹ OOPS!!! " + separatedInput[0].trim() + " is missing a \"/by\" for deadline");
             }
             else if(separatedInput[1].split("/by").length < 2)
             {
-                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a deadline");
+                throw new DukeException("☹ OOPS!!! " + separatedInput[0].trim() + " is missing a deadline");
             }
             else
             {
                 return separatedInput;
             }
         }
-        else if(separatedInput[0].equalsIgnoreCase("Event"))
+        else if(separatedInput[0].trim().equalsIgnoreCase("Event"))
         {
             if (separatedInput.length < 2)
             {
-                throw new DukeException("☹ OOPS!!! The description of a " + separatedInput[0] + " cannot be empty.");
+                throw new DukeException("☹ OOPS!!! The description of a " + separatedInput[0].trim() + " cannot be empty.");
             }
             else if (!separatedInput[1].contains("/from"))
             {
-                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a \"/from\" for Event");
+                throw new DukeException("☹ OOPS!!! " + separatedInput[0].trim() + " is missing a \"/from\" for Event");
             }
             else if (!separatedInput[1].contains("/to"))
             {
-                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a \"/to\" for Event");
+                throw new DukeException("☹ OOPS!!! " + separatedInput[0].trim() + " is missing a \"/to\" for Event");
             }
             else
             {
@@ -126,37 +126,41 @@ public class Parser {
                 return separatedInput;
             }
         }
-        else if(separatedInput[0].equalsIgnoreCase("Todo"))
+        else if(separatedInput[0].trim().equalsIgnoreCase("Todo"))
         {
             if (separatedInput.length < 2)
             {
-                throw new DukeException("☹ OOPS!!! The description of a " + separatedInput[0] + " cannot be empty.");
+                throw new DukeException("☹ OOPS!!! The description of a " + separatedInput[0].trim() + " cannot be empty.");
             }
             else
             {
                 return separatedInput;
             }
         }
-        else if (separatedInput[0].equalsIgnoreCase("Mark") || separatedInput[0].equalsIgnoreCase("Unmark") || separatedInput[0].equalsIgnoreCase("Delete"))
+        else if (separatedInput[0].trim().equalsIgnoreCase("Mark") || separatedInput[0].trim().equalsIgnoreCase("Unmark") || separatedInput[0].trim().equalsIgnoreCase("Delete"))
         {
             if (separatedInput.length < 2)
             {
-                throw new DukeException("☹ OOPS!!! The value after " + separatedInput[0] + " cannot be empty.");
-            }
-            else if (!isNumber(separatedInput[1]))
-            {
-                throw new DukeException("☹ OOPS!!! The value after " + separatedInput[0] + " must be a number.");
-            }
-            else if (Integer.parseInt(separatedInput[1]) <= 0)
-            {
-                throw new DukeException("☹ OOPS!!! The value after " + separatedInput[0] + " cannot be smaller than 0.");
+                throw new DukeException("☹ OOPS!!! The value after " + separatedInput[0].trim() + " cannot be empty.");
             }
             else
             {
+                String[] separateMultipleIndex = separatedInput[1].split(",");
+                for(int i = 0; i < separateMultipleIndex.length; i++)
+                {
+                    if(!isNumber(separateMultipleIndex[i].trim()))
+                    {
+                        throw new DukeException("☹ OOPS!!! The value " + separateMultipleIndex[i].trim() + " must be a number.");
+                    }
+                    else if (Integer.parseInt(separateMultipleIndex[i].trim()) <= 0)
+                    {
+                        throw new DukeException("☹ OOPS!!! The value " + separateMultipleIndex[i].trim() + " cannot be smaller than 0.");
+                    }
+                }
                 return separatedInput;
             }
         }
-        else if(separatedInput[0].equalsIgnoreCase("Find"))
+        else if(separatedInput[0].trim().equalsIgnoreCase("Find"))
         {
             if (separatedInput.length < 2)
             {

@@ -67,6 +67,7 @@ public class TaskList {
         else {
             this.list.add(newTask);
             System.out.println("Got it. I've added this task:\n" + newTask.toString());
+            System.out.println("Now you have " + this.getSizeOfList() + " task(s) in the list");
             return newTask;
         }
     }
@@ -75,13 +76,14 @@ public class TaskList {
      *  this method will take in an index & remove an existing Tasking from the current list
      */
     public Task deleteTask(int indexToBeDeleted) throws DukeException {
-        if(indexToBeDeleted > (this.list.size()-1)) {
+        if(indexToBeDeleted > (this.getSizeOfList()-1)) {
             throw new DukeException("☹ OOPS!!! The value after delete is over the size of the list.");
         }
         else {
             Task deletedItem = getElementFromList(indexToBeDeleted);
             Task item = this.list.remove(indexToBeDeleted);
             System.out.println("Noted. I've removed this task:\n" + deletedItem);
+            System.out.println("Now you have " + this.getSizeOfList() + " task(s) in the list");
             return deletedItem;
         }
     }
@@ -90,7 +92,7 @@ public class TaskList {
      *  This method will retrieve the item to mark it
      */
     public void markTask(int indexToBeMarked) throws DukeException {
-        if(indexToBeMarked > (this.list.size()-1)) {
+        if(indexToBeMarked > (this.getSizeOfList()-1)) {
             throw new DukeException("☹ OOPS!!! The value after mark is over the size of the list.");
         }
         else {
@@ -105,7 +107,7 @@ public class TaskList {
      */
     public void unmarkTask(int indexToBeUnmarked) throws DukeException {
 
-        if(indexToBeUnmarked > (this.list.size()-1)) {
+        if(indexToBeUnmarked > (this.getSizeOfList()-1)) {
             throw new DukeException("☹ OOPS!!! The value after unmark is over the size of the list.");
         }
         else {
@@ -120,17 +122,22 @@ public class TaskList {
      */
     public void findItemInList(String searchKeyword) {
         System.out.println("Here are the matching tasks in your list:");
-        for(int i = 0; i < this.list.size(); i++) {
+        for(int i = 0; i < this.getSizeOfList(); i++) {
             if(this.list.get(i).getDescription().contains(searchKeyword)) {
                 System.out.println(i+1 + "." + this.list.get(i).toString());
             }
         }
     }
 
+    /**
+     *  This method will search the list to check for duplicates
+     * @return true if duplicate exists
+     * @return false if no duplicates
+     */
     public boolean checkDuplicate(Task newTask)
     {
         boolean counter = false;
-        for(int i = 0; i < this.list.size(); i++) {
+        for(int i = 0; i < this.getSizeOfList(); i++) {
             Task currItem = this.getElementFromList(i);
             if(newTask.getClass().equals(currItem.getClass())) {
                 if(newTask instanceof Todo)
