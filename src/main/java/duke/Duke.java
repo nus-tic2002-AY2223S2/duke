@@ -2,7 +2,7 @@ package duke;
 
 import duke.Ui.Ui;
 import duke.Command.Command;
-//import duke.Storage;
+//import duke.Storage.Storage;
 
 public class Duke {
     private final Ui ui;

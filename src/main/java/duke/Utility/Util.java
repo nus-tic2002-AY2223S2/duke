@@ -1,4 +1,4 @@
-package duke;
+package duke.Utility;
 
 public class Util {
     public static boolean checkMark(String input) {

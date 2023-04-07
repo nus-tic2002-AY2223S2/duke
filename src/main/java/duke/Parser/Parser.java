@@ -1,4 +1,6 @@
-package duke;
+package duke.Parser;
+
+import duke.DukeException;
 
 import java.util.ArrayList;
 

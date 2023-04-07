@@ -1,26 +1,30 @@
 package duke.Command;
 
 import duke.*;
+import duke.Parser.Parser;
+import duke.Storage.Storage;
+import duke.TaskList.TaskList;
 import duke.TasksType.Deadline;
 import duke.TasksType.Event;
 import duke.TasksType.Task;
 import duke.TasksType.Todo;
+import duke.Utility.Util;
 
 import java.util.Scanner;
 
 public class Command {
     public static Task executeLoad(String line) {
         Task task;
-        if (line.contains("[T]")) {
+        if (line.contains("[T]")) { //loads Todos
             task = new Todo(line.substring(7).trim());
         }
-        else if (line.contains("[D]")) {
+        else if (line.contains("[D]")) { //loads Deadlines
             String description = line.substring(7);
             String[] deadlineSplit = description.split("/by");
             task = new Deadline(deadlineSplit[0].trim(), deadlineSplit[1].trim());
         }
         else {
-            String description = line.substring(7);
+            String description = line.substring(7); //loads Events
             String[] eventSplit = description.split("/from");
             String[] eventSplitAgain = eventSplit[1].split("/to");
             task = new Event(eventSplit[0].trim(), eventSplitAgain[0].trim(), eventSplitAgain[1].trim());
