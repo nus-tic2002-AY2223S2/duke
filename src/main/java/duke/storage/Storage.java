@@ -51,12 +51,6 @@ public class Storage {
                          * @param splitEntryValue[2] = Description
                          */
                         newTask = new Todo(splitEntryValue[2].trim());
-
-                        //mark as done if value is 1
-                        if(splitEntryValue[1].trim().equalsIgnoreCase("1"))
-                        {
-                            newTask.markAsDone();
-                        }
                     }
                     else if(splitEntryValue[0].trim().equalsIgnoreCase("D")) {
                         /**
@@ -76,6 +70,12 @@ public class Storage {
                          * @param splitEntryValue[4] = End
                          */
                         newTask = new Event(splitEntryValue[2].trim(), splitEntryValue[3].trim(), splitEntryValue[4].trim());
+                    }
+
+                    //mark as done if value is 1
+                    if(splitEntryValue[1].trim().equalsIgnoreCase("1"))
+                    {
+                        newTask.markAsDone();
                     }
                     listOfTask.add(newTask);
                 }

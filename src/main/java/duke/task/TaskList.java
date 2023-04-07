@@ -4,6 +4,9 @@
 
 package duke.task;
 
+import duke.Todo;
+import duke.Deadline;
+import duke.Event;
 import duke.DukeException;
 import duke.Task;
 
@@ -34,8 +37,7 @@ public class TaskList {
      */
     public void printTaskList() {
         System.out.println("Here are the tasks in your list:");
-        for(int i = 0; i < this.list.size(); i++)
-        {
+        for(int i = 0; i < this.list.size(); i++) {
             System.out.println(i+1 + "." + this.list.get(i).toString());
         }
     }
@@ -58,10 +60,15 @@ public class TaskList {
     /**
      *  This method will add a new Tasking into the current list
      */
-    public Task addNewTask(Task newTask) {
-        this.list.add(newTask);
-        System.out.println("Got it. I've added this task:\n" + newTask.toString());
-        return newTask;
+    public Task addNewTask(Task newTask) throws DukeException{
+        if (checkDuplicate(newTask)) {
+            throw new DukeException("☹ OOPS!!! This already task exists");
+        }
+        else {
+            this.list.add(newTask);
+            System.out.println("Got it. I've added this task:\n" + newTask.toString());
+            return newTask;
+        }
     }
 
     /**
@@ -113,13 +120,39 @@ public class TaskList {
      */
     public void findItemInList(String searchKeyword) {
         System.out.println("Here are the matching tasks in your list:");
-        for(int i = 0; i < this.list.size(); i++)
-        {
-            if(this.list.get(i).getDescription().contains(searchKeyword))
-            {
+        for(int i = 0; i < this.list.size(); i++) {
+            if(this.list.get(i).getDescription().contains(searchKeyword)) {
                 System.out.println(i+1 + "." + this.list.get(i).toString());
             }
         }
+    }
+
+    public boolean checkDuplicate(Task newTask)
+    {
+        boolean counter = false;
+        for(int i = 0; i < this.list.size(); i++) {
+            Task currItem = this.getElementFromList(i);
+            if(newTask.getClass().equals(currItem.getClass())) {
+                if(newTask instanceof Todo)
+                {
+                    if(newTask.getDescription().equalsIgnoreCase(currItem.getDescription())) {
+                        return true;
+                    }
+                }
+                else if(newTask instanceof Deadline)
+                {
+                    if(newTask.getDescription().equalsIgnoreCase(currItem.getDescription()) && ((Deadline) newTask).getBy().equalsIgnoreCase(((Deadline) currItem).getBy())) {
+                        return true;
+                    }
+                }
+                else {
+                    if(newTask.getDescription().equalsIgnoreCase(currItem.getDescription()) && ((Event) newTask).getStart().equalsIgnoreCase(((Event) currItem).getStart()) && ((Event) newTask).getEnd().equalsIgnoreCase(((Event) currItem).getEnd())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return counter;
     }
 
 
