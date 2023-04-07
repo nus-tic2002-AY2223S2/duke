@@ -11,8 +11,13 @@ public class Deadline extends Task
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "[D]" + super.toString() + " (by: " + by + ")";
+    }
+    public String getDescription() {
+        return description;
+    }
+    public String getBy() {
+        return by;
     }
 }

@@ -2,6 +2,7 @@ package duke;
 
 import java.util.ArrayList;
 import duke.Ui.Ui;
+
 public class TaskList {
     private ArrayList<Task> list = new ArrayList<Task>();
 
@@ -10,11 +11,13 @@ public class TaskList {
          *empty constructor
          */
     }
-
+    public void storeList(ArrayList<Task> list) {
+        this.list = list;
+    }
     public void addTask(Task task) {
         list.add(task);
         System.out.println("Got it. I've added this task:");
-        System.out.println();
+        System.out.println(task);
     }
 
     public void deleteTask(int IndexToDelete) {
@@ -25,6 +28,9 @@ public class TaskList {
     }
     public Task getTask(int index) {
         return list.get(index);
+    }
+    public ArrayList getList() {
+        return list;
     }
 
     public void listTask() {

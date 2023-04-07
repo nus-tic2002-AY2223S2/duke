@@ -1,5 +1,7 @@
 package duke;
 
+import duke.Command.Command;
+
 import java.io.*;
 import java.util.*;
 import java.io.File;
@@ -12,24 +14,8 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
 import duke.Task;
-//import java.time.format.DateTimeFormatter;
-//public class Storage
-//{
-//
-//    private File saved;
-//
-//    public Storage() {
-//        saved = new File("data/saved.txt");
-//
-//    }
-//    public void load() throws DukeException{
-//        if (!saved.exists() && saved.isDirectory()) {
-//
-//            throw new DukeException("New file created!");
-//
-//        }
-//    }
-//}
+import java.time.format.DateTimeFormatter;
+
 
 
 public class Storage {
@@ -37,15 +23,14 @@ public class Storage {
     private static final String FILE_PATH = "data/saved.txt";
 
     public static ArrayList<Task> loadFile() {
-        ArrayList<Task> list = new ArrayList<Task>();
+        ArrayList<Task> list = new ArrayList<>();
         File file = new File(FILE_PATH);
         if (file.exists()) {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    Task description = new Task(line);
-                    list.add(description);
+                    list.add(Command.executeLoad(line));
                 }
                 reader.close();
             } catch (IOException e) {
@@ -60,12 +45,24 @@ public class Storage {
         }
         return list;
     }
-
-    public static void saveToFile(ArrayList<Task> lines) {
+    public static void saveToFile(ArrayList<Task> list) {
         try {
             FileWriter writer = new FileWriter(FILE_PATH);
-            for (Task line : lines) {
-                writer.write(line + "\n");
+
+            for (Task line : list) {
+                String item = new String();
+                item += line.toString().substring(0, 7);
+                if (line instanceof Todo) {
+                    item += line.toString().substring(7);
+                }
+                else if (line instanceof Deadline) {
+                    item += ((Deadline) line).getDescription() + " /by " + ((Deadline) line).getBy();
+                }
+                else {
+                    item += ((Event) line).getDescription() + " /from " + ((Event) line).getFrom()+ " /to " + ((Event) line).getTo();
+                }
+
+                writer.write(item + "\n");
             }
             writer.close();
         } catch (IOException e) {
