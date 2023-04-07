@@ -68,7 +68,7 @@ public class TaskList {
      *  this method will take in an index & remove an existing Tasking from the current list
      */
     public Task deleteTask(int indexToBeDeleted) throws DukeException {
-        if(indexToBeDeleted > this.list.size()) {
+        if(indexToBeDeleted > (this.list.size()-1)) {
             throw new DukeException("☹ OOPS!!! The value after delete is over the size of the list.");
         }
         else {
@@ -83,7 +83,7 @@ public class TaskList {
      *  This method will retrieve the item to mark it
      */
     public void markTask(int indexToBeMarked) throws DukeException {
-        if(indexToBeMarked > this.list.size()) {
+        if(indexToBeMarked > (this.list.size()-1)) {
             throw new DukeException("☹ OOPS!!! The value after mark is over the size of the list.");
         }
         else {
@@ -98,7 +98,7 @@ public class TaskList {
      */
     public void unmarkTask(int indexToBeUnmarked) throws DukeException {
 
-        if(indexToBeUnmarked > this.list.size()) {
+        if(indexToBeUnmarked > (this.list.size()-1)) {
             throw new DukeException("☹ OOPS!!! The value after unmark is over the size of the list.");
         }
         else {

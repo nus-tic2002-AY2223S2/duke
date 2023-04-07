@@ -1,3 +1,4 @@
-T : 1 : read more books
+T : 0 : read more books
 E : 0 : project meeting : Sun 3pm : 4pm
 D : 0 : return money : 5th April 2024
+D : 1 : add water : Sunday

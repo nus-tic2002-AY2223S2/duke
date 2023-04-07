@@ -117,11 +117,11 @@ public class Parser {
             }
             else if (!separatedInput[1].contains("/from"))
             {
-                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a \"/from\" for deadline");
+                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a \"/from\" for Event");
             }
             else if (!separatedInput[1].contains("/to"))
             {
-                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a \"/to\" for deadline");
+                throw new DukeException("☹ OOPS!!! " + separatedInput[0] + " is missing a \"/to\" for Event");
             }
             else
             {
@@ -149,6 +149,10 @@ public class Parser {
             else if (!isNumber(separatedInput[1]))
             {
                 throw new DukeException("☹ OOPS!!! The value after " + separatedInput[0] + " must be a number.");
+            }
+            else if (Integer.parseInt(separatedInput[1]) <= 0)
+            {
+                throw new DukeException("☹ OOPS!!! The value after " + separatedInput[0] + " cannot be smaller than 0.");
             }
             else
             {

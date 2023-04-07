@@ -113,6 +113,7 @@ public class Command {
         }
         else {
             byeAttribute = true;
+            ui.showByeMeg();
         }
     }
 
