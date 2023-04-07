@@ -1,3 +1,5 @@
+package duke;
+
 public class Task
 {
     protected String description;
@@ -23,8 +25,8 @@ public class Task
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
+        //return this.getStatusIcon()  + this.description;
     }
 }
