@@ -12,6 +12,8 @@ public class Ui {
      */
     private static String loadingError = "No file found";
     private static String uiDivider = "____________________________________________________________";
+
+    private static String byeMsg = "Bye. Hope to see you again soon";
     private static Scanner scanObj;
     private static String input;
 
@@ -43,21 +45,29 @@ public class Ui {
     /**
      *  this method will print out a divider line
      */
-    public static void showDividerLine() {
+    public void showDividerLine() {
         System.out.println(uiDivider);
     }
 
     /**
      *  this method will print out a loading error
      */
-    public static void showLoadingError() {
+    public void showLoadingError() {
         System.out.println(loadingError);
+    }
+
+    /**
+     *  this method will print motherhood bye statement
+     */
+    public void showByeMeg() {
+        this.showDividerLine();
+        System.out.println(byeMsg);
     }
 
     /**
      *  this method will take in an input from the user and returns it
      */
-    public static String readCommand()
+    public String readCommand()
     {
         input = scanObj.nextLine();
         return input;
@@ -66,7 +76,7 @@ public class Ui {
     /**
      *  this method will take in an error and display it out
      */
-    public static void showError(String errorMessage)
+    public void showError(String errorMessage)
     {
         System.out.println("Error caught:" + errorMessage);
     }

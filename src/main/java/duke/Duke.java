@@ -17,14 +17,14 @@ public class Duke {
 
     public static String uiDivider = "____________________________________________________________";
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //  Helper method                                                                                              //
-    //  isNumber() method will check input if it is a number                                                       //
-    //  Returns TRUE if it is a number; FALSE if it is a String                                                    //
-    //  Logic:      Integer.parseInt will throw NumberFormatException if it is unable to convert input to Integer  //
-    //              Once NumberFormatException is caught, return FALSE as it is not a Number                       //
-    //  Reference:  https://stackoverflow.com/questions/1102891/how-to-check-if-a-string-is-numeric-in-java        //
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     *  Helper method
+     *  isNumber() method will check input if it is a Number
+     *  Returns TRUE if it is a number; FALSE if it is a String
+     *  Logic:      Integer.parseInt will throw NumberFormatException if it is unable to convert input to Integer
+     *              Once NumberFormatException is caught, return FALSE as it is not a Number
+     *  Reference:  https://stackoverflow.com/questions/1102891/how-to-check-if-a-string-is-numeric-in-java
+     */
     public static boolean isNumber(String strToCheck)
     {
         try {
@@ -37,14 +37,14 @@ public class Duke {
         }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-    //  Helper method                                                                                //
-    //  checkInputForMarkAction() method will return TRUE if needs to execute Mark function          //
-    //  Assumption: Mark function will only contain input with 2 words; 'Mark' followed by a number  //
-    //              Anything besides that will be treated as a duke.Task to be added to the list          //
-    //              E.G. 'Mark Dairy' - goes to List                                                 //
-    //              E.G. 'Mark 2' - perform Mark function                                            //
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     *  Helper method:
+     *  checkInputForMarkAction() method will return TRUE if needs to execute Mark function
+     *  Assumption: Mark function will only contain input with 2 words; 'Mark' followed by a number
+     *              Anything besides that will be treated as a Task to be added to the list
+     *              E.G. 'Mark Dairy' - goes to List
+     *              E.G. 'Mark 2' - perform Mark function
+     */
     public static boolean checkInputForMarkAction(String load)
     {
         String[] separatedLoad = load.split(" ");
@@ -58,14 +58,14 @@ public class Duke {
         }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    //  Helper method                                                                                    //
-    //  checkInputForUnmarkAction() method will return TRUE if needs to execute Unmark function          //
-    //  Assumption: Unmark function will only contain input with 2 Words; 'Unmark' followed by a number  //
-    //              Anything besides that will be treated as a duke.Task to be added to the list              //
-    //              E.G. 'Unmark Dairy' - goes to List                                                   //
-    //              E.G. 'Unmark 2' - perform Unmark function                                            //
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     *  Helper method:
+     *  checkInputForUnmarkAction() method will return TRUE if needs to execute Unmark function
+     *  Assumption: Unmark function will only contain input with 2 Words; 'Unmark' followed by a number
+     *              Anything besides that will be treated as a Task to be added to the list
+     *              E.G. 'Unmark Dairy' - goes to List
+     *              E.G. 'Unmark 2' - perform Unmark function
+     */
     public static boolean checkInputForUnmarkAction(String load)
     {
         String[] separatedLoad = load.split(" ");
@@ -173,8 +173,7 @@ public class Duke {
                 return separatedInput;
             }
         }
-        else
-        {
+        else {
             //any other starting words besides the functions list, throws error
             throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
@@ -218,7 +217,7 @@ public class Duke {
 
         /**************************to be extracted one by one******************/
 
-        //variable initialization
+/*        //variable initialization
         Scanner scanObj = new Scanner(System.in); //scanner Extracted
         var lists = new ArrayList<Task>(); //string initialize duke.Task arraylist //Extracted
 
@@ -351,7 +350,7 @@ public class Duke {
         System.out.println(uiDivider);
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println(uiDivider);
-        // End of programme
+        // End of programme*/
 
 
         /**************************end of extract 1 by 1******************/
@@ -359,6 +358,6 @@ public class Duke {
 
 
     public static void main(String[] args) {
-        new Duke("data/tasks.txt").run();
+        new Duke("data/duke.txt").run();
     }
 }

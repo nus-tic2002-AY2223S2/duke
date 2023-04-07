@@ -4,8 +4,7 @@
 
 package duke.command;
 
-import duke.Task;
-import duke.Ui;
+import duke.*;
 import duke.storage.Storage;
 import duke.task.TaskList;
 
@@ -14,27 +13,30 @@ public class Command {
     /**
      *  Attribute
      */
-    private static boolean byeAttribute;
-    private static String[] seperatedInput;
-    private static String commandName;
+    private boolean byeAttribute;
+    private String[] seperatedInput;
+    private String commandName;
 
     /**
      *  Constructor w 2 input
      */
     public Command(String[] seperatedInput) {
         this.seperatedInput = seperatedInput;
-        commandName = seperatedInput[0];
+        this.commandName = seperatedInput[0];
     }
 
     /**
      *  Constructor w 1 input (Bye, List etc.)
      */
     public Command(String input) {
-        this.commandName = commandName;
-        byeAttribute = checkIsBye(commandName);
+        this.commandName = input;
+        byeAttribute = checkIsBye(input);
     }
 
-    public static boolean checkIsBye(String input) {
+    /**
+     *  This method checks if input is bye and returns TRUE if its bye; FALSE if it's not bye
+     */
+    public boolean checkIsBye(String input) {
         if (input.equalsIgnoreCase("bye")) {
             return true;
         }
@@ -43,11 +45,83 @@ public class Command {
         }
     }
 
-    public static void execute(TaskList task, Ui ui, Storage storage) {
+    /**
+     *  This method performs all the key functions of the Duke programme
+     */
+    public void execute(TaskList task, Ui ui, Storage storage) throws DukeException {
+        if (!commandName.equalsIgnoreCase("bye")) {
+            if (commandName.equalsIgnoreCase("list")) {
+                task.printTaskList();
+            }
+            else if (commandName.equalsIgnoreCase("mark")) {
+                int indexInList = Integer.parseInt(seperatedInput[1]) - 1 ;
+                //set Status of duke.Task to Done
+                task.markTask(indexInList);
+            }
+            else if (commandName.equalsIgnoreCase("unmark")) {
+                //This condition checks if the Unmark Action needs to be executed
 
+                //retrieve the index to be unmarked
+                int indexInList = Integer.parseInt(seperatedInput[1]) - 1 ;
+                //set Status of duke.Task to Done
+                task.unmarkTask(indexInList);
+            }
+            else if (commandName.equalsIgnoreCase("delete")) {
+
+                int indexInList = Integer.parseInt(seperatedInput[1]) - 1 ;
+                task.deleteTask(indexInList);
+                System.out.println("Now you have " + task.getSizeOfList() + " task(s) in the list");
+            }
+            else if (commandName.equalsIgnoreCase("deadline")) {
+
+                //Using indexOf method to extract description & dateline
+                //nextSeparated array will store value in such index
+                //nextSeparated[0] = description;
+                //nextSeparated[1] = deadline;
+                String [] nextSeparated = seperatedInput[1].split("/by");
+
+                Deadline newDeadline = new Deadline(nextSeparated[0].trim(), nextSeparated[1].trim());
+                task.addNewTask(newDeadline);
+                System.out.println("Now you have " + task.getSizeOfList() + " task(s) in the list");
+            }
+            else if(commandName.equalsIgnoreCase("event")) {
+                //Using indexOf method to extract description & start/end timing
+                //nextSeparated array will store value in such index
+                //nextSeparated[0] = description;
+                //nextSeparated[1] = start/end timing;
+                String [] nextSeparated = seperatedInput[1].split("/from");
+
+                //Using indexOf method again to extract start & end timing
+                //nextSeparated array will store value in such index
+                //separatedTiming[0] = start timing;
+                //separatedTiming[1] = end timing;
+                String [] separatedTiming = nextSeparated[1].split("/to");
+
+                Event newEvent = new Event(nextSeparated[0].trim(), separatedTiming[0].trim(), separatedTiming[1].trim());
+                task.addNewTask(newEvent);
+                System.out.println("Now you have " + task.getSizeOfList() + " task(s) in the list");
+            }
+            else if(commandName.equalsIgnoreCase("todo")) {
+
+                Todo newTodo = new Todo(seperatedInput[1]);
+                task.addNewTask(newTodo);
+                System.out.println("Now you have " + task.getSizeOfList() + " task(s) in the list");
+            }
+
+            //finally save TaskList to file
+            storage.saveFile(task);
+        }
+        else {
+            byeAttribute = true;
+        }
     }
 
-    public static boolean isItBye() {
+    /**
+     *  This method returns the current status of byeAttribute
+     *  returns TRUE if it is bye
+     *  returns FALSE if it is not bye
+     */
+    public boolean isItBye() {
         return byeAttribute;
     }
 

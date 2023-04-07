@@ -5,15 +5,16 @@
 package duke;
 
 public class Event extends Task {
-    ///////////////////
-    //  Attributes   //
-    ///////////////////
+
+    /**
+     *  Attributes
+     */
     protected String start;
     protected String end;
 
-    ///////////////////
-    //  Constructor  //
-    ///////////////////
+    /**
+     *  Constructor
+     */
     public Event(String description, String start, String end) {
         super(description);
         this.start = start;

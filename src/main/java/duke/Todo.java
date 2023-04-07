@@ -6,16 +6,16 @@ package duke;
 
 public class Todo extends Task {
 
-    ///////////////////
-    //  Constructor  //
-    ///////////////////
+    /**
+     *  Constructor
+     */
     public Todo(String description) {
         super(description);
     }
 
-    ///////////////////////////////////////////////////////////////
-    //  toString() method will print out duke.Task's standard output  //
-    ///////////////////////////////////////////////////////////////
+    /**
+     *  toString() method will print out duke.Task's standard output
+     */
     @Override
     public String toString() {
         return "[T]" + super.toString();
