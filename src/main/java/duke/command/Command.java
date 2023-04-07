@@ -54,30 +54,38 @@ public class Command {
                 task.printTaskList();
             }
             else if (commandName.equalsIgnoreCase("mark")) {
+                /**
+                 * retrieve the index to be marked &
+                 * set Status of Task to Done
+                 */
                 int indexInList = Integer.parseInt(seperatedInput[1]) - 1 ;
-                //set Status of duke.Task to Done
                 task.markTask(indexInList);
             }
             else if (commandName.equalsIgnoreCase("unmark")) {
-                //This condition checks if the Unmark Action needs to be executed
-
-                //retrieve the index to be unmarked
+                /**
+                 * retrieve the index to be unmarked &
+                 * set Status of Task to Undone
+                 */
                 int indexInList = Integer.parseInt(seperatedInput[1]) - 1 ;
-                //set Status of duke.Task to Done
                 task.unmarkTask(indexInList);
             }
             else if (commandName.equalsIgnoreCase("delete")) {
 
+                /**
+                 * retrieve the index to be deleted &
+                 * remove the Task from the list
+                 */
                 int indexInList = Integer.parseInt(seperatedInput[1]) - 1 ;
                 task.deleteTask(indexInList);
                 System.out.println("Now you have " + task.getSizeOfList() + " task(s) in the list");
             }
             else if (commandName.equalsIgnoreCase("deadline")) {
-
-                //Using indexOf method to extract description & dateline
-                //nextSeparated array will store value in such index
-                //nextSeparated[0] = description;
-                //nextSeparated[1] = deadline;
+                /**
+                 * Using indexOf method to extract description & dateline
+                 * nextSeparated array will store value in such index
+                 * nextSeparated[0] = description;
+                 * nextSeparated[1] = deadline;
+                 */
                 String [] nextSeparated = seperatedInput[1].split("/by");
 
                 Deadline newDeadline = new Deadline(nextSeparated[0].trim(), nextSeparated[1].trim());
@@ -85,16 +93,13 @@ public class Command {
                 System.out.println("Now you have " + task.getSizeOfList() + " task(s) in the list");
             }
             else if(commandName.equalsIgnoreCase("event")) {
-                //Using indexOf method to extract description & start/end timing
-                //nextSeparated array will store value in such index
-                //nextSeparated[0] = description;
-                //nextSeparated[1] = start/end timing;
+                /**
+                 * Using indexOf method to extract description & start/end timing
+                 * nextSeparated array will store value in such index
+                 * @param nextSeparated[0] = description;
+                 * @param nextSeparated[1] = start/end timing;
+                 */
                 String [] nextSeparated = seperatedInput[1].split("/from");
-
-                //Using indexOf method again to extract start & end timing
-                //nextSeparated array will store value in such index
-                //separatedTiming[0] = start timing;
-                //separatedTiming[1] = end timing;
                 String [] separatedTiming = nextSeparated[1].split("/to");
 
                 Event newEvent = new Event(nextSeparated[0].trim(), separatedTiming[0].trim(), separatedTiming[1].trim());
@@ -107,8 +112,14 @@ public class Command {
                 task.addNewTask(newTodo);
                 System.out.println("Now you have " + task.getSizeOfList() + " task(s) in the list");
             }
+            else if(commandName.equalsIgnoreCase("find"))
+            {
+                task.findItemInList(seperatedInput[1].trim());
+            }
 
-            //finally save TaskList to file
+            /**
+             *  save task list to txt
+             */
             storage.saveFile(task);
         }
         else {

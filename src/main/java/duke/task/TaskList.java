@@ -94,7 +94,7 @@ public class TaskList {
     }
 
     /**
-     *  This method will retrieve the item to mark it
+     *  This method will retrieve the item to unmark it
      */
     public void unmarkTask(int indexToBeUnmarked) throws DukeException {
 
@@ -105,6 +105,20 @@ public class TaskList {
             this.list.get(indexToBeUnmarked).markAsUndone();
             System.out.println("OK, I've marked this task as not done yet:");
             System.out.println(this.list.get(indexToBeUnmarked).toString());
+        }
+    }
+
+    /**
+     *  This method will search task by keyword and display matching tasks
+     */
+    public void findItemInList(String searchKeyword) {
+        System.out.println("Here are the matching tasks in your list:");
+        for(int i = 0; i < this.list.size(); i++)
+        {
+            if(this.list.get(i).getDescription().contains(searchKeyword))
+            {
+                System.out.println(i+1 + "." + this.list.get(i).toString());
+            }
         }
     }
 

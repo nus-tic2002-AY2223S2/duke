@@ -7,9 +7,6 @@ package duke.parser;
 import duke.DukeException;
 import duke.command.Command;
 
-import java.io.File;
-import java.util.ArrayList;
-
 public class Parser {
 
     /**
@@ -153,6 +150,17 @@ public class Parser {
             else if (Integer.parseInt(separatedInput[1]) <= 0)
             {
                 throw new DukeException("☹ OOPS!!! The value after " + separatedInput[0] + " cannot be smaller than 0.");
+            }
+            else
+            {
+                return separatedInput;
+            }
+        }
+        else if(separatedInput[0].equalsIgnoreCase("Find"))
+        {
+            if (separatedInput.length < 2)
+            {
+                throw new DukeException("☹ OOPS!!! Find command is unable to find an empty input.");
             }
             else
             {

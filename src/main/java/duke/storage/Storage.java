@@ -37,7 +37,6 @@ public class Storage {
         }
         else {
             listOfTask = new ArrayList<Task>(); //string initialize Task arraylist
-
             try {
                 Scanner scan = new Scanner(fileItem);
                 while (scan.hasNext()) {
