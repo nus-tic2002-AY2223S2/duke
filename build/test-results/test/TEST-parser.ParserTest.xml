@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="parser.ParserTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2023-04-08T03:58:12" hostname="DESKTOP-7C6H032" time="0.012">
+  <properties/>
+  <testcase name="DeleteCommandTest()" classname="parser.ParserTest" time="0.005"/>
+  <testcase name="TodoCommandTest()" classname="parser.ParserTest" time="0.0"/>
+  <testcase name="DeadlineCommandTest()" classname="parser.ParserTest" time="0.001"/>
+  <testcase name="ListCommandTest()" classname="parser.ParserTest" time="0.0"/>
+  <testcase name="UnmarkCommandTest()" classname="parser.ParserTest" time="0.0"/>
+  <testcase name="ByeCommandTest()" classname="parser.ParserTest" time="0.001"/>
+  <testcase name="MarkCommandTest()" classname="parser.ParserTest" time="0.001"/>
+  <testcase name="EventCommandTest()" classname="parser.ParserTest" time="0.001"/>
+  <system-out><![CDATA[datetime:  2/12/2019 1800
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="command.EventCommandTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-04-08T03:58:12" hostname="DESKTOP-7C6H032" time="0.02">
+  <properties/>
+  <testcase name="EventExecuteString()" classname="command.EventCommandTest" time="0.018"/>
+  <testcase name="EventCommandStringTest()" classname="command.EventCommandTest" time="0.001"/>
+  <system-out><![CDATA[Got it. I've add this task:
+Training at school
+[E][ ] Training at school (from: 2nd of November 2020, 8AM to: 2nd of November 2020, 10AM)
+Number of tasks in the list = 1
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

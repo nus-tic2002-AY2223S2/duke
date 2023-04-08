@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="command.DeadlineCommandTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-04-08T03:58:12" hostname="DESKTOP-7C6H032" time="0.051">
+  <properties/>
+  <testcase name="DeadlineCommandStringTest()" classname="command.DeadlineCommandTest" time="0.027"/>
+  <testcase name="DeadlineExecuteString()" classname="command.DeadlineCommandTest" time="0.024"/>
+  <system-out><![CDATA[Got it. I've add this task:
+[D][ ] Submit homework (by: 2nd of December 2019, 6PM)
+Number of tasks in the list = 1
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

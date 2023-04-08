@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="task.DeadlineTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-04-08T03:58:12" hostname="DESKTOP-7C6H032" time="0.007">
+  <properties/>
+  <testcase name="DeadlineDesciptionTest()" classname="task.DeadlineTest" time="0.001"/>
+  <testcase name="DeadlinetoStringTest()" classname="task.DeadlineTest" time="0.0"/>
+  <testcase name="DeadlineByTest()" classname="task.DeadlineTest" time="0.0"/>
+  <testcase name="DeadlinetoSaveTest()" classname="task.DeadlineTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

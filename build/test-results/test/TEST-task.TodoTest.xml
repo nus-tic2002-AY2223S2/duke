@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="task.TodoTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-04-08T03:58:12" hostname="DESKTOP-7C6H032" time="0.001">
+  <properties/>
+  <testcase name="ToDotoStringTest()" classname="task.TodoTest" time="0.001"/>
+  <testcase name="ToDoDesciptionTest()" classname="task.TodoTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
