@@ -1,7 +1,5 @@
 package duke.storage;
 
-import duke.task.Task;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -13,17 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static duke.parser.Parser.getTask;
+public class DukeFileReaderAndWriter implements Storage {
+    public DukeFileReaderAndWriter() {
+    }
 
-public class DukeFileReaderAndWriter {
-
-    private static void createFile() throws IOException {
+    private void createFile() throws IOException {
         File file = new File(Storage.FILE_PATH);
         file.getParentFile().mkdirs();
         file.createNewFile(); // if file already exists will do nothing
     }
 
-    public static ArrayList<String> load() {
+    public ArrayList<String> load() {
         ArrayList<String> lines = new ArrayList<>();
         try {
             createFile();
@@ -40,7 +38,7 @@ public class DukeFileReaderAndWriter {
         return lines;
     }
 
-    public static void writeInFile(String textToAdd) {
+    public void writeInFile(String textToAdd) {
         try {
             createFile();
 
@@ -52,7 +50,7 @@ public class DukeFileReaderAndWriter {
         }
     }
 
-    public static void appendInFile(String textToAppend) {
+    public void appendInFile(String textToAppend) {
         try {
             createFile();
 
@@ -65,7 +63,7 @@ public class DukeFileReaderAndWriter {
     }
 
 
-    public static void editFile(int lineNumber, String data) {
+    public void editFile(int lineNumber, String data) {
         try {
             createFile();
 
@@ -78,7 +76,7 @@ public class DukeFileReaderAndWriter {
         }
     }
 
-    public static String readLine(int lineNumber) {
+    public String readLine(int lineNumber) {
         String line = "";
         try {
             createFile();

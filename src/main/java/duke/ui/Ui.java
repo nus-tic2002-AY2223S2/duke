@@ -10,8 +10,6 @@ import java.util.Scanner;
  */
 public class Ui {
 
-    private TaskList tasks;
-
     /**
      * This method prints exit message for user.
      */
@@ -28,6 +26,15 @@ public class Ui {
         System.out.println("------------------------------------------------------------");
         System.out.println("\t" + command);
         System.out.println("------------------------------------------------------------");
+    }
+
+    /**
+     * This method prints custom exception message for user.
+     *
+     * @param exceptionMsg A String representing custom exception message.
+     */
+    public static void printException(String exceptionMsg) {
+        System.out.println("----- " + exceptionMsg + " -----");
     }
 
     /**

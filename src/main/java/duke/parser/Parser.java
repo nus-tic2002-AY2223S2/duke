@@ -237,15 +237,15 @@ public class Parser {
                     throw new IllegalTaskException();
             }
         } catch (IllegalTodoException e) {
-            Ui.printCommand("☹ OOPS!!! The description of a todo cannot be empty.");
+            Ui.printException("☹ OOPS!!! The description of a todo cannot be empty.");
         } catch (IllegalDeadlineException e) {
-            Ui.printCommand("☹ OOPS!!! The description or date of a deadline cannot be empty.");
+            Ui.printException("☹ OOPS!!! The description or date of a deadline cannot be empty.");
         } catch (IllegalEventException e) {
-            Ui.printCommand("☹ OOPS!!! The description or start date or end date of an event cannot be empty.");
+            Ui.printException("☹ OOPS!!! The description or start date or end date of an event cannot be empty.");
         } catch (IllegalTaskException e) {
-            Ui.printCommand("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+            Ui.printException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         } catch (IndexOutOfBoundsException e) {
-            Ui.printCommand("IndexOutOfBoundsException for task: " + command);
+            Ui.printException("IndexOutOfBoundsException for task: " + command);
         }
         return task;
     }
@@ -311,7 +311,7 @@ public class Parser {
         try {
             formattedDate = myFormat.format(fromUser.parse(datetime));
         } catch (ParseException e) {
-            Ui.printCommand("☹ OOPS!!! Invalid DateTime format (DateTimeParseException) --> " + datetime);
+            Ui.printException("☹Invalid DateTime format --> " + datetime);
         }
 
         return formattedDate;
