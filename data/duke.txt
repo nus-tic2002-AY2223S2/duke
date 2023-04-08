@@ -1,0 +1,10 @@
+TODO hello world!@true
+DEADLINE 222 /by monday@false
+EVENT 333 /from jj /to weekend@true
+TODO unn=@false
+TODO hh@false
+DEADLINE 222 /by monday@false
+todo hhh@false
+deadline ttt /by 18 April@false
+todo testing@false
+EVENT 333 /from jj /to weekend@true
