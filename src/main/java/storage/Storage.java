@@ -73,25 +73,25 @@ public class Storage {
                 String input = sc.nextLine();
                 String[] aLine = input.split("\\Q|\\E");
 
-                if (aLine[0].equals("D")) {
-                    loadList.add(count, new Deadline(aLine[2], aLine[3]));
+                if (aLine[0].trim().equals("D")) {
+                    loadList.add(count, new Deadline(aLine[2]trim(), aLine[3].trim()));
                     //check status
-                    if (aLine[1].equals("1")) {
+                    if (aLine[1].trim().equals("1")) {
                         loadList.get(count).mark();
                     }
                     ++count;
-                } else if (aLine[0].equals("T")) {
-                    loadList.add(count, new ToDo(aLine[2]));
+                } else if (aLine[0].trim().equals("T")) {
+                    loadList.add(count, new ToDo(aLine[2].trim()));
                     //check status
-                    if (aLine[1].equals("1")) {
+                    if (aLine[1].trim().equals("1")) {
                         loadList.get(count).mark();
                     }
                     ++count;
-                } else if (aLine[0].equals("E")) {
+                } else if (aLine[0].trim().equals("E")) {
                     String[] time = aLine[3].split("-");
-                    loadList.add(count, new Event(aLine[2], time[0], time[1]));
+                    loadList.add(count, new Event(aLine[2].trim(), time[0].trim(), time[1].trim()));
                     //check status
-                    if (aLine[1].equals("1")) {
+                    if (aLine[1].trim().equals("1")) {
                         loadList.get(count).mark();
                     }
                     ++count;
