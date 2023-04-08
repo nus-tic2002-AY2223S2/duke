@@ -11,6 +11,7 @@ import duke.task.TaskList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 public class Command {
 
@@ -64,7 +65,8 @@ public class Command {
      *  This method takes in an array and split them into integer Arraylist
      */
     public ArrayList<Integer> convertAndSortDescending(String[] inputArray) {
-        ArrayList<String> separateMultipleIndex = new ArrayList<String>(Arrays.asList(inputArray));
+        ArrayList<String> separateMultipleIndex = new ArrayList(Arrays.asList(inputArray));
+        separateMultipleIndex = (ArrayList<String>)separateMultipleIndex.stream().map(p -> p.trim()).collect(Collectors.toList()); //this method will use the inbuilt stream function in arrayList to remove all whitespaces in each element
         ArrayList<Integer> multipleIndexList = convertToIntArrayList(separateMultipleIndex);
         Collections.sort(multipleIndexList, Collections.reverseOrder());
         return multipleIndexList;
@@ -88,7 +90,6 @@ public class Command {
                 ArrayList<Integer> multipleIndexList = convertAndSortDescending(seperatedInput[1].split(","));
                 for(int i = 0; i < multipleIndexList.size(); i++) {
                     task.markTask(multipleIndexList.get(i)-1);
-                    ui.printEmptyLine();
                 }
             }
             else if (commandName.equalsIgnoreCase("unmark")) {
@@ -101,7 +102,6 @@ public class Command {
                 ArrayList<Integer> multipleIndexList = convertAndSortDescending(seperatedInput[1].split(","));
                 for(int i = 0; i < multipleIndexList.size(); i++) {
                     task.unmarkTask(multipleIndexList.get(i)-1);
-                    ui.printEmptyLine();
                 }
             }
             else if (commandName.equalsIgnoreCase("delete")) {

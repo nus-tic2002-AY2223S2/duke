@@ -48,7 +48,6 @@ public class Ui {
         this.showDividerLine();
         System.out.println("What can I do for you?");
         this.showDividerLine();
-        System.out.println("\n");
     }
 
     /**

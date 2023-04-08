@@ -21,43 +21,43 @@ public class Task {
     }
 
     /**
-     *  getDescription() method will return the description of duke.Task
+     *  getDescription() method will return the description of Task
      */
     public String getDescription() {
         return this.description; // returns the value stored in the description attribute
     }
 
     /**
-     *  setDescription() method will change the description of duke.Task
+     *  setDescription() method will change the description of Task
      */
     public void setDescription(String newDescription) {
         this.description = newDescription; // changes the description with the new input
     }
 
     /**
-     *  getTaskStatus() method will return the status of the duke.Task
+     *  getTaskStatus() method will return the status of the Task
      */
     public String getTaskStatus() {
         return (isDone ? "X" : " "); // mark done task with X
     }
 
     /**
-     *  markAsDone() method will mark the current task object as done by changing the isDone to TRUE
+     *  markAsDone() method will mark the current Task object as done by changing the isDone to TRUE
      */
     public void markAsDone() {
         this.isDone = true; // converts isDone attribute to 'TRUE'
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //  markAsUndone() method will un-mark the current task object as undone by changing the isDone to FALSE  //
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     *  markAsUndone() method will un-mark the current task object as undone by changing the isDone to FALSE
+     */
     public void markAsUndone() {
         this.isDone = false; // converts isDone attribute to 'FALSE'
     }
 
-    ///////////////////////////////////////////////////////////////
-    //  toString() method will print out duke.Task's standard output  //
-    ///////////////////////////////////////////////////////////////
+    /**
+     *  toString() method will print out duke.Task's standard output
+     */
 
     @Override
     public String toString() {
