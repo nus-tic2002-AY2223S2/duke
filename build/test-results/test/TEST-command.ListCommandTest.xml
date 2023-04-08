@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="command.ListCommandTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-04-08T03:58:12" hostname="DESKTOP-7C6H032" time="0.006">
+  <properties/>
+  <testcase name="ListExecuteString()" classname="command.ListCommandTest" time="0.006"/>
+  <system-out><![CDATA[Here are the tasks in your list:
+1. [T][ ] Wash the dishes
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

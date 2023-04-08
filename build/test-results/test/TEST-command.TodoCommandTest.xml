@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="command.TodoCommandTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-04-08T03:58:12" hostname="DESKTOP-7C6H032" time="0.003">
+  <properties/>
+  <testcase name="EventExecuteString()" classname="command.TodoCommandTest" time="0.002"/>
+  <testcase name="DeadlineCommandStringTest()" classname="command.TodoCommandTest" time="0.001"/>
+  <system-out><![CDATA[Got it. I've add this task:
+Attend a meeting
+[T][ ] Attend a meeting
+Number of tasks in the list = 1
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

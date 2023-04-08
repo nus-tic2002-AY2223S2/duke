@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="formatDateTime.LocalDateTimeTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-04-08T03:58:12" hostname="DESKTOP-7C6H032" time="0.01">
+  <properties/>
+  <testcase name="LocalDateTimeStringTestFour()" classname="formatDateTime.LocalDateTimeTest" time="0.006"/>
+  <testcase name="LocalDateTimeStringTestThree()" classname="formatDateTime.LocalDateTimeTest" time="0.001"/>
+  <testcase name="LocalDateTimeStringTestOne()" classname="formatDateTime.LocalDateTimeTest" time="0.001"/>
+  <testcase name="LocalDateTimeStringTestTwo()" classname="formatDateTime.LocalDateTimeTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

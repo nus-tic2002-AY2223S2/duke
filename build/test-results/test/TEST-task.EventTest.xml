@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="task.EventTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-04-08T03:58:12" hostname="DESKTOP-7C6H032" time="0.013">
+  <properties/>
+  <testcase name="EventtoSaveTest()" classname="task.EventTest" time="0.008"/>
+  <testcase name="EventDesciptionTest()" classname="task.EventTest" time="0.0"/>
+  <testcase name="EventToTest()" classname="task.EventTest" time="0.001"/>
+  <testcase name="EventtoStringTest()" classname="task.EventTest" time="0.001"/>
+  <testcase name="EventFromTest()" classname="task.EventTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

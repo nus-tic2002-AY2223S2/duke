@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="command.UnmarkCommandTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-04-08T03:58:12" hostname="DESKTOP-7C6H032" time="0.003">
+  <properties/>
+  <testcase name="UnmarkCommandStringTest()" classname="command.UnmarkCommandTest" time="0.001"/>
+  <testcase name="UnmarkExecuteString()" classname="command.UnmarkCommandTest" time="0.001"/>
+  <system-out><![CDATA[Ok, I've marked this task as not done yet:[T][ ] Prepare the dishes
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
