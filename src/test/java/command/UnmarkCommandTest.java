@@ -28,9 +28,6 @@ public class UnmarkCommandTest {
         //tasks
         task.taskslist.add(new ToDo("Wash the dishes"));
         task.taskslist.add(new ToDo("Prepare the dishes"));
-        /*MarkCommand m = new MarkCommand(1);
-        m.execute(task, ui, storage);
-        assertEquals("X", task.taskslist.get(1).getStatusIcon());*/
         UnmarkCommand u = new UnmarkCommand(1);
         u.execute(task, ui, storage);
         assertEquals("[ ]", task.taskslist.get(1).getStatusIcon());
