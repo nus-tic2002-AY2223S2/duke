@@ -10,26 +10,26 @@ import java.util.ArrayList;
 
 public class TaskList {
     /**
-     *  Attribute
+     * Attribute
      */
     private ArrayList<Task> list; //string initialize Task arraylist
 
     /**
-     *  Constructor [with inputs]
+     * Constructor [with inputs]
      */
     public TaskList(ArrayList<Task> inputList) {
         this.list = inputList;
     }
 
     /**
-     *  Constructor 2 [w/o inputs]
+     * Constructor 2 [w/o inputs]
      */
     public TaskList() {
         this.list = new ArrayList<Task>();
     }
 
     /**
-     *  This method will print all the elements in the list
+     * printTaskList will iterate the ArrayList and prints out each Task to the user
      */
     public void printTaskList() {
         System.out.println("Here are the tasks in your list:");
@@ -39,7 +39,12 @@ public class TaskList {
     }
 
     /**
-     *  This method will add a new Tasking into the current list
+     */
+
+    /**
+     * getElementFromList will retrieve the element based on the index given
+     * @param eleIndex input index given to search for
+     * @return Task object corresponding to the index in the ArrayList
      */
     public Task getElementFromList(int eleIndex) {
         Task item = this.list.get(eleIndex);
@@ -47,14 +52,17 @@ public class TaskList {
     }
 
     /**
-     *  This method will return size of currentList
+     * getSizeOfList will return size of currentList
      */
     public int getSizeOfList () {
         return this.list.size();
     }
 
     /**
-     *  This method will add a new Tasking into the current list
+     * addNewTask will add a new Tasking into the current list
+     * @param newTask Task object to be added to the list
+     * @return Task object that is added
+     * @throws DukeException if Task object is a duplicate from within the list
      */
     public Task addNewTask(Task newTask) throws DukeException{
         if (checkDuplicate(newTask)) {
@@ -69,7 +77,10 @@ public class TaskList {
     }
 
     /**
-     *  this method will take in an index & remove an existing Tasking from the current list
+     * deleteTask method will take in an index & remove an existing Tasking from the current list
+     * @param indexToBeDeleted index to be reference for Task object to be removed from the list
+     * @return Task object that is deleted
+     * @throws DukeException if index provided is larger than the size of the list
      */
     public Task deleteTask(int indexToBeDeleted) throws DukeException {
         if(indexToBeDeleted > (this.getSizeOfList()-1)) {
@@ -85,7 +96,9 @@ public class TaskList {
     }
 
     /**
-     *  This method will retrieve the item to mark it
+     * markTask method will take in an index & mark the object as done from the list
+     * @param indexToBeMarked index to be reference for Task object to be marked as done from the list
+     * @throws DukeException if index provided is larger than the size of the list
      */
     public void markTask(int indexToBeMarked) throws DukeException {
         if(indexToBeMarked > (this.getSizeOfList()-1)) {
@@ -99,7 +112,9 @@ public class TaskList {
     }
 
     /**
-     *  This method will retrieve the item to unmark it
+     * markTask method will take in an index & unmark the object as done from the list
+     * @param indexToBeUnmarked index to be reference for Task object to be set as not done from the list
+     * @throws DukeException if index provided is larger than the size of the list
      */
     public void unmarkTask(int indexToBeUnmarked) throws DukeException {
 
@@ -114,7 +129,9 @@ public class TaskList {
     }
 
     /**
-     *  This method will search task by keyword and display matching tasks
+     * findItemInList method will search task by keyword and display matching tasks
+     * @param searchKeyword keyword to be searched
+     * @throws DukeException if index provided is larger than the size of the list
      */
     public void findItemInList(String searchKeyword) {
         System.out.println("Here are the matching tasks in your list:");
@@ -126,9 +143,8 @@ public class TaskList {
     }
 
     /**
-     *  This method will search the list to check for duplicates
-     * @return true if duplicate exists
-     * @return false if no duplicates
+     * checkDuplicate method will search the list to check for duplicates
+     * @return TRUE if duplicate exists, FALSE if no duplicates
      */
     public boolean checkDuplicate(Task newTask)
     {

@@ -32,6 +32,11 @@ public class Storage {
         fileItem = new File(pathFile);
     }
 
+    /**
+     * load() method will load the date from duke.txt into a TaskList storing ArrayList of Task objects
+     * @return ArrayList of Task objects to store into the Tasklist object in Duke class.
+     * @throws DukeException if any problems occur when loading the file into the tasklist, such as Empty File
+     */
     public static ArrayList<Task> load() throws DukeException {
         if (!fileItem.exists() || !fileItem.isFile()) {
             throw new DukeException("☹ OOPS!!! File is empty");
@@ -88,6 +93,11 @@ public class Storage {
         }
     }
 
+    /**
+     * save() method will save the data from Tasklist object containing Arraylist of Task objects into duke.txt
+     * @param listOfTask
+     * @throws DukeException if any problems occur when saving the list into the duke.txt file
+     */
     public static void saveFile(TaskList listOfTask) throws DukeException {
         try {
             FileWriter newFW = new FileWriter(filePath);

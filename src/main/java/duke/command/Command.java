@@ -18,7 +18,7 @@ public class Command {
     /**
      *  Attribute
      */
-    private boolean byeAttribute;
+    private boolean isByeAttribute;
     private String[] seperatedInput;
     private String commandName;
 
@@ -35,11 +35,13 @@ public class Command {
      */
     public Command(String input) {
         this.commandName = input;
-        byeAttribute = checkIsBye(input);
+        isByeAttribute = checkIsBye(input);
     }
 
     /**
-     *  This method checks if input is bye and returns TRUE if its bye; FALSE if it's not bye
+     * This method checks if command line is 'bye'
+     * @param input command parameter to check for 'bye' command
+     * @return True if command is 'bye', False if command is not 'bye'
      */
     public boolean checkIsBye(String input) {
         if (input.equalsIgnoreCase("bye")) {
@@ -51,7 +53,9 @@ public class Command {
     }
 
     /**
-     *  This method converts all values in the string to array
+     * This helper method converts all values in the string to array
+     * @param strArrayList arraylist of String elements
+     * @return arraylist of Integer elements
      */
     public ArrayList<Integer> convertToIntArrayList(ArrayList<String> strArrayList) {
         ArrayList<Integer> intArrayList = new ArrayList<Integer>();
@@ -62,7 +66,9 @@ public class Command {
     }
 
     /**
-     *  This method takes in an array and split them into integer Arraylist
+     * This helper method takes in a String array and splits them into integer Arraylist using a helper method 'convertToIntarrayList'
+     * @param inputArray array of String elements
+     * @return arraylist of Integer elements
      */
     public ArrayList<Integer> convertAndSortDescending(String[] inputArray) {
         ArrayList<String> separateMultipleIndex = new ArrayList(Arrays.asList(inputArray));
@@ -73,7 +79,11 @@ public class Command {
     }
 
     /**
-     *  This method performs all the key functions of the Duke programme
+     * This method performs all key functions of the Duke programe
+     * @param task TaskList object for Task manipulation purposes
+     * @param ui UI object for display purposes
+     * @param storage Storage object for storing purposes
+     * @return arraylist of Integer elements
      */
     public void execute(TaskList task, Ui ui, Storage storage) throws DukeException {
         if (!commandName.equalsIgnoreCase("bye")) {
@@ -159,18 +169,17 @@ public class Command {
             storage.saveFile(task);
         }
         else {
-            byeAttribute = true;
+            isByeAttribute = true;
             ui.showByeMeg();
         }
     }
 
     /**
-     *  This method returns the current status of byeAttribute
-     *  returns TRUE if it is bye
-     *  returns FALSE if it is not bye
+     *  This method returns the current status of isByeAttribute
+     *  @return TRUE if it is bye; FALSE if it is not bye
      */
     public boolean isItBye() {
-        return byeAttribute;
+        return isByeAttribute;
     }
 
 }
