@@ -5,10 +5,16 @@ public class Task
     protected String description;
     protected boolean isDone;
 
-    public Task(String description)
-    {
+    protected priorityLevel level;
+
+    public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.level = priorityLevel.Medium; // new
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 
     public void markAsDone() {
@@ -24,5 +30,18 @@ public class Task
     @Override
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
+    }
+
+    public enum priorityLevel { // new
+        Low,
+        Medium,
+        High
+    }
+
+    public priorityLevel getPriorityLevel() { // new
+        return this.level;
+    }
+    public void changePriority(priorityLevel p) {
+        this.level = p;
     }
 }

@@ -13,27 +13,39 @@ import duke.Utility.Util;
 import java.util.Scanner;
 
 public class Command {
+    /**
+     * This executeLoad() method loads the previously saved file, with each line into the different task types
+     */
     public static Task executeLoad(String line) {
         Task task;
         if (line.contains("[T]")) { //loads Todos
-            task = new Todo(line.substring(7).trim());
+            task = new Todo(line.substring(7, line.indexOf("[Priority ")).trim());
         }
         else if (line.contains("[D]")) { //loads Deadlines
-            String description = line.substring(7);
+            String description = line.substring(7, line.indexOf("[Priority "));
             String[] deadlineSplit = description.split("/by");
-            task = new Deadline(deadlineSplit[0].trim(), deadlineSplit[1].trim());
+            task = new Deadline(deadlineSplit[0].trim(), Util.convertDateTime(deadlineSplit[1].trim()));
         }
         else {
-            String description = line.substring(7); //loads Events
+            String description = line.substring(7, line.indexOf("[Priority ")); //loads Events
             String[] eventSplit = description.split("/from");
             String[] eventSplitAgain = eventSplit[1].split("/to");
-            task = new Event(eventSplit[0].trim(), eventSplitAgain[0].trim(), eventSplitAgain[1].trim());
+            task = new Event(eventSplit[0].trim(), Util.convertDateTime(eventSplitAgain[0].trim()), Util.convertDateTime(eventSplitAgain[1].trim()));
         }
         if (line.contains("[X]")) {
             task.markAsDone();
         }
+        if (line.contains("[Priority High")) {
+            task.changePriority(Task.priorityLevel.High);
+        }
+        else if (line.contains("[Priority Low")) {
+            task.changePriority(Task.priorityLevel.Low);
+        }
         return task;
     }
+    /**
+     * This execute() method tries to load a file, and runs the endless loop to scan for user inputs (commands)
+     */
     public static void execute() {
         boolean isBye = false;
         Scanner Obj = new Scanner(System.in);
@@ -78,7 +90,8 @@ public class Command {
                         continue;
                     }
                 }
-            } else {
+            }
+            else {
                 String[] splitted = question.split(" ", 2);
 
                 //catch for "to-do"
@@ -90,7 +103,7 @@ public class Command {
                 //catch for "deadline"
                 else if (splitted[0].equalsIgnoreCase("deadline")) {
                     String[] deadlineSplit = splitted[1].split("/by");
-                    Deadline dl = new Deadline(deadlineSplit[0].trim(), deadlineSplit[1].trim());
+                    Deadline dl = new Deadline(deadlineSplit[0].trim(), Util.convertDateTime(deadlineSplit[1].trim()));
                     list.addTask(dl);
                 }
 
@@ -98,18 +111,28 @@ public class Command {
                 else if (splitted[0].equalsIgnoreCase("event")) {
                     String[] eventSplit = splitted[1].split("/from");
                     String[] eventSplitAgain = eventSplit[1].split("/to");
-                    Event ev = new Event(eventSplit[0].trim(), eventSplitAgain[0].trim(), eventSplitAgain[1].trim());
+                    Event ev = new Event(eventSplit[0].trim(), Util.convertDateTime(eventSplitAgain[0].trim()), Util.convertDateTime(eventSplitAgain[1].trim()));
                     list.addTask(ev);
                 }
                 //catch for delete
                 else if (splitted[0].equalsIgnoreCase("delete")) {
                     Task toDelete = list.getTask(Integer.parseInt(splitted[1]) - 1);
                     list.deleteTask(Integer.parseInt(splitted[1]) - 1);
-                } else {
+                }
+                //catch for priority
+                else if (splitted[0].equalsIgnoreCase("priority")) {
+                    String[] prioritySplit = splitted[1].split(" ");
+                    list.setPriority(Integer.parseInt(prioritySplit[0]) - 1, Util.stringToLevel(prioritySplit[1]));
+                }
+                else if (splitted[0].equalsIgnoreCase("find")) {
+                    list.find(splitted[1]);
+                }
+                else {
                     System.out.println("duke.TasksType.Task not recognised");
                 }
             }
-            loader.saveToFile(list.getList());
+            list.sortList();
+            loader.saveToFile(list.getList()); //saves the list into data/saved.txt
         }
     }
 }

@@ -1,6 +1,7 @@
 package duke.TaskList;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import duke.TasksType.Task;
 import duke.Ui.Ui;
@@ -43,5 +44,41 @@ public class TaskList {
         }
         Ui.showLine();
     }
+    public void setPriority(int index, Task.priorityLevel p) {
+        getTask(index).changePriority(p);
+        System.out.println("Noted, item " + (index + 1) + "'s priority has been set to " + p);
+    }
+    public void sortList() {
+        //ArrayList<Task> sortedList =(ArrayList<Task>)list.stream().map(Task.priorityLevel::valueOf).sorted(Task.priorityLevel::compareTo).map(Task.priorityLevel::toString).collect(Collectors.toList());
+        ArrayList<Task> sortedList = new ArrayList<>();
+        ArrayList<Task> high = new ArrayList<>();
+        ArrayList<Task> low = new ArrayList<>();
+        ArrayList<Task> medium = new ArrayList<>();
+        for (Task t: list) {
+            if (t.getPriorityLevel().equals(Task.priorityLevel.High)) {
+                high.add(t);
+            }
+            else if (t.getPriorityLevel().equals(Task.priorityLevel.Low)) {
+                low.add(t);
+            }
+            else {
+                medium.add(t);
+            }
+        }
+        sortedList.addAll(high);
+        sortedList.addAll(medium);
+        sortedList.addAll(low);
+        list = sortedList;
+    }
 
+    public void find (String word) {
+        Ui.showLine();
+        System.out.println("Here are the matching tasks in your list:");
+        for (Task t : list) {
+            if (t.getDescription().contains(word)) {
+                System.out.println(t);
+            }
+        }
+        Ui.showLine();
+    }
 }

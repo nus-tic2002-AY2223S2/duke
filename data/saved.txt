@@ -1,9 +1,4 @@
-[T][ ] eat
-[D][X] shop /by tues
-[E][ ] meeting /from tues 10am /to tues 11am
-[T][ ] lunch
-[D][ ] swim /by monday
-[D][ ] jump /by wed
-[T][X] laugh
-[E][ ] dinner /from tues 6pm /to tues 10pm
-[E][ ] FDO /from sat 8am /to sun 8am
+[D][X] eat /by 2023-04-10 22:00 [Priority High]
+[E][X] meeting /from 2023-04-11 10:00 /to 2023-04-11 11:00 [Priority Medium]
+[T][ ] eat [Priority Medium]
+[T][ ] slp [Priority Low]

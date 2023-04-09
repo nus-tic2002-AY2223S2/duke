@@ -8,7 +8,16 @@ public class Parser {
     public static Boolean validateQuestion(String input, ArrayList list) throws DukeException {
 
         String[] splitted = input.split(" ", 2);
-        if (!splitted[0].equalsIgnoreCase("bye") && !splitted[0].equalsIgnoreCase("todo") && !splitted[0].equalsIgnoreCase("deadline") && !splitted[0].equalsIgnoreCase("event") && !splitted[0].equalsIgnoreCase("list") && !splitted[0].equalsIgnoreCase("mark") && !splitted[0].equalsIgnoreCase("unmark") && !splitted[0].equalsIgnoreCase("delete")) {
+        if (!splitted[0].equalsIgnoreCase("bye") &&
+                !splitted[0].equalsIgnoreCase("todo") &&
+                !splitted[0].equalsIgnoreCase("deadline") &&
+                !splitted[0].equalsIgnoreCase("event") &&
+                !splitted[0].equalsIgnoreCase("list") &&
+                !splitted[0].equalsIgnoreCase("mark") &&
+                !splitted[0].equalsIgnoreCase("unmark") &&
+                !splitted[0].equalsIgnoreCase("delete") &&
+                !splitted[0].equalsIgnoreCase("priority") &&
+                !splitted[0].equalsIgnoreCase("find")) {
             throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         }
         if (splitted.length < 2 && !splitted[0].equalsIgnoreCase("list")) {

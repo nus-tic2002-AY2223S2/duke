@@ -7,11 +7,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import duke.TasksType.Deadline;
 import duke.TasksType.Event;
 import duke.TasksType.Task;
 import duke.TasksType.Todo;
+import duke.Utility.Util;
 
 
 public class Storage {
@@ -51,10 +51,10 @@ public class Storage {
                     item += line.toString().substring(7);
                 }
                 else if (line instanceof Deadline) {
-                    item += ((Deadline) line).getDescription() + " /by " + ((Deadline) line).getBy();
+                    item += ((Deadline) line).getDescription() + " /by " + Util.dateTimeToString(((Deadline) line).getBy()) + " [Priority " + line.getPriorityLevel() + "]";
                 }
                 else {
-                    item += ((Event) line).getDescription() + " /from " + ((Event) line).getFrom()+ " /to " + ((Event) line).getTo();
+                    item += ((Event) line).getDescription() + " /from " + Util.dateTimeToString(((Event) line).getFrom())+ " /to " + Util.dateTimeToString(((Event) line).getTo()) + " [Priority " + line.getPriorityLevel() + "]";
                 }
 
                 writer.write(item + "\n");
