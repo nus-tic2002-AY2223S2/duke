@@ -5,19 +5,18 @@ package duke;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 public class Deadline extends Task {
 
     /**
      *  Attributes
      */
-    protected String by;
+    protected LocalDate by;
 
     /**
      *  Constructor
      */
-    public Deadline(String description, String by) {
+    public Deadline(String description, LocalDate by) {
         super(description);
         this.by = by;
     }
@@ -25,14 +24,14 @@ public class Deadline extends Task {
     /**
      * @return the deadline of Task
      */
-    public String getBy() {
+    public LocalDate getBy() {
         return by;
     }
 
     /**
      * change the deadline of Task
      */
-    public void setBy(String by) {
+    public void setBy(LocalDate by) {
         this.by = by;
     }
 

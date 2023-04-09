@@ -127,7 +127,7 @@ public class Command {
                  */
                 String [] nextSeparated = seperatedInput[1].split("/by");
 
-                Deadline newDeadline = new Deadline(nextSeparated[0].trim(), nextSeparated[1].trim().trim());
+                Deadline newDeadline = new Deadline(nextSeparated[0].trim(), DateValidator.convertStringToDate(nextSeparated[1].trim().trim()));
                 task.addNewTask(newDeadline);
             }
             else if(commandName.equalsIgnoreCase("event")) {

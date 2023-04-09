@@ -1,3 +1,4 @@
-T : 1 : read more books
-E : 0 : project meeting : Sun 3pm : 4pm
-D : 0 : return money : 5th April 2024
+T : 1 : Read More Books
+E : 0 : Project Meeting : 2019-08-09 23-00-00 : 2019-08-10 01-00-00
+D : 0 : Return Money : 2024-04-05 08-10-00
+T : 0 : Drink water

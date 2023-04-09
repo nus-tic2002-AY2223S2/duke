@@ -6,6 +6,11 @@ package duke.storage;
 
 import duke.*;
 import duke.task.TaskList;
+import duke.DateValidator;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -59,7 +64,7 @@ public class Storage {
                          * @param splitEntryValue[2] = Description
                          * @param splitEntryValue[3] = 'By' attribute
                          */
-                        newTask = new Deadline(splitEntryValue[2].trim(), splitEntryValue[3].trim());
+                        newTask = new Deadline(splitEntryValue[2].trim(), DateValidator.convertStringToDate(splitEntryValue[3].trim()));
                     }
                     else  {
                         /**

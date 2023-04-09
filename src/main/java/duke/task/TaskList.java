@@ -4,11 +4,7 @@
 
 package duke.task;
 
-import duke.Todo;
-import duke.Deadline;
-import duke.Event;
-import duke.DukeException;
-import duke.Task;
+import duke.*;
 
 import java.util.ArrayList;
 
@@ -148,7 +144,7 @@ public class TaskList {
                 }
                 else if(newTask instanceof Deadline)
                 {
-                    if(newTask.getDescription().equalsIgnoreCase(currItem.getDescription()) && ((Deadline) newTask).getBy().equalsIgnoreCase(((Deadline) currItem).getBy())) {
+                    if(newTask.getDescription().equalsIgnoreCase(currItem.getDescription()) && (DateValidator.isDateEqual(((Deadline) newTask).getBy(),((Deadline) currItem).getBy()))) {
                         return true;
                     }
                 }
