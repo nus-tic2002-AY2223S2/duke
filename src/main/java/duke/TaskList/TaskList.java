@@ -19,6 +19,7 @@ public class TaskList {
     }
     public void addTask(Task task) {
         list.add(task);
+        assert list.size() > 0 : "ArrayList should have task inside";
         System.out.println("Got it. I've added this task:");
         System.out.println(task);
     }
@@ -38,6 +39,7 @@ public class TaskList {
 
     public void listTask() {
         Ui.showLine();
+        System.out.println("Sorted from High to Low priority...");
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < list.size(); i++) {
             System.out.println(i + 1 + ". " + list.get(i).toString());
@@ -46,7 +48,7 @@ public class TaskList {
     }
     public void setPriority(int index, Task.priorityLevel p) {
         getTask(index).changePriority(p);
-        System.out.println("Noted, item " + (index + 1) + "'s priority has been set to " + p);
+        System.out.println("Noted, item " + (index + 1) +  " (" + getTask(index).getDescription() + ") priority has been set to " + p);
     }
     public void sortList() {
 

@@ -4,7 +4,15 @@ import duke.DukeException;
 
 import java.util.ArrayList;
 
+
 public class Parser {
+    /**
+     *
+     * @param input
+     * @param list
+     * @return
+     * @throws DukeException
+     */
     public static Boolean validateQuestion(String input, ArrayList list) throws DukeException {
 
         String[] splitted = input.split(" ", 2);
@@ -24,8 +32,8 @@ public class Parser {
             throw new DukeException("☹ OOPS!!! The description of a " + splitted[0] + " cannot be empty.");
         }
         if (splitted[0].equalsIgnoreCase("mark") || splitted[0].equalsIgnoreCase("unmark")) {
-            if ( Integer.parseInt(splitted[1]) > list.size() ) {
-                throw new DukeException("☹ OOPS!!! Index is over the size of items in the list");
+            if ( Integer.parseInt(splitted[1]) > list.size() || Integer.parseInt(splitted[1]) == 0) {
+                throw new DukeException("☹ OOPS!!! Index is not within the size of items in the list");
             }
         }
         return true;

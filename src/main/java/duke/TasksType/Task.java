@@ -11,6 +11,7 @@ public class Task
         this.description = description;
         this.isDone = false;
         this.level = priorityLevel.Medium; // new
+        assert !description.isEmpty() && description != null : "Description cannot be empty";
     }
 
     public String getDescription() {
@@ -41,6 +42,11 @@ public class Task
     public priorityLevel getPriorityLevel() { // new
         return this.level;
     }
+
+    /**
+     *
+     * @param p 
+     */
     public void changePriority(priorityLevel p) {
         this.level = p;
     }
