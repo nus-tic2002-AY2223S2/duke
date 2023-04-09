@@ -65,6 +65,15 @@ public class Parser {
                     String deleteTask = splitDelete[1].trim(); //get the position
                     int selectedNum = Integer.parseInt(deleteTask) - 1;
                     return new DeleteCommand(selectedNum);
+                 /*case "update":
+                    String updatetasknum = givenCommand[1].trim();
+                    int updateNum = Integer.parseInt(updatetasknum) - 1;
+                    String updateTask = givenCommand[2].trim();
+                    return new UpdateCommand(updateNum, updateTask);*/
+                case "find":
+                    String[] splitFindWord = input.split(" ", 2); //split by min 2 array
+                    String findWord = splitFindWord[1]; //get description
+                    return new FindCommand(findWord);
                 default:
                     throw new DukeException();
             }
