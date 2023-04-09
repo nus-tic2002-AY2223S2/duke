@@ -37,7 +37,6 @@ public class TaskList {
             System.out.println(i+1 + "." + this.list.get(i).toString());
         }
     }
-
     /**
      */
 
@@ -70,6 +69,7 @@ public class TaskList {
         }
         else {
             this.list.add(newTask);
+            assert !list.isEmpty() : "List must not be empty after adding";
             System.out.println("Got it. I've added this task:\n" + newTask.toString());
             System.out.println("Now you have " + this.getSizeOfList() + " task(s) in the list");
             return newTask;
@@ -106,6 +106,7 @@ public class TaskList {
         }
         else {
             this.list.get(indexToBeMarked).markAsDone();
+            assert list.get(indexToBeMarked).getTaskStatus().equalsIgnoreCase("X") : "Task will be marked as done";
             System.out.println("Nice! I've marked this task as done:");
             System.out.println(this.list.get(indexToBeMarked).toString());
         }
@@ -144,6 +145,7 @@ public class TaskList {
 
     /**
      * checkDuplicate method will search the list to check for duplicates
+     * @param newTask task object as parameters
      * @return TRUE if duplicate exists, FALSE if no duplicates
      */
     public boolean checkDuplicate(Task newTask)

@@ -80,6 +80,9 @@ public class DateValidator {
      * @return TRUE if date is equal; FALSE if date is equal
      */
     public static boolean isDateEqual(LocalDateTime firstDate, LocalDateTime secondDate) {
+        assert firstDate != null : "first date input cannot be null";
+        assert secondDate != null : "second date input cannot be null";
+
         if(firstDate.equals(secondDate)) {
             return true;
         }

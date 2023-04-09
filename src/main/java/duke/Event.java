@@ -29,28 +29,31 @@ public class Event extends Task {
     }
 
     /**
-     *  Change start value of Task
+     * Change start value of Task
+     * @param start
      */
     public void setStart(String start) {
         this.start = start;
     }
 
     /**
-     *  @return end value of Task
+     * @return end value of Task
      */
     public String getEnd() {
         return end;
     }
 
     /**
-     *  Change end value of Task
+     * Change end value of Task
+     * @param end end time of the event
      */
     public void setEnd(String end) {
         this.end = end;
     }
 
     /**
-     *  toString() method will print out Task's standard output
+     * toString() method will print out Task's standard output
+     * @return string format
      */
     @Override
     public String toString() {
