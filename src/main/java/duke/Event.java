@@ -50,7 +50,7 @@ public class Event extends Task {
     }
 
     /**
-     *  toString() method will print out duke.Task's standard output
+     *  toString() method will print out Task's standard output
      */
     @Override
     public String toString() {

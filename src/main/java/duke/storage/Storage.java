@@ -95,7 +95,7 @@ public class Storage {
 
     /**
      * save() method will save the data from Tasklist object containing Arraylist of Task objects into duke.txt
-     * @param listOfTask
+     * @param listOfTask TaskList object
      * @throws DukeException if any problems occur when saving the list into the duke.txt file
      */
     public static void saveFile(TaskList listOfTask) throws DukeException {

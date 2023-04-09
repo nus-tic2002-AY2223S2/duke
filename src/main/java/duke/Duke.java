@@ -9,10 +9,6 @@ import duke.parser.Parser;
 import duke.storage.Storage;
 import duke.task.TaskList;
 
-
-import java.util.Scanner;
-import java.util.ArrayList;
-
 public class Duke {
 
     /********************************************/

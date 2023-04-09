@@ -130,13 +130,13 @@ public class TaskList {
 
     /**
      * findItemInList method will search task by keyword and display matching tasks
-     * @param searchKeyword keyword to be searched
+     * @param keyword keyword to be searched
      * @throws DukeException if index provided is larger than the size of the list
      */
-    public void findItemInList(String searchKeyword) {
+    public void findItemInList(String keyword) {
         System.out.println("Here are the matching tasks in your list:");
         for(int i = 0; i < this.getSizeOfList(); i++) {
-            if(this.list.get(i).getDescription().contains(searchKeyword)) {
+            if(this.list.get(i).getDescription().contains(keyword)) {
                 System.out.println(i+1 + "." + this.list.get(i).toString());
             }
         }
