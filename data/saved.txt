@@ -1,4 +1,4 @@
 [D][X] eat /by 2023-04-10 22:00 [Priority High]
-[E][X] meeting /from 2023-04-11 10:00 /to 2023-04-11 11:00 [Priority Medium]
+[T][ ] slp [Priority High]
 [T][ ] eat [Priority Medium]
-[T][ ] slp [Priority Low]
+[T][ ] makan [Priority Medium]

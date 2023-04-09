@@ -51,10 +51,10 @@ public class Storage {
                     item += line.toString().substring(7);
                 }
                 else if (line instanceof Deadline) {
-                    item += ((Deadline) line).getDescription() + " /by " + Util.dateTimeToString(((Deadline) line).getBy()) + " [Priority " + line.getPriorityLevel() + "]";
+                    item += line.getDescription() + " /by " + Util.dateTimeToString(((Deadline) line).getBy()) + " [Priority " + line.getPriorityLevel() + "]";
                 }
                 else {
-                    item += ((Event) line).getDescription() + " /from " + Util.dateTimeToString(((Event) line).getFrom())+ " /to " + Util.dateTimeToString(((Event) line).getTo()) + " [Priority " + line.getPriorityLevel() + "]";
+                    item += line.getDescription() + " /from " + Util.dateTimeToString(((Event) line).getFrom())+ " /to " + Util.dateTimeToString(((Event) line).getTo()) + " [Priority " + line.getPriorityLevel() + "]";
                 }
 
                 writer.write(item + "\n");

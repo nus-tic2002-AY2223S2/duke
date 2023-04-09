@@ -49,7 +49,7 @@ public class TaskList {
         System.out.println("Noted, item " + (index + 1) + "'s priority has been set to " + p);
     }
     public void sortList() {
-        //ArrayList<Task> sortedList =(ArrayList<Task>)list.stream().map(Task.priorityLevel::valueOf).sorted(Task.priorityLevel::compareTo).map(Task.priorityLevel::toString).collect(Collectors.toList());
+
         ArrayList<Task> sortedList = new ArrayList<>();
         ArrayList<Task> high = new ArrayList<>();
         ArrayList<Task> low = new ArrayList<>();
