@@ -41,6 +41,7 @@ public class Ui {
         System.out.println(" -> Todo e.g.: 'todo <description>' ");
         System.out.println(" -> Dateline e.g.: 'deadline <description> /by <deadline>' ");
         System.out.println(" -> Event e.g.: 'event <description> /from <start date> /to <end date>' ");
+        System.out.println(" -> date format in terms of 'yyyy-mm-dd HH:mm' ");
         System.out.println(" Mark / Unmark / Delete Task; [insert comma between numbers if want to perform Mass Operations]");
         System.out.println(" List -> List all Tasks ");
         System.out.println(" Bye -> Exit");

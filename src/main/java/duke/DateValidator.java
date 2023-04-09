@@ -1,40 +1,52 @@
 package duke;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class DateValidator {
 
-    public static String dateFormat = "yyyy-MM-dd HH-mm-ss";
+    private static String dateFormat = "yyyy-MM-dd HH:mm";
+    private static String displayFormat = "dd MMM yyyy HH:mm";
 
     public DateValidator() {
 
     }
 
     public static boolean validateInput(String dateString) {
-        DateFormat sdf = new SimpleDateFormat(dateFormat);
-        sdf.setLenient(false);
+        DateTimeFormatter df = DateTimeFormatter.ofPattern(dateFormat);
         try {
-            sdf.parse(dateString);
-        } catch (ParseException e) {
+            LocalDateTime dt = LocalDateTime.parse(dateString, df);
+            return true;
+        } catch (DateTimeParseException e) {
+            //handle exception
             return false;
         }
-        return true;
     }
 
-    public static LocalDate convertStringToDate(String dateString) throws DukeException {
+    public static LocalDateTime convertStringToDate(String dateString) throws DukeException {
         if(validateInput(dateString))
         {
-        LocalDate dateFormatted = LocalDate.parse(dateString);
+            DateTimeFormatter df = DateTimeFormatter.ofPattern(dateFormat);
+            LocalDateTime dateFormatted = LocalDateTime.parse(dateString, df);
             return dateFormatted;
         }else {
             throw new DukeException("Date Format Error");
         }
     }
+    public static String convertDateToString(LocalDateTime lclDateTime) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern(dateFormat);
+        return lclDateTime.format(df);
+    }
 
-    public static boolean isDateEqual(LocalDate firstDate, LocalDate secondDate) {
+    public static String convertDateToDisplay(LocalDateTime lclDateTime) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern(displayFormat);
+        return lclDateTime.format(df);
+    }
+
+
+    public static boolean isDateEqual(LocalDateTime firstDate, LocalDateTime secondDate) {
         if(firstDate.equals(secondDate)) {
             return true;
         }

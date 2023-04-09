@@ -3,20 +3,19 @@
  */
 package duke;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 public class Deadline extends Task {
 
     /**
      *  Attributes
      */
-    protected LocalDate by;
+    protected LocalDateTime by;
 
     /**
      *  Constructor
      */
-    public Deadline(String description, LocalDate by) {
+    public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
     }
@@ -24,14 +23,14 @@ public class Deadline extends Task {
     /**
      * @return the deadline of Task
      */
-    public LocalDate getBy() {
+    public LocalDateTime getBy() {
         return by;
     }
 
     /**
      * change the deadline of Task
      */
-    public void setBy(LocalDate by) {
+    public void setBy(LocalDateTime by) {
         this.by = by;
     }
 
@@ -40,7 +39,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() + " (by: " + DateValidator.convertDateToDisplay(by) + ")";
     }
 
 

@@ -8,10 +8,6 @@ import duke.*;
 import duke.task.TaskList;
 import duke.DateValidator;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -47,7 +43,7 @@ public class Storage {
                 while (scan.hasNext()) {
                     String itemEntry = scan.nextLine();
                     Task newTask;
-                    String [] splitEntryValue = itemEntry.split(":");
+                    String [] splitEntryValue = itemEntry.split(";");
 
                     if(splitEntryValue[0].trim().equalsIgnoreCase("T")) {
                         /**
@@ -100,34 +96,34 @@ public class Storage {
                 Task itemToAdd = listOfTask.getElementFromList(i);
                 String finalLine = new String();
                 if(itemToAdd instanceof Todo) {
-                    finalLine += "T : ";
+                    finalLine += "T ; ";
                     if(itemToAdd.getTaskStatus().equalsIgnoreCase("X")) {
                         finalLine += "1";
                     }
                     else {
                         finalLine += "0";
                     }
-                    finalLine += " : " + itemToAdd.getDescription();
+                    finalLine += " ; " + itemToAdd.getDescription();
                 }
                 else if(itemToAdd instanceof Deadline) {
-                    finalLine += "D : ";
+                    finalLine += "D ; ";
                     if(itemToAdd.getTaskStatus().equalsIgnoreCase("X")) {
                         finalLine += "1";
                     }
                     else {
                         finalLine += "0";
                     }
-                    finalLine += " : " + itemToAdd.getDescription() + " : " + ((Deadline) itemToAdd).getBy();
+                    finalLine += " ; " + itemToAdd.getDescription() + " ; " + DateValidator.convertDateToString(((Deadline) itemToAdd).getBy());
                 }
                 else {
-                    finalLine += "E : ";
+                    finalLine += "E ; ";
                     if(itemToAdd.getTaskStatus().equalsIgnoreCase("X")) {
                         finalLine += "1";
                     }
                     else {
                         finalLine += "0";
                     }
-                    finalLine += " : " + itemToAdd.getDescription() + " : " + ((Event) itemToAdd).getStart()+ " : " + ((Event) itemToAdd).getEnd();
+                    finalLine += " ; " + itemToAdd.getDescription() + " ; " + ((Event) itemToAdd).getStart()+ " ; " + ((Event) itemToAdd).getEnd();
 
                 }
                 newFW.write(finalLine);
