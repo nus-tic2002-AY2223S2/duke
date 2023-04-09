@@ -2,10 +2,10 @@ package duke.task;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static duke.parser.Parser.getTask;
+import static duke.parser.Parser.IS_DONE_SEPARATOR;
+import static duke.parser.Parser.getTaskFromCommand;
 
 /**
  * A <code>duke.task.TaskList</code> class contains the task list
@@ -16,7 +16,7 @@ public class TaskList {
 
     public TaskList(ArrayList<String> lines) {
         for (String line : lines) {
-            Task task = getTask(line);
+            Task task = getTaskFromCommand(line);
             this.tasklist.add(task);
         }
     }
@@ -31,7 +31,6 @@ public class TaskList {
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
                 TaskList.addItem(list.get(i));
-                i++;
             }
         }
         return TaskList;
@@ -72,7 +71,7 @@ public class TaskList {
         String printStr = "";
         for (int i = 0; i < tasklist.size(); i++) {
             Task item = tasklist.get(i);
-            printStr += item.toCommand() + "@" + item.isDone() + System.lineSeparator();
+            printStr += item.toCommand() + IS_DONE_SEPARATOR + item.isDone() + System.lineSeparator();
         }
         return printStr;
     }
@@ -84,7 +83,7 @@ public class TaskList {
      */
     public String getTaskString(int index) {
         Task task = tasklist.get(index);
-        String printStr = task.toCommand() + "@" + task.isDone();
+        String printStr = task.toCommand() + IS_DONE_SEPARATOR + task.isDone();
         return printStr;
     }
 

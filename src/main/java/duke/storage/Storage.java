@@ -26,7 +26,7 @@ public interface Storage {
     /**
      * This method edit text at the given lineNumber of the file at the source.
      *
-     * @param lineNumber An int text representing the lineNumber to be edited.
+     * @param lineNumber An int representing the lineNumber to be edited.
      * @param editedText A String text representing the edited text.
      */
     void editFile(int lineNumber, String editedText);

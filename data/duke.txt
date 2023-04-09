@@ -1,10 +1,9 @@
-TODO hello world!@true
-DEADLINE 222 /by monday@false
-EVENT 333 /from jj /to weekend@true
-TODO unn=@false
-TODO hh@false
-DEADLINE 222 /by monday@false
-todo hhh@false
-deadline ttt /by 18 April@false
-todo testing@false
-EVENT 333 /from jj /to weekend@true
+DEADLINE start Exam Revision /by Sunday#true
+EVENT ignite nights /from Monday /to Friday#true
+TODO cook something new#false
+DEADLINE return book in library /by Apr 11 2023#false
+TODO find a destination to travel for summer vacay#false
+TODO find a holiday destination#false
+EVENT JJ concert /from May 12 2023 /to May 31 2023#false
+TODO read book#false
+DEADLINE return book in library /by Apr 11 2023#false

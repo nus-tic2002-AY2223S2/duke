@@ -23,6 +23,9 @@ public class Duke {
 
     }
 
+    /**
+     * This method starts the Duke Application
+     */
     public void run() {
         ui.welcome();
 

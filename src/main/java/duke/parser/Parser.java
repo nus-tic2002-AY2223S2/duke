@@ -13,8 +13,7 @@ import duke.type.CommandType;
 import duke.type.TaskType;
 import duke.ui.Ui;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import static duke.util.Utils.formatDateTime;
 
 /**
  * A <code>duke.parser.Parser</code> class deals with making sense of the user command
@@ -25,8 +24,7 @@ public class Parser {
     public static final String BY_COMMAND = "/by";
     public static final String FROM_COMMAND = "/from";
     public static final String TO_COMMAND = "/to";
-
-    public static final String IS_EXIT_SEPARATOR = "@";
+    public static final String IS_DONE_SEPARATOR = "#";
 
 
     /**
@@ -42,7 +40,7 @@ public class Parser {
     }
 
     /**
-     * This method parse index from the user command
+     * This method parse index from different user command like delete, edit, clone, mark & unmark.
      *
      * @param command A string representing user command.
      * @return index of the task
@@ -50,6 +48,7 @@ public class Parser {
     public static int parseIndex(String command) throws IndexOutOfBoundsException, NumberFormatException {
         String numberStr = command.split(" ")[1].trim();
         int index = Integer.parseInt(numberStr) - 1;
+        assert index >= 0 : "index shouldn't be a negative number";
         return index;
     }
 
@@ -61,8 +60,10 @@ public class Parser {
      */
     public static String parseKeyword(String command) throws IndexOutOfBoundsException {
         String keyword = command.split(" ")[1].trim();
+        assert !keyword.isEmpty() : "keyword in find command shouldn't be empty";
         return keyword;
     }
+
 
     private static void parseAndMarkTask(String markString, Task task) {
         boolean isMarkAsDone = Boolean.parseBoolean(markString);
@@ -84,7 +85,7 @@ public class Parser {
             throw new IllegalTodoException();
         }
 
-        String[] taskStringList = commandStringList[1].split(IS_EXIT_SEPARATOR);
+        String[] taskStringList = command.replaceFirst(commandStringList[0], "").trim().split(IS_DONE_SEPARATOR);
         String description = taskStringList[0].trim();
 
         Todo todo = new Todo(description);
@@ -114,7 +115,7 @@ public class Parser {
         }
         String description = commandStringList[0].replaceFirst(taskStringList[0], "").trim();
 
-        String[] deadlineStringList = commandStringList[1].split(IS_EXIT_SEPARATOR);
+        String[] deadlineStringList = commandStringList[1].split(IS_DONE_SEPARATOR);
         String by = formatDateTime(deadlineStringList[0].trim());
         Deadline deadline = new Deadline(description, by);
 
@@ -130,7 +131,7 @@ public class Parser {
      * This method parse the user Event command and create Event object
      *
      * @param command A string representing the user command.
-     * @return A Event object parsed from the user input.
+     * @return An Event object parsed from the user input.
      */
     public static Event parseEvent(String command) throws IndexOutOfBoundsException, IllegalEventException {
         String[] commandStringList = command.split(FROM_COMMAND);
@@ -150,7 +151,7 @@ public class Parser {
         }
         String fromDate = formatDateTime(dates[0].trim());
 
-        String[] toDateStringList = dates[1].split(IS_EXIT_SEPARATOR);
+        String[] toDateStringList = dates[1].split(IS_DONE_SEPARATOR);
         String toDate = formatDateTime(toDateStringList[0].trim());
 
         Event event = new Event(description, fromDate, toDate);
@@ -170,7 +171,7 @@ public class Parser {
      * @param command A string representing the user command.
      * @return A TaskType representing the type of Task
      */
-    public static TaskType getTaskType(String command) {
+    public static TaskType parseTaskType(String command) {
         if (command.toUpperCase().startsWith("TODO")) {
             return TaskType.TODO;
         } else if (command.toUpperCase().startsWith("DEADLINE")) {
@@ -219,10 +220,10 @@ public class Parser {
      * @param command A string representing the user command.
      * @return A Task object created based on user command.
      */
-    public static Task getTask(String command) {
+    public static Task getTaskFromCommand(String command) {
         Task task = null;
         try {
-            TaskType taskType = getTaskType(command);
+            TaskType taskType = parseTaskType(command);
             switch (taskType) {
                 case TODO:
                     task = parseTodo(command);
@@ -251,25 +252,6 @@ public class Parser {
     }
 
     /**
-     * This method check if the command is a valid edit command
-     *
-     * @param command  A string representing the user command.
-     * @param taskType Type of task to be edited.
-     * @return A boolean indicating whether the edit command is valid or not.
-     */
-    public static boolean checkValidEditCommand(String command, TaskType taskType) {
-        boolean isValid = false;
-        if (command.contains(DESCRIPTION_COMMAND)) {
-            isValid = true;
-        } else if (command.contains(BY_COMMAND) && taskType == TaskType.DEADLINE) {
-            isValid = true;
-        } else if ((command.contains(FROM_COMMAND) || command.contains(TO_COMMAND)) && taskType == TaskType.EVENT) {
-            isValid = true;
-        }
-        return isValid;
-    }
-
-    /**
      * This method parse edit command and edit the task
      *
      * @param command A string representing the user command.
@@ -288,32 +270,13 @@ public class Parser {
             Event event = (Event) task;
             String[] taskElements = command.split(FROM_COMMAND);
             String from = formatDateTime(taskElements[taskElements.length - 1].trim());
-            event.setEndDateTime(from);
+            event.setStartDateTime(from);
         } else if (command.contains(TO_COMMAND)) {
             Event event = (Event) task;
             String[] taskElements = command.split(TO_COMMAND);
             String to = formatDateTime(taskElements[taskElements.length - 1].trim());
-            event.setStartDateTime(to);
+            event.setEndDateTime(to);
         }
     }
 
-    /**
-     * This method format valid date/datetime string into another format.
-     *
-     * @param datetime A string representing the date.
-     * @return A datetime String in the format 'MMM d yyyy' if it's valid date input.
-     */
-    public static String formatDateTime(String datetime) {
-        String formattedDate = datetime;
-        SimpleDateFormat fromUser = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat myFormat = new SimpleDateFormat("MMM d yyyy");
-
-        try {
-            formattedDate = myFormat.format(fromUser.parse(datetime));
-        } catch (ParseException e) {
-            Ui.printException("☹Invalid DateTime format --> " + datetime);
-        }
-
-        return formattedDate;
-    }
 }

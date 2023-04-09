@@ -37,15 +37,16 @@ public class ParserTest {
     @Test
     public void getTaskTest() {
         String command1 = "todo eat breakfast";
-        Task todo = Parser.getTask(command1);
+        Task todo = Parser.getTaskFromCommand(command1);
         assertEquals(TaskType.TODO, todo.getType());
 
         String command2 = "deadline SE PROJECT /by 01/04/2023";
-        Task deadline = Parser.getTask(command2);
+        Task deadline = Parser.getTaskFromCommand(command2);
         assertEquals(TaskType.DEADLINE, deadline.getType());
 
         String command3 = "event SE Course /from 01/01/2023 /to 16/04/2023";
-        Task event = Parser.getTask(command3);
+        Task event = Parser.getTaskFromCommand(command3);
         assertEquals(TaskType.EVENT, event.getType());
     }
+
 }

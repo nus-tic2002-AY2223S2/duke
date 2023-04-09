@@ -4,6 +4,7 @@ import duke.storage.DukeFileReaderAndWriter;
 import duke.task.Task;
 import duke.task.TaskList;
 import duke.type.CommandType;
+import duke.type.TaskType;
 import duke.ui.Ui;
 
 import static duke.parser.Parser.*;
@@ -18,6 +19,25 @@ public class Command {
         this.commandType = commandType;
         this.command = command;
         this.isExit = commandType == CommandType.EXIT;
+    }
+
+    /**
+     * This method check if the command is a valid edit command
+     *
+     * @param command  A string representing the user command.
+     * @param taskType Type of task to be edited.
+     * @return A boolean indicating whether the edit command is valid or not.
+     */
+    private static boolean checkValidEditCommand(String command, TaskType taskType) {
+        boolean isValid = false;
+        if (command.contains(DESCRIPTION_COMMAND)) {
+            isValid = true;
+        } else if (command.contains(BY_COMMAND) && taskType == TaskType.DEADLINE) {
+            isValid = true;
+        } else if ((command.contains(FROM_COMMAND) || command.contains(TO_COMMAND)) && taskType == TaskType.EVENT) {
+            isValid = true;
+        }
+        return isValid;
     }
 
     public CommandType getCommandType() {
@@ -91,10 +111,11 @@ public class Command {
     }
 
     /**
-     * This method clone an existing task
+     * This method clone an existing task from the task list.
+     * This method can be used to easily create new items based on existing items.
      *
      * @param taskList A TaskList object representing list of tasks of the user.
-     * @param command  A string representing user command. Clone command should be in the format "clone [index]"
+     * @param command  A string representing user command. Clone command should be in the format "clone [line-number]"
      */
     private void cloneTask(TaskList taskList, String command, DukeFileReaderAndWriter fileReaderAndWriter) throws IndexOutOfBoundsException, NumberFormatException {
         int index = parseIndex(command);
@@ -109,10 +130,10 @@ public class Command {
     }
 
     /**
-     * This method edit task from users list of tasks.
+     * This method update an existing item from users list of tasks without having to delete it first.
      *
      * @param taskList A TaskList object representing list of tasks of the user.
-     * @param command  A string representing user command. Edit command should be in the format "edit [index] [/description || /by || /to || /from] update-text"
+     * @param command  A string representing user command.Edit command should be in the format "edit [line-number] [/description or /by or /to or /from] [update-text]"
      */
     private void editTask(TaskList taskList, String command, DukeFileReaderAndWriter fileReaderAndWriter) throws IndexOutOfBoundsException, NumberFormatException {
         int index = parseIndex(command);
@@ -138,11 +159,11 @@ public class Command {
      * @param command  A string representing user command.
      */
     private void addTask(TaskList taskList, String command, DukeFileReaderAndWriter fileReaderAndWriter) {
-        Task task = getTask(command);
+        Task task = getTaskFromCommand(command);
         if (task != null) {
             taskList.addItem(task);
 
-            fileReaderAndWriter.appendInFile(command + IS_EXIT_SEPARATOR + task.isDone() + System.lineSeparator());
+            fileReaderAndWriter.appendInFile(command + IS_DONE_SEPARATOR + task.isDone() + System.lineSeparator());
 
             Ui.printNewTaskString(taskList, task);
         }
@@ -168,7 +189,7 @@ public class Command {
      * This method mark task as done or not done.
      *
      * @param taskList    A TaskList object representing list of tasks of the user.
-     * @param commandType A string representing the type of user command.
+     * @param commandType A string representing the type of user command.Mark/Unmark command should be in the format "mark/unmark [line-number]"
      */
     private void markTask(TaskList taskList, CommandType commandType, DukeFileReaderAndWriter fileReaderAndWriter) throws IndexOutOfBoundsException, NumberFormatException {
         int index = parseIndex(command);
