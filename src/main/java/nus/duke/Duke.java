@@ -11,13 +11,15 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 
-public class Duke extends Application{
+//public class Duke extends Application{
+public class Duke{
+
     public static String filePath;
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
-
+/*
     @Override
     public void start(Stage stage) {
         Label helloWorld = new Label("Hello World!"); // Creating a new Label control
@@ -26,7 +28,7 @@ public class Duke extends Application{
         stage.setScene(scene); // Setting the stage to show our screen
         stage.show(); // Render the stage.
     }
-
+*/
 
     public Duke(String filePath) {
         Duke.filePath = filePath;

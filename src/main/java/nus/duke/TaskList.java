@@ -55,23 +55,5 @@ public class TaskList {
         size--;
     }
 
-/*
-    // in our test class:
-    @Test
-    public void testAddTask() {
-        TaskList taskList = new TaskList();
-        ToDo task1 = new ToDo("Buy milk");
-        ToDo task2 = new ToDo("Buy eggs");
-
-        taskList.add(task1);
-        taskList.add(task2);
-
-        // assert that the tasks were added to the task list;
-        List<Task> tasks = taskList.getTasks();
-        assert tasks.size() == 2;
-        assert tasks.get(0).description.equals("buy milk");
-        assert tasks.get(1).description.equals("Buy eggs");
-
- */
 }
 

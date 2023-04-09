@@ -59,12 +59,13 @@ public class Command {
         // level 3 mark/unmark feature
         // ***************************
 
-        //assert taskNumber != 0 : "Task cannot be null";
+
         if (this.taskNumber == 0) {
             //System.out.println("There is no task 0.");
             throw new InvalidCodeException("Invalid code exception");
         }
 
+        assert taskNumber != 0 : "taskNumber cannot be null";
         try {
             tl.get(this.taskNumber - 1).markAsDone();
             displayMarkTask(tl);
@@ -157,10 +158,15 @@ public class Command {
     public void execute(TaskList tl, Ui ui, Storage storage) throws DukeException, IOException, InvalidCodeException {
 
 
-        //assert task != null : "Task cannot be null";
+
+        /*
         if (task == null) {
             throw new InvalidCodeException("Invalid code exception");
         }
+        */
+
+
+        assert task != null : "Task cannot be null";
         switch (task) {
             // *********************
             // level 1 bye feature
@@ -193,7 +199,6 @@ public class Command {
                 if (taskDescription == null) {
                     throw new InvalidCodeException("Invalid code exception");
                 }
-
                 tl.add(new ToDo(taskDescription));
                 //tl.testAddTask();
                 displayAddTask(tl, ui);

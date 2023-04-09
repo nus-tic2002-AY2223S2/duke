@@ -1,14 +1,5 @@
-[T][X] TIC2002 duke project 
-[D][X] TIC2002 duke project submission (by:Apr 16 2023 at 11:59)
-[E][X] (from:Apr 27 2023 at 09:00 to:Apr 30 2023 at 11:00)
-[T][ ] abc 
-[T][ ] bcd 
-[T][ ] null
-[T][ ] null
-[T][ ] null
-[D][ ] hgi (by:Jan 1 2020 at 11:00)
-[D][ ] jkl (by:Jan 1 2020 at 11:00)
-[T][ ] null
-[T][ ] null
-[D][ ] aop (by:Jan 1 2020 at 11:00)
-[D][ ] hgjf (by:Jan 1 2020 at 11:00)
+[T][ ] do TIC2002 project 
+[D][ ] TIC2002 project submission (by:Apr 16 2023 at 11:59)
+[E][ ] TIC2002 exam (from:Apr 27 2023 at 09:00 to:Apr 27 2023 at 11:00)
+[T][ ] play 
+[T][ ] TIC3302 project 
