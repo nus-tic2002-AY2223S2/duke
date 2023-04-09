@@ -80,7 +80,7 @@ public class Ui {
     }
 
     /**
-     *  this method will take in an input from the user and returns it
+     *  this method will take in an input command from the user and returns it
      */
     public String readCommand()
     {
