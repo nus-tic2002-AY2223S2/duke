@@ -1,7 +1,10 @@
-public class Task {
+import java.time.LocalDate;
 
+public class Task {
     protected String description;
     protected boolean isDone;
+
+
 
     public Task(String description) {
         this.description = description;
@@ -19,19 +22,24 @@ public class Task {
 
     public void markAsDone(){
         isDone=true;
-        System.out.println("Awesome! The task has been marked done!\n");
-        //System.out.println("["+ getStatusIcon()+"] "+ description+"\n");
+
+
     }
 
     public void markAsUndone(){
         isDone=false;
         System.out.println("Alright! The task has been marked Undone!\n");
-        //System.out.println("[ ] "+ description+"\n");
+
     }
 
     @Override
     public String toString() {
 
         return "["+ getStatusIcon()+"] "+ description;
+    }
+
+    public LocalDate toDate(String da){
+        LocalDate dat= LocalDate.parse(da);
+        return dat;
     }
 }
