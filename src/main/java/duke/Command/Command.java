@@ -8,6 +8,7 @@ import duke.TasksType.Deadline;
 import duke.TasksType.Event;
 import duke.TasksType.Task;
 import duke.TasksType.Todo;
+import duke.Ui.Ui;
 import duke.Utility.Util;
 
 import java.util.Scanner;
@@ -75,7 +76,11 @@ public class Command {
                 System.out.println("Bye. Hope to see you again soon!");
                 continue;
             }
-
+            //catch for help
+            if (question.equalsIgnoreCase("help")) {
+                Ui.showCommands();
+                continue;
+            }
             if (question.equalsIgnoreCase("list")) { //loop to print out the items in list[]
                 list.listTask();
                 continue;
@@ -94,17 +99,20 @@ public class Command {
                     if (question.contains("unmark")) {
 
                         list.getTask(num).markAsNotDone();
-                        System.out.println("Item " + (num + 1) + " is not done.");
+                        System.out.println("Oops! Task " + (num + 1) + " is marked as not done.");
+                        System.out.println(list.getTask(num));
                         loader.saveToFile(list.getList());
                         continue;
                     } else {
                         list.getTask(num).markAsDone();
-                        System.out.println("Item " + (num + 1) + " is done.");
+                        System.out.println("Well Done! Task " + (num + 1) + " is done.");
+                        System.out.println(list.getTask(num));
                         loader.saveToFile(list.getList());
                         continue;
                     }
                 }
             }
+
             else {
                 String[] splitted = question.split(" ", 2);
 
@@ -117,35 +125,77 @@ public class Command {
                 //catch for "deadline"
                 else if (splitted[0].equalsIgnoreCase("deadline")) {
                     String[] deadlineSplit = splitted[1].split("/by");
-                    Deadline dl = new Deadline(deadlineSplit[0].trim(), Util.convertDateTime(deadlineSplit[1].trim()));
-                    list.addTask(dl);
+
+                    if (Parser.isValidDateTime(deadlineSplit[1].trim())) { //validates the dateTime format from user input
+                        try { //validates the deadline dateTime
+                            Util.validateDateTime(Util.convertDateTime(deadlineSplit[1].trim()));
+                        } catch (DukeException dateError) {
+                            System.out.println(dateError);
+                            continue;
+                        }
+                        Deadline dl = new Deadline(deadlineSplit[0].trim(), Util.convertDateTime(deadlineSplit[1].trim()));
+                        list.addTask(dl);
+                    }
+                    else {
+                        System.out.println("Invalid date and time format. Please use the format: yyyy-MM-dd HH:mm");
+                        continue;
+                    }
                 }
 
                 //catch for "event"
                 else if (splitted[0].equalsIgnoreCase("event")) {
                     String[] eventSplit = splitted[1].split("/from");
                     String[] eventSplitAgain = eventSplit[1].split("/to");
-                    Event ev = new Event(eventSplit[0].trim(), Util.convertDateTime(eventSplitAgain[0].trim()), Util.convertDateTime(eventSplitAgain[1].trim()));
-                    list.addTask(ev);
+
+                    if (Parser.isValidDateTime(eventSplitAgain[0].trim()) && //validates the dateTime format
+                            Parser.isValidDateTime(eventSplitAgain[1].trim())) {
+                        try { //validates the start and end dateTimes
+                            Util.validateDateTime(Util.convertDateTime(eventSplitAgain[0].trim()));
+                            Util.validateDateTime(Util.convertDateTime(eventSplitAgain[1].trim()));
+                        } catch (DukeException dateError) {
+                            System.out.println(dateError);
+                            continue;
+                        }
+                        try { //validates the start dateTime should be before the end dateTime
+                            Util.validateEventDate(Util.convertDateTime(eventSplitAgain[0].trim()), Util.convertDateTime(eventSplitAgain[1].trim()));
+                        } catch (DukeException dateError) {
+                            System.out.println(dateError);
+                            continue;
+                        }
+                        Event ev = new Event(eventSplit[0].trim(), Util.convertDateTime(eventSplitAgain[0].trim()), Util.convertDateTime(eventSplitAgain[1].trim()));
+                        list.addTask(ev);
+                    }
+                    else {
+                        System.out.println("Invalid date and time format. Please use the format: yyyy-MM-dd HH:mm");
+                        continue;
+                    }
                 }
                 //catch for delete
                 else if (splitted[0].equalsIgnoreCase("delete")) {
-                    Task toDelete = list.getTask(Integer.parseInt(splitted[1]) - 1);
                     list.deleteTask(Integer.parseInt(splitted[1]) - 1);
                 }
                 //catch for priority
                 else if (splitted[0].equalsIgnoreCase("priority")) {
                     String[] prioritySplit = splitted[1].split(" ");
+                    try { //validates index to change priority
+                        Parser.checkPriority(Integer.parseInt(prioritySplit[0]) - 1, list.getList());
+                    } catch (DukeException indexError) {
+                        System.out.println(indexError);
+                        continue;
+                    }
                     list.setPriority(Integer.parseInt(prioritySplit[0]) - 1, Util.stringToLevel(prioritySplit[1]));
                 }
+
+                //catch for find
                 else if (splitted[0].equalsIgnoreCase("find")) {
                     list.find(splitted[1]);
                 }
+
                 else {
-                    System.out.println("duke.TasksType.Task not recognised");
+                    System.out.println("Input not recognised");
                 }
             }
-            list.sortList();
+            list.sortList(); //sorts the list of tasks according to the priority level
             loader.saveToFile(list.getList()); //saves the list into data/saved.txt
         }
     }

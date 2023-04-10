@@ -27,11 +27,6 @@ public class Deadline extends Task
         return "[D]" + super.toString() + " (by: " + Util.displayDT(by) + ")" + " [Priority " + getPriorityLevel() + "]";
     }
 
-
-//    public String getDescription() {
-//        return description;
-//    }
-
     /**
      * This method is called to get the date and time of the particular deadline clas
      * @return a LocalDateTime for formatting and subsequently for display or save

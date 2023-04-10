@@ -18,13 +18,44 @@ public class Ui
 
         System.out.println("Hello from\n" + logo);
         System.out.println("Hello! I'm Duke, your task scheduler.");
+//        System.out.println("Here are the commands you can use:");
+//        Ui.showLine();
+//        System.out.println("list - list out your current task(s).");
+//        System.out.println("todo (description) - adds a Todo task");
+//        System.out.println("deadline (description) /by (yyyy-MM-dd) - adds a Deadline task");
+//        System.out.println("event (description) /from (yyyy-MM-dd) /to (yyyy-MM-dd) - adds a Event task");
+//        System.out.println("delete (index) - deletes a specific task");
+//        System.out.println("(mark/unmark) (index) - marks a task as done or not done");
+//        System.out.println("priority (index) (high/low/medium) - changes the priority level of a specific task");
+//        System.out.println("find (keyword) - list out the tasks that contains the keyword");
+//        System.out.println("bye - exit the program");
+        Ui.showLine();
         System.out.println("What can I do for you?\n");
+        System.out.println("Type "+ "help" + " to see the available commands");
     }
 
     /**
-     * This method is called to print lines for demarcation of output texts
+     * This method is called to print a line for demarcation of output texts
      */
     public static void showLine() {
-        System.out.println("________________________________________________________________________");
+        System.out.println("__________________________________________________________________________________________");
+    }
+
+    public static void showCommands() {
+        showLine();
+        System.out.println("Here are the commands you can use:");
+        showLine();
+        System.out.println("1. list - list out your current task(s).");
+        System.out.println("2. todo (description) - adds a Todo task");
+        System.out.println("3. deadline (description) /by (yyyy-MM-dd) - adds a Deadline task");
+        System.out.println("4. event (description) /from (yyyy-MM-dd) /to (yyyy-MM-dd) - adds an Event task");
+        System.out.println("5. delete (index) - deletes a specific task");
+        System.out.println("6. mark (index) - marks a task as done");
+        System.out.println("7. unmark (index) - marks a task as not done");
+        System.out.println("8. priority (index) (high/low/medium) - changes the priority level of a specific task");
+        System.out.println("9. find (keyword) - list out the tasks that contain the keyword");
+        System.out.println("10. help - list out all the usable commands");
+        System.out.println("11. bye - exit the program");
+        showLine();
     }
 }

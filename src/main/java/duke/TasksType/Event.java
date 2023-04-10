@@ -29,9 +29,6 @@ public class Event extends Task
     public String toString() {
         return "[E]" + super.toString() + " (from: " + Util.displayDT(from) + " to: " + Util.displayDT(to) + ")" + " [Priority " + getPriorityLevel() + "]";
     }
-//    public String getDescription() {
-//        return description;
-//    }
 
     /**
      * This method is called to get the start date time of the event task
