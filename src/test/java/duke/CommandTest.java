@@ -4,12 +4,14 @@ import duke.TaskList.TaskList;
 import duke.TasksType.Task;
 import duke.TasksType.Todo;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CommandTest {
+    /**
+     * The Junit tests the addTask method in the Command class
+     * adds two tasks and asserts that the description is stored and retrieved correctly
+     */
     @Test
     public void addTask() {
         ArrayList<Task> list = new ArrayList<>();

@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TaskListTest {
+    /**
+     * This JUnit tests the TaskList class, setPriority() method
+     * When user changes the priorityLevel of the task,
+     * the correct priorityLevel will be stored
+     */
     @Test
     public void changePriorityTest(){
 

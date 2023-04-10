@@ -7,11 +7,12 @@ import java.util.ArrayList;
 
 public class Parser {
     /**
-     *
-     * @param input
-     * @param list
-     * @return
-     * @throws DukeException
+     * This method validated the input given by the user
+     * only the specified commands are allowed, exceptions will be thrown if anything word is parsed
+     * @param input takes in the string input that was given by user
+     * @param list takes in the ArrayList for checking the size of the list to valid indices
+     * @return a boolean on whether the input is valid
+     * @throws DukeException is displayed according to the type of error input
      */
     public static Boolean validateQuestion(String input, ArrayList list) throws DukeException {
 
