@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
@@ -10,12 +11,26 @@ public class Duke {
 
         while (scanner.hasNext()) {
             String input = scanner.nextLine();
-            Task new_task = new Task(input);
+            String[] strArr = input.split(" ");
 
-            // add to-do list
-            if (!input.equals("list") && !input.equals("bye") && !input.contains("mark") && !input.contains("unmark")) {
+            if (!input.contains("list")
+                && !input.contains("bye")
+                && !input.contains("mark")
+                && !input.contains("unmark")
+                && !input.contains("todo")
+            ) {
+                Task new_task = new Task(strArr[0]);
                 list_of_task.add(new_task);
                 System.out.println("added:" + new_task.description);
+            }
+
+            if (input.matches("todo(.*)")) {
+                String[] modifiedArray = Arrays.copyOfRange(strArr, 1, strArr.length);
+                String joinedString = String.join(" ", modifiedArray);
+
+                Todo to_do_task = new Todo(joinedString);
+                list_of_task.add(to_do_task);
+                System.out.println("Got it. I've added this task:\n" + to_do_task.toString() + to_do_task.getDescription());
             }
 
             if (input.matches("mark(.*)")) {
@@ -45,7 +60,7 @@ public class Duke {
                 System.out.println("Here are the tasks in your list: ");
                 for (int index = 0; index < list_of_task.size(); index++)
                 {
-                    System.out.println(index+1 + ". " + list_of_task.get(index).getDescription());
+                    System.out.println(index+1 + ". " + list_of_task.get(index).toString() + list_of_task.get(index).getDescription());
                 }
             }
 
