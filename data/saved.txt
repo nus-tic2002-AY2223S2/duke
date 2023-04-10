@@ -3,6 +3,7 @@
 [E][ ] exam /from 2023-04-24 08:00 /to 2023-04-24 10:00 [Priority High]
 [D][ ] quizzes /by 2023-04-12 15:00 [Priority High]
 [T][X] makan [Priority Medium]
-[T][ ] eat [Priority Medium]
+[T][X] eat [Priority Medium]
+[D][ ] 3301 report /by 2023-04-16 23:59 [Priority Medium]
 [T][ ] play game [Priority Low]
 [T][ ] sing song [Priority Low]
