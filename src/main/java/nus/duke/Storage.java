@@ -15,16 +15,29 @@ import java.time.format.DateTimeFormatter;
 // level 7 Save
 // *************************
 public class Storage {
-    /*
-    String root = System.getProperty("Users");
-    java.nio.file.Path path = java.nio.file.Paths.get(root, "weipinglim", "duke", "data");
-    boolean directoryExists = java.nio.file.Files.exists(path);
-    */
+
+
+
     protected File filename;
 
     // create a data file in filePath
     public Storage(String filePath) {
         this.filename = new File(filePath);
+        if (!filename.exists()) {
+            try{
+                boolean isFileCreated = filename.createNewFile();
+
+                if(isFileCreated) {
+                    System.out.println("File created");
+                } else {
+                    throw new DukeException("Unable to create file!");
+                }
+            } catch (DukeException de) {
+                System.out.println(de.getMessage());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public void loadTodoInStorage (String taskString,String task, ArrayList a) {
