@@ -11,6 +11,7 @@ public class Duke {
 
         while (scanner.hasNext()) {
             String input = scanner.nextLine();
+            if (input.isEmpty()) continue;
             String[] strArr = input.split(" ");
 
             if (!input.contains("list")
@@ -18,10 +19,35 @@ public class Duke {
                 && !input.contains("mark")
                 && !input.contains("unmark")
                 && !input.contains("todo")
+                && !input.contains("deadline")
             ) {
                 Task new_task = new Task(strArr[0]);
                 list_of_task.add(new_task);
                 System.out.println("added:" + new_task.description);
+            }
+
+            if (input.matches("deadline(.*)")) {
+                // find by/
+                int stop = 0;
+                String found = "/by";
+
+                for(int i = 0; i < input.length(); i++)
+                {
+                    if(found.equals(strArr[i]))
+                    {
+                        stop = i;
+                        break;
+                    }
+                }
+                String[] taskArray = Arrays.copyOfRange(strArr, 1, stop);
+                String[] timingArray = Arrays.copyOfRange(strArr, stop+1, strArr.length);
+
+                String task = String.join(" ", taskArray);
+                String timing = String.join(" ", timingArray);
+
+                Deadline deadline = new Deadline(task, timing);
+                list_of_task.add(deadline);
+                System.out.println("Got it. I've added this task:\n" + deadline.toString());
             }
 
             if (input.matches("todo(.*)")) {
@@ -30,7 +56,9 @@ public class Duke {
 
                 Todo to_do_task = new Todo(joinedString);
                 list_of_task.add(to_do_task);
-                System.out.println("Got it. I've added this task:\n" + to_do_task.toString() + to_do_task.getDescription());
+                System.out.println("Got it. I've added this task:\n" + to_do_task.toString());
+                System.out.println(String.format("Now you have %s tasks in the list.", list_of_task.size()));
+
             }
 
             if (input.matches("mark(.*)")) {
@@ -60,7 +88,7 @@ public class Duke {
                 System.out.println("Here are the tasks in your list: ");
                 for (int index = 0; index < list_of_task.size(); index++)
                 {
-                    System.out.println(index+1 + ". " + list_of_task.get(index).toString() + list_of_task.get(index).getDescription());
+                    System.out.println(index+1 + ". " + list_of_task.get(index).toString());
                 }
             }
 
