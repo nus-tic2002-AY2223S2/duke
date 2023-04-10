@@ -1,5 +1,6 @@
 package duke;
 
+import duke.Exception.DukeException;
 import duke.Parser.Parser;
 import duke.TasksType.Task;
 import org.junit.jupiter.api.Test;

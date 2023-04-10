@@ -2,7 +2,6 @@ package duke.TaskList;
 
 import java.util.ArrayList;
 
-import duke.DukeException;
 import duke.TasksType.Task;
 import duke.Ui.Ui;
 
@@ -58,7 +57,7 @@ public class TaskList {
      * This method is called to simply retrieve the entire list of tasks
      * @return an ArrayList of tasks
      */
-    public ArrayList getList() {
+    public ArrayList<Task> getList() {
         return list;
     }
 

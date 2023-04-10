@@ -1,5 +1,6 @@
 package duke;
 
+import duke.Exception.DukeException;
 import duke.Ui.Ui;
 import duke.Command.Command;
 
@@ -15,7 +16,7 @@ public class Duke {
      * The run method calles the UI class to display
      * calls the execute() method in Command class to begin the program
      */
-    public void run() throws DukeException {
+    public void run() {
         ui.showWelcome();
         Command.execute();
     }

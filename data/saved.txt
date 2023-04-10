@@ -1,3 +1,8 @@
 [T][X] read my new book [Priority High]
 [D][ ] submit income tax /by 2023-05-01 23:59 [Priority Medium]
+[T][ ] borrow book from library [Priority Medium]
+[T][ ] service vehicle [Priority Medium]
+[D][ ] pay bills /by 2023-04-19 23:59 [Priority Medium]
+[D][ ] return book to library /by 2023-04-30 17:00 [Priority Low]
+[D][ ] homework /by 2023-05-01 18:00 [Priority Low]
 [E][ ] Director's Meeting /from 2023-04-20 08:00 /to 2023-04-20 11:00 [Priority Low]

@@ -1,6 +1,6 @@
 package duke.Parser;
 
-import duke.DukeException;
+import duke.Exception.DukeException;
 import duke.TasksType.Task;
 
 import java.time.LocalDateTime;
@@ -22,10 +22,9 @@ public class Parser {
      * Checks for missing priority level or index
      * @param input takes in the string input that was given by user
      * @param list takes in the ArrayList for checking the size of the list to valid indices
-     * @return a boolean on whether the input is valid
      * @throws DukeException is displayed according to the type of error input
      */
-    public static void validateQuestion(String input, ArrayList list) throws DukeException {
+    public static void validateQuestion(String input, ArrayList<Task> list) throws DukeException {
 
         String[] splitted = input.split(" ", 2);
         if (!splitted[0].equalsIgnoreCase("bye") &&
@@ -128,7 +127,7 @@ public class Parser {
      * @param list takes in the list of task
      * @throws DukeException if the index is out of bound
      */
-    public static void checkPriority(int index,  ArrayList list) throws DukeException {
+    public static void checkPriority(int index,  ArrayList<Task> list) throws DukeException {
         if (index < 0 || index >= list.size()) {
             throw new DukeException("Index is out of bounds. Please enter a valid index.");
         }

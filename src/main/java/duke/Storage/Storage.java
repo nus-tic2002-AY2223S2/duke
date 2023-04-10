@@ -17,13 +17,12 @@ import duke.Utility.Util;
 public class Storage {
     private static final String FILE_PATH = "data/saved.txt";
     //path to save and load the list, final as it should not be changed
-
+    //absolute path for Jar "C:/Users/ixxed/IdeaProjects/duke/data/saved.txt"
     /***
      * This method is called by execute() to try to load a file,
      * if file is found, call executeLoad() to load in the text lines into an ArrayList of different tasks
      * if the file is not found, create a new file using the path
      * @return an ArrayList of Tasks
-     * @thows an exception if found cannot be created
      */
     public static ArrayList<Task> loadFile() {
         ArrayList<Task> list = new ArrayList<>();
