@@ -19,6 +19,7 @@ public class Duke {
                         && !input.contains("bye")
                         && !input.contains("mark")
                         && !input.contains("unmark")
+                        && !input.contains("delete")
                         && !input.contains("todo")
                         && !input.contains("deadline")
                         && !input.contains("event")
@@ -96,8 +97,8 @@ public class Duke {
                     list_of_task.add(to_do_task);
                     System.out.println("Got it. I've added this task:\n" + to_do_task.toString());
                     System.out.println(String.format("Now you have %s tasks in the list.", list_of_task.size()));
-
                 }
+
 
                 if (input.matches("mark(.*)")) {
                     String num_input = input.replaceAll("\\D+", "");
@@ -119,6 +120,18 @@ public class Duke {
 
                     System.out.println("OK, I've marked this task as not done yet: ");
                     System.out.println(list_of_task.get(i - 1).getDescription());
+                }
+
+                if (input.matches("delete(.*)")) {
+                    String num_input = input.replaceAll("\\D+", "");
+                    int i = Integer.parseInt(num_input);
+
+                    if (i > list_of_task.size()) continue;
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println(list_of_task.get(i).toString());
+                    list_of_task.remove(i);
+
+                    if (!list_of_task.isEmpty()) System.out.println(String.format("Now you have %s tasks in the list.", list_of_task.size()));
                 }
 
                 if (input.equals("list")) {
