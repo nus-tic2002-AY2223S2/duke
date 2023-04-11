@@ -5,7 +5,6 @@ public class Task
     //protected so that child class can utilize
     protected String description;
     protected boolean isDone;
-
     protected priorityLevel level;
 
     /**

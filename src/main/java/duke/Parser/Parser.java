@@ -2,7 +2,6 @@ package duke.Parser;
 
 import duke.Exception.DukeException;
 import duke.TasksType.Task;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -48,7 +47,7 @@ public class Parser {
                 throw new DukeException("☹ OOPS!!! Index is not within the size of items in the list");
             }
         }
-        if (input.toLowerCase().startsWith("event")) {
+        if (input.toLowerCase().startsWith("event")) { //checks if event input is valid
             Pattern pattern = Pattern.compile("^event\\s+(.+)\\s+/from\\s+(.+)\\s+/to\\s+(.+)$", Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(input);
             if (matcher.find()) {
@@ -69,7 +68,7 @@ public class Parser {
             }
         }
 
-        if (input.toLowerCase().startsWith("deadline")) {
+        if (input.toLowerCase().startsWith("deadline")) { //checks if deadline input is valid
             if (!input.contains(" /by ")) {
                 throw new DukeException("☹ OOPS!!! The event command is missing /by");
             }

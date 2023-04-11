@@ -1,7 +1,6 @@
 package duke.TasksType;
 
 import duke.Utility.Util;
-
 import java.time.LocalDateTime;
 
 public class Event extends Task

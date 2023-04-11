@@ -1,12 +1,13 @@
 package duke.Storage;
 
 import duke.Command.Command;
-
 import java.io.*;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import duke.Exception.DukeException;
 import duke.TasksType.Deadline;
 import duke.TasksType.Event;
 import duke.TasksType.Task;
@@ -24,26 +25,25 @@ public class Storage {
      * if the file is not found, create a new file using the path
      * @return an ArrayList of Tasks
      */
-    public static ArrayList<Task> loadFile() {
+    public static ArrayList<Task> loadFile() throws DukeException {
         ArrayList<Task> list = new ArrayList<>();
-        File file = new File(FILE_PATH);
-        if (file.exists()) {
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader(file));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    list.add(Command.executeLoad(line));
-                }
-                reader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+        try {
+            if (!Files.exists(Paths.get(FILE_PATH))) {
+                throw new DukeException("File not found. A new file will be created.");
             }
-        } else {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
+            FileReader fr = new FileReader(FILE_PATH);
+            BufferedReader br = new BufferedReader(fr);
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                Task t = Command.executeLoad(line);
+                list.add(t);
             }
+            br.close();
+        } catch (IOException e) {
+            throw new DukeException("Error while loading file: " + e.getMessage());
+        } catch (DukeException e) {
+            System.out.println(e.getMessage());
         }
         return list;
     }

@@ -16,7 +16,7 @@ public class Duke {
      * The run method calles the UI class to display
      * calls the execute() method in Command class to begin the program
      */
-    public void run() {
+    public void run() throws DukeException {
         ui.showWelcome();
         Command.execute();
     }

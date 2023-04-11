@@ -10,7 +10,6 @@ import duke.TasksType.Task;
 import duke.TasksType.Todo;
 import duke.Ui.Ui;
 import duke.Utility.Util;
-
 import java.util.Scanner;
 
 public class Command {
@@ -61,7 +60,7 @@ public class Command {
      * sort the ArrayList from priority level high to low, by calling the sortList() method in TaskList class
      * saves the list into text file by calling the saveToFile() in Storage class
      */
-    public static void execute() {
+    public static void execute() throws DukeException {
         boolean isBye = false;
         Scanner Obj = new Scanner(System.in);
         Storage loader = new Storage();
@@ -87,7 +86,7 @@ public class Command {
             }
 
             try {
-                Parser.validateQuestion(question, list.getList());
+                Parser.validateQuestion(question.trim(), list.getList());
             } catch (DukeException error) {
                 System.out.println(error);
                 continue;
@@ -101,12 +100,14 @@ public class Command {
                         list.getTask(num).markAsNotDone();
                         System.out.println("Oops! Task " + (num + 1) + " is marked as not done.");
                         System.out.println(list.getTask(num));
+                        Ui.showLine();
                         loader.saveToFile(list.getList());
                         continue;
                     } else {
                         list.getTask(num).markAsDone();
                         System.out.println("Well Done! Task " + (num + 1) + " is done.");
                         System.out.println(list.getTask(num));
+                        Ui.showLine();
                         loader.saveToFile(list.getList());
                         continue;
                     }

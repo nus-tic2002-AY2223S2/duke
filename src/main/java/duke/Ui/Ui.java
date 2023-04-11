@@ -1,6 +1,5 @@
 package duke.Ui;
-public class Ui
-{
+public class Ui {
     public Ui() {
         //empty constructor
     }
@@ -18,17 +17,6 @@ public class Ui
 
         System.out.println("Hello from\n" + logo);
         System.out.println("Hello! I'm Duke, your task scheduler.");
-//        System.out.println("Here are the commands you can use:");
-//        Ui.showLine();
-//        System.out.println("list - list out your current task(s).");
-//        System.out.println("todo (description) - adds a Todo task");
-//        System.out.println("deadline (description) /by (yyyy-MM-dd) - adds a Deadline task");
-//        System.out.println("event (description) /from (yyyy-MM-dd) /to (yyyy-MM-dd) - adds a Event task");
-//        System.out.println("delete (index) - deletes a specific task");
-//        System.out.println("(mark/unmark) (index) - marks a task as done or not done");
-//        System.out.println("priority (index) (high/low/medium) - changes the priority level of a specific task");
-//        System.out.println("find (keyword) - list out the tasks that contains the keyword");
-//        System.out.println("bye - exit the program");
         Ui.showLine();
         System.out.println("What can I do for you?\n");
         System.out.println("Type "+ "help" + " to see the available commands");

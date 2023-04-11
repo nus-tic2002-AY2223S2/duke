@@ -31,6 +31,7 @@ public class TaskList {
         System.out.println("Got it. I've added this task:");
         System.out.println(task);
         System.out.println("Now you have " + list.size() + " task(s) in your list.");
+        Ui.showLine();
     }
 
     /**
@@ -42,6 +43,7 @@ public class TaskList {
         list.remove(IndexToDelete);
         System.out.println("Noted. I've removed this task:");
         System.out.println(toDelete);
+        Ui.showLine();
     }
 
     /**
@@ -81,16 +83,11 @@ public class TaskList {
      * @param p takes in a priorityLevel to indicate the level that the user wants to change to
      */
     public void setPriority(int index, Task.priorityLevel p) {
-//        if (index < 0 || index >= taskList.size()) {
-//            throw new DukeException("☹ OOPS!!! The task index provided is invalid.");
-//        } else if (p == null) {
-//            throw new DukeException("☹ OOPS!!! Please specify a priority level for the task.");
-//        } else {
-            getTask(index).changePriority(p);
-            System.out.println("Noted, item " + (index + 1) + " (" + getTask(index).getDescription() + ") priority has been set to " + p);
-            System.out.println(index + 1 + ". " + list.get(index).toString());
-            Ui.showLine();
-//        }
+        getTask(index).changePriority(p);
+        System.out.println("Noted, item " + (index + 1) + " (" + getTask(index).getDescription() + ") priority has been set to " + p);
+        System.out.println(index + 1 + ". " + list.get(index).toString());
+        Ui.showLine();
+
     }
 
     /**
