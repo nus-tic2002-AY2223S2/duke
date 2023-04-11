@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import duke.Event;
+
 public class DateValidator {
 
     /**
@@ -89,6 +91,28 @@ public class DateValidator {
         else {
             return false;
         }
+    }
+
+    /**
+     * isEventDateClash method compare 2 Event date to check if it clashes
+     * only under 2 conditions will the events not clash
+     * - newEvent endDate isBefore existingEvent startDate OR newEvent startDate isAfter existingEvent endDate
+     * @param eventExisting event obj input that exists to be compared
+     * @param eventNew event obj input that is to be added to be compared
+     * @return TRUE if event clashs; FALSE if doesn't
+     */
+    public static boolean isEventDateClash(Event eventExisting, Event eventNew) {
+        assert eventExisting != null : "first event obj input cannot be null";
+        assert eventNew != null : "second event obj input cannot be null";
+
+        if(eventNew.getEnd().isBefore(eventExisting.getStart()) || eventNew.getStart().isAfter(eventExisting.getEnd())) {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+
     }
 
 }

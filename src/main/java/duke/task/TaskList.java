@@ -144,6 +144,24 @@ public class TaskList {
     }
 
     /**
+     * findClashingEventInList method will search the list and returns true if there is a clash of event
+     * @param eventTask task Obj in
+     */
+    public Integer findClashingEventInList(Event eventTask) {
+        Integer counter = -1;
+        for(int i = 0; i < this.getSizeOfList(); i++) {
+            Task currTask = this.getElementFromList(i);
+            if(currTask instanceof Event) {
+                if(DateValidator.isEventDateClash((Event) currTask, eventTask)) {
+                    counter = i;
+                    break;
+                }
+            }
+        }
+        return counter;
+    }
+
+    /**
      * checkDuplicate method will search the list to check for duplicates
      * @param newTask task object as parameters
      * @return TRUE if duplicate exists, FALSE if no duplicates

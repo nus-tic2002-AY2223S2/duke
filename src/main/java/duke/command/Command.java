@@ -150,8 +150,20 @@ public class Command {
                 String [] nextSeparated = seperatedInput[1].split("/from");
                 String [] separatedTiming = nextSeparated[1].split("/to");
 
-                Event newEvent = new Event(nextSeparated[0].trim(), DateValidator.convertStringToDate(separatedTiming[0].trim()), DateValidator.convertStringToDate(separatedTiming[1].trim()));
-                task.addNewTask(newEvent);
+                if(DateValidator.convertStringToDate(separatedTiming[0].trim()).isAfter(DateValidator.convertStringToDate(separatedTiming[1].trim()))) {
+                    throw new DukeException("☹ OOPS!!! datetime value for /from cannot be after datetime value for /to");
+                }
+                else {
+                    Event newEvent = new Event(nextSeparated[0].trim(), DateValidator.convertStringToDate(separatedTiming[0].trim()), DateValidator.convertStringToDate(separatedTiming[1].trim()));
+
+                    if(task.findClashingEventInList(newEvent) == -1)
+                    {
+                        throw new DukeException("☹ OOPS!!! This Event clashes with existing tasks");
+                    }
+                    else {
+                        task.addNewTask(newEvent);
+                    }
+                }
             }
             else if(commandName.equalsIgnoreCase("todo")) {
 
