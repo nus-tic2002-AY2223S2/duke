@@ -65,15 +65,19 @@ public class Parser {
                     String deleteTask = splitDelete[1].trim(); //get the position
                     int selectedNum = Integer.parseInt(deleteTask) - 1;
                     return new DeleteCommand(selectedNum);
-                 /*case "update":
-                    String updatetasknum = givenCommand[1].trim();
-                    int updateNum = Integer.parseInt(updatetasknum) - 1;
-                    String updateTask = givenCommand[2].trim();
-                    return new UpdateCommand(updateNum, updateTask);*/
+                 case "update":
+                    String[] splitTheTask = input.split(" ", 2);
+                    String[] updateChosenTask = splitTheTask[1].split("-");
+                    int updateNum = Integer.parseInt(updateChosenTask[0]) - 1;
+                    return new UpdateCommand(updateNum, updateChosenTask[1], updateChosenTask[2]);
                 case "find":
                     String[] splitFindWord = input.split(" ", 2); //split by min 2 array
                     String findWord = splitFindWord[1]; //get description
                     return new FindCommand(findWord);
+                case "repeat":
+                    String[] splitRepeat = input.split(" ", 2);
+                    int selectedRepeat = Integer.parseInt(splitRepeat[1]) - 1;
+                    return new RepeatCommand(selectedRepeat);
                 default:
                     throw new DukeException();
             }
