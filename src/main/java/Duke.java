@@ -15,15 +15,50 @@ public class Duke {
             String[] strArr = input.split(" ");
 
             if (!input.contains("list")
-                && !input.contains("bye")
-                && !input.contains("mark")
-                && !input.contains("unmark")
-                && !input.contains("todo")
-                && !input.contains("deadline")
+                    && !input.contains("bye")
+                    && !input.contains("mark")
+                    && !input.contains("unmark")
+                    && !input.contains("todo")
+                    && !input.contains("deadline")
+                    && !input.contains("event")
             ) {
                 Task new_task = new Task(strArr[0]);
                 list_of_task.add(new_task);
                 System.out.println("added:" + new_task.description);
+            }
+
+            if (input.matches("event(.*)")) {
+                // find by/
+                int from = 0, to = 0;
+                String from_time = "/from", to_time = "/to";
+
+                for (int i = 0; i < input.length(); i++) {
+                    if (from_time.equals(strArr[i])) {
+                        from = i;
+                        break;
+                    }
+                }
+
+                for (int j = 0; j < input.length(); j++) {
+                    if (to_time.equals(strArr[j])) {
+                        to = j;
+                        break;
+                    }
+                }
+
+                String[] taskArray = Arrays.copyOfRange(strArr, 1, from);
+                String[] from_timingArray = Arrays.copyOfRange(strArr, from+1, to);
+                String[] to_timingArray = Arrays.copyOfRange(strArr, to+1, strArr.length);
+
+                String task = String.join(" ", taskArray);
+                String from_timing = String.join(" ", from_timingArray);
+                String to_timing = String.join(" ", to_timingArray);
+
+                Event event = new Event(task, from_timing, to_timing);
+                list_of_task.add(event);
+
+                System.out.println("Got it. I've added this task:\n" + event.toString());
+                System.out.println(String.format("Now you have %s tasks in the list.", list_of_task.size()));
             }
 
             if (input.matches("deadline(.*)")) {
@@ -31,16 +66,14 @@ public class Duke {
                 int stop = 0;
                 String found = "/by";
 
-                for(int i = 0; i < input.length(); i++)
-                {
-                    if(found.equals(strArr[i]))
-                    {
+                for (int i = 0; i < input.length(); i++) {
+                    if (found.equals(strArr[i])) {
                         stop = i;
                         break;
                     }
                 }
                 String[] taskArray = Arrays.copyOfRange(strArr, 1, stop);
-                String[] timingArray = Arrays.copyOfRange(strArr, stop+1, strArr.length);
+                String[] timingArray = Arrays.copyOfRange(strArr, stop + 1, strArr.length);
 
                 String task = String.join(" ", taskArray);
                 String timing = String.join(" ", timingArray);
@@ -48,6 +81,8 @@ public class Duke {
                 Deadline deadline = new Deadline(task, timing);
                 list_of_task.add(deadline);
                 System.out.println("Got it. I've added this task:\n" + deadline.toString());
+                System.out.println(String.format("Now you have %s tasks in the list.", list_of_task.size()));
+
             }
 
             if (input.matches("todo(.*)")) {
@@ -62,7 +97,7 @@ public class Duke {
             }
 
             if (input.matches("mark(.*)")) {
-                String num_input = input.replaceAll("\\D+","");
+                String num_input = input.replaceAll("\\D+", "");
                 int i = Integer.parseInt(num_input);
 
                 if (i > list_of_task.size()) continue;
@@ -73,7 +108,7 @@ public class Duke {
             }
 
             if (input.matches("unmark(.*)")) {
-                String num_input = input.replaceAll("\\D+","");
+                String num_input = input.replaceAll("\\D+", "");
                 int i = Integer.parseInt(num_input);
 
                 if (i > list_of_task.size()) continue;
@@ -86,13 +121,12 @@ public class Duke {
             if (input.equals("list")) {
                 if (list_of_task.isEmpty()) continue;
                 System.out.println("Here are the tasks in your list: ");
-                for (int index = 0; index < list_of_task.size(); index++)
-                {
-                    System.out.println(index+1 + ". " + list_of_task.get(index).toString());
+                for (int index = 0; index < list_of_task.size(); index++) {
+                    System.out.println(index + 1 + ". " + list_of_task.get(index).toString());
                 }
             }
 
-            if (input.equals("bye") ) {
+            if (input.equals("bye")) {
                 System.out.println("Bye. Hope to see you again soon!\n");
                 break;
             }
