@@ -137,7 +137,7 @@ public class Command {
                  */
                 String [] nextSeparated = seperatedInput[1].split("/by");
 
-                Deadline newDeadline = new Deadline(nextSeparated[0].trim(), DateValidator.convertStringToDate(nextSeparated[1].trim().trim()));
+                Deadline newDeadline = new Deadline(nextSeparated[0].trim(), DateValidator.convertStringToDate(nextSeparated[1].trim()));
                 task.addNewTask(newDeadline);
             }
             else if(commandName.equalsIgnoreCase("event")) {
@@ -150,7 +150,7 @@ public class Command {
                 String [] nextSeparated = seperatedInput[1].split("/from");
                 String [] separatedTiming = nextSeparated[1].split("/to");
 
-                Event newEvent = new Event(nextSeparated[0].trim(), separatedTiming[0].trim(), separatedTiming[1].trim());
+                Event newEvent = new Event(nextSeparated[0].trim(), DateValidator.convertStringToDate(separatedTiming[0].trim()), DateValidator.convertStringToDate(separatedTiming[1].trim()));
                 task.addNewTask(newEvent);
             }
             else if(commandName.equalsIgnoreCase("todo")) {

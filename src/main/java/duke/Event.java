@@ -4,18 +4,20 @@
 
 package duke;
 
+import java.time.LocalDateTime;
+
 public class Event extends Task {
 
     /**
      *  Attributes
      */
-    protected String start;
-    protected String end;
+    protected LocalDateTime start;
+    protected LocalDateTime end;
 
     /**
      *  Constructor
      */
-    public Event(String description, String start, String end) {
+    public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
         this.start = start;
         this.end = end;
@@ -24,7 +26,7 @@ public class Event extends Task {
     /**
      *  @return start value of Task
      */
-    public String getStart() {
+    public LocalDateTime getStart() {
         return start;
     }
 
@@ -32,14 +34,14 @@ public class Event extends Task {
      * Change start value of Task
      * @param start
      */
-    public void setStart(String start) {
+    public void setStart(LocalDateTime start) {
         this.start = start;
     }
 
     /**
      * @return end value of Task
      */
-    public String getEnd() {
+    public LocalDateTime getEnd() {
         return end;
     }
 
@@ -47,7 +49,7 @@ public class Event extends Task {
      * Change end value of Task
      * @param end end time of the event
      */
-    public void setEnd(String end) {
+    public void setEnd(LocalDateTime end) {
         this.end = end;
     }
 
@@ -57,7 +59,7 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + start + " to: " + end + ")";
+        return "[E]" + super.toString() + " (from: " + DateValidator.convertDateToDisplay(start) + " to: " + DateValidator.convertDateToDisplay(end) + ")";
     }
 
 }

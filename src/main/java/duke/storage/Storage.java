@@ -96,7 +96,7 @@ public class Storage {
                          * @param splitEntryValue[3] = Start
                          * @param splitEntryValue[4] = End
                          */
-                        newTask = new Event(splitEntryValue[2].trim(), splitEntryValue[3].trim(), splitEntryValue[4].trim());
+                        newTask = new Event(splitEntryValue[2].trim(), DateValidator.convertStringToDate(splitEntryValue[3].trim()), DateValidator.convertStringToDate(splitEntryValue[4].trim()));
                     }
 
                     //mark as done if value is 1
@@ -154,7 +154,7 @@ public class Storage {
                     else {
                         finalLine += "0";
                     }
-                    finalLine += " ; " + itemToAdd.getDescription() + " ; " + ((Event) itemToAdd).getStart()+ " ; " + ((Event) itemToAdd).getEnd();
+                    finalLine += " ; " + itemToAdd.getDescription() + " ; " + DateValidator.convertDateToString(((Event) itemToAdd).getStart())+ " ; " + DateValidator.convertDateToString(((Event) itemToAdd).getEnd());
 
                 }
                 newFW.write(finalLine);

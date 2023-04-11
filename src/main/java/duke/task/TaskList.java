@@ -167,7 +167,7 @@ public class TaskList {
                     }
                 }
                 else {
-                    if(newTask.getDescription().equalsIgnoreCase(currItem.getDescription()) && ((Event) newTask).getStart().equalsIgnoreCase(((Event) currItem).getStart()) && ((Event) newTask).getEnd().equalsIgnoreCase(((Event) currItem).getEnd())) {
+                    if(newTask.getDescription().equalsIgnoreCase(currItem.getDescription()) && DateValidator.isDateEqual(((Event) newTask).getStart(),((Event) currItem).getStart()) && DateValidator.isDateEqual(((Event) newTask).getStart(),((Event) currItem).getStart())) {
                         return true;
                     }
                 }
