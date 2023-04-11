@@ -16,6 +16,14 @@ public class Task {
         this.description = description;
         this.isDone = false;
     }
+    
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public void mark() {
         isDone = true;
