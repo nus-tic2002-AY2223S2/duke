@@ -12,6 +12,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -20,29 +23,47 @@ public class Storage {
     /**
      *  Attribute
      */
-    private static String filePath;
+
+    private static String filePath = System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "data";
+    private static String fileName = "duke.txt";
+    private static Path existingPath;
+    private static Path existingFile;
+    private static File fileDir;
     private static File fileItem;
     private static ArrayList<Task> listOfTask;
 
     /**
      *  Constructor
      */
-    public Storage(String pathFile) {
-        this.filePath = pathFile;
-        fileItem = new File(pathFile);
+    public Storage() {
+        existingPath = Paths.get(filePath);
+        existingFile = Paths.get(filePath + File.separator + fileName);
+        fileDir = new File(filePath);
     }
 
     /**
      * load() method will load the date from duke.txt into a TaskList storing ArrayList of Task objects
      * @return ArrayList of Task objects to store into the Tasklist object in Duke class.
-     * @throws DukeException if any problems occur when loading the file into the tasklist, such as Empty File
+     * @throws DukeException if any problems occur when loading the file into the tasklist, such as file directory doesn't exist and will create the file path
      */
     public static ArrayList<Task> load() throws DukeException {
-        if (!fileItem.exists() || !fileItem.isFile()) {
-            throw new DukeException("☹ OOPS!!! File is empty");
+        if (!fileDir.exists()) {
+            fileDir.mkdirs();
+        }
+
+        fileItem = new File(filePath, fileName);
+
+        if(!Files.exists(existingFile))
+        {
+            try {
+                fileItem.createNewFile();
+                throw new DukeException("☹ OOPS!!! File doesn't exists; created the file: " + fileItem.getAbsolutePath());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         else {
-            listOfTask = new ArrayList<Task>(); //string initialize Task arraylist
+            listOfTask = new ArrayList<>(); //string initialize Task arraylist
             try {
                 Scanner scan = new Scanner(fileItem);
                 while (scan.hasNext()) {
@@ -100,7 +121,7 @@ public class Storage {
      */
     public static void saveFile(TaskList listOfTask) throws DukeException {
         try {
-            FileWriter newFW = new FileWriter(filePath);
+            FileWriter newFW = new FileWriter(filePath + File.separator + fileName);
             for(int i = 0; i < listOfTask.getSizeOfList(); i++)
             {
                 Task itemToAdd = listOfTask.getElementFromList(i);

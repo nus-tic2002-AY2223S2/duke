@@ -68,8 +68,8 @@ public class Ui {
     /**
      *  this method will print out a loading error
      */
-    public void showLoadingError() {
-        System.out.println(loadingError);
+    public void showLoadingError(String msg) {
+        System.out.println(loadingError + "; " + msg);
     }
 
     /**

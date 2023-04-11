@@ -1,6 +1,0 @@
-D ; 0 ; Return Money ; 2024-04-05 08:10
-T ; 1 ; Read More Books
-E ; 0 ; Project Meeting ; 2019-08-09 23:00 ; 2019-08-10 01:00
-T ; 0 ; Drink water
-D ; 0 ; Finish work ; 2023-04-12 09:00
-D ; 0 ; Silm down to 80kg ; 2024-09-10 06:00
