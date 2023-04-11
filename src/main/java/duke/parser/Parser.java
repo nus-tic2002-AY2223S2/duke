@@ -155,7 +155,7 @@ public class Parser {
                 {
                     if(!isNumber(separateMultipleIndex[i].trim()))
                     {
-                        throw new DukeException("☹ OOPS!!! The value " + separateMultipleIndex[i].trim() + " must be a number.");
+                        throw new DukeException("☹ OOPS!!! The value '" + separateMultipleIndex[i].trim() + "' must be a number.");
                     }
                     else if (Integer.parseInt(separateMultipleIndex[i].trim()) <= 0)
                     {

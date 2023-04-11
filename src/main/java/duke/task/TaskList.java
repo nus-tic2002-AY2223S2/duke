@@ -137,7 +137,7 @@ public class TaskList {
     public void findItemInList(String keyword) {
         System.out.println("Here are the matching tasks in your list:");
         for(int i = 0; i < this.getSizeOfList(); i++) {
-            if(this.list.get(i).getDescription().contains(keyword)) {
+            if(this.list.get(i).getDescription().toUpperCase().contains(keyword.toUpperCase())) {
                 System.out.println(i+1 + "." + this.list.get(i).toString());
             }
         }

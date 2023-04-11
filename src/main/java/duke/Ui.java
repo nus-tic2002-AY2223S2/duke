@@ -41,7 +41,7 @@ public class Ui {
         System.out.println(" -> Todo e.g.: 'todo <description>' ");
         System.out.println(" -> Dateline e.g.: 'deadline <description> /by <deadline>' ");
         System.out.println(" -> Event e.g.: 'event <description> /from <start date> /to <end date>' ");
-        System.out.println(" -> date format in terms of 'yyyy-mm-dd HH:mm' ");
+        System.out.println("    ->-> date format in terms of 'yyyy-mm-dd HH:mm' ");
         System.out.println(" Mark / Unmark / Delete Task; [insert comma between numbers if want to perform Mass Operations]");
         System.out.println(" List -> List all Tasks ");
         System.out.println(" Bye -> Exit");
@@ -66,21 +66,23 @@ public class Ui {
 
 
     /**
-     *  this method will print out a loading error
+     * this method will print out a loading error
+     * @param msg input to be shown
      */
     public void showLoadingError(String msg) {
         System.out.println(loadingError + "; " + msg);
     }
 
     /**
-     *  this method will print motherhood bye statement
+     * this method will print motherhood bye statement
      */
     public void showByeMeg() {
         System.out.println(byeMsg);
     }
 
     /**
-     *  this method will take in an input command from the user and returns it
+     * this method will take in an input command from the user and returns it
+     * @return gives back the next input by the user
      */
     public String readCommand()
     {
@@ -89,7 +91,8 @@ public class Ui {
     }
 
     /**
-     *  this method will take in an error and display it out
+     * this method will take in an error and display it out
+     * @param errorMessage input message to be displayed
      */
     public void showError(String errorMessage)
     {

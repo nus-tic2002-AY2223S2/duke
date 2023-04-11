@@ -156,9 +156,10 @@ public class Command {
                 else {
                     Event newEvent = new Event(nextSeparated[0].trim(), DateValidator.convertStringToDate(separatedTiming[0].trim()), DateValidator.convertStringToDate(separatedTiming[1].trim()));
 
-                    if(task.findClashingEventInList(newEvent) == -1)
+                    Integer count = task.findClashingEventInList(newEvent);
+                    if(count != -1)
                     {
-                        throw new DukeException("☹ OOPS!!! This Event clashes with existing tasks");
+                        throw new DukeException("☹ OOPS!!! This Event clashes with existing task: " + task.getElementFromList(count));
                     }
                     else {
                         task.addNewTask(newEvent);
