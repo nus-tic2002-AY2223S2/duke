@@ -25,7 +25,7 @@ public class DateValidator {
      * validateInput method will validate the date input by user to fix it to a format
      * @param dateString date input in String datatype
      * @return TRUE if date format is valid, else FALSE
-     * @throws DateTimeParseException if date input is in the wrong format
+     * @throws DateTimeParseException if date input is in wrong format
      */
     public static boolean validateInput(String dateString) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern(dateFormat);
