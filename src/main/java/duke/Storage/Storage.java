@@ -5,6 +5,7 @@ import java.io.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import duke.Exception.DukeException;
@@ -16,6 +17,7 @@ import duke.Utility.Util;
 
 
 public class Storage {
+    private static final String DIRECTORY_PATH = "data";
     private static final String FILE_PATH = "data/saved.txt";
     //path to save and load the list, final as it should not be changed
     //absolute path for Jar "C:/Users/ixxed/IdeaProjects/duke/data/saved.txt"
@@ -28,6 +30,10 @@ public class Storage {
     public static ArrayList<Task> loadFile() throws DukeException {
         ArrayList<Task> list = new ArrayList<>();
         try {
+            Path path = Paths.get(DIRECTORY_PATH);
+            if (!Files.exists(path)) {
+                Files.createDirectories(path);
+            } 
             if (!Files.exists(Paths.get(FILE_PATH))) {
                 throw new DukeException("File not found. A new file will be created.");
             }

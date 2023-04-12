@@ -1,7 +1,0 @@
-[D][X] student feedback /by 2023-04-21 23:59 [Priority High]
-[E][ ] TIC 3301 Exam /from 2023-05-02 09:00 /to 2023-05-02 11:00 [Priority High]
-[E][X] lesson /from 2023-04-12 19:00 /to 2023-04-12 20:00 [Priority Medium]
-[D][ ] return book to library /by 2023-04-30 17:00 [Priority Medium]
-[T][ ] service vehicle [Priority Medium]
-[T][ ] swimming [Priority Medium]
-[T][ ] 2.4 run [Priority Low]
