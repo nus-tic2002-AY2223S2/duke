@@ -20,12 +20,12 @@ public class Duke {
     public Duke(String filePath){
         ui = new Ui();
         storage = new Storage(filePath);
-        //if (storage.exists() ) {
+        try {
             tasks = new TaskList(storage.load());
-        /*} else {
+        } catch (DukeException e) {
             ui.showLoadingError();
             tasks = new TaskList();
-        }*/
+        }
     }
 
     public void run()  {
@@ -33,20 +33,14 @@ public class Duke {
         boolean isExit = false;
 
         while (!isExit) {
-            //try {
-                String fullCommand = ui.input();
-                ui.printMsg("----------------------"); // show the divider line
-                Commands c = Parser.parse(fullCommand);
-                c.execute(tasks, ui, storage);
-                storage.saveToFile(tasks.getTasks());
-                isExit = c.isExit();
-           /* } catch (IOException e ){
-                ui.printMsg("ERROR");
-                continue;
-            } finally {
-                ui.printMsg("----------------------");
-            }*/
+            String fullCommand = ui.input();
+            ui.showLine();
+            Commands c = Parser.parse(fullCommand);
+            c.execute(tasks, ui, storage);
+            storage.saveToFile(tasks.getTasks());
+            isExit = c.isExit();
         }
+        Ui.showLine();
 
     }
 
