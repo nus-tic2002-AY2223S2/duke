@@ -8,16 +8,18 @@ import task.Deadline;
 import task.ToDo;
 import task.Event;
 import task.Task;
+import exception.DukeException;
+import ui.Ui;
 
 /**
  * Storage class
- * -> stores the list into a file
+ * -> stores the list into a file and load task from file
  */
 public class Storage {
-    private static File f;
-    private static String filePath;
-    private static FileWriter fileWriter;
-    private static BufferedWriter bW;
+    protected static File f;
+    protected static String filePath;
+    protected static FileWriter fileWriter;
+    protected static BufferedWriter bW;
 
     /**
      *
@@ -36,10 +38,10 @@ public class Storage {
         try {
             File f = new File(filePath);
             if (f.exists()) {
-                System.out.println("File is already created");
+                Ui.printMsg("File is already created");
             } else {
                 f.createNewFile();
-                System.out.println("File created successfully");
+                Ui.printMsg("File created successfully");
             }
 
             FileWriter fileWriter = new FileWriter(filePath);
@@ -50,21 +52,22 @@ public class Storage {
                 toSaveList = list.get(i).toSave();
                 bW.write(toSaveList);
                 bW.newLine();
-                System.out.println("Task saved successfully");
             }
             bW.close();
         } catch (IOException e) {
-            System.out.println("Save to file Error");
+            Ui.printMsg("Save to file Error");
+            Ui.showLine();
         }
+        Ui.printMsg("All tasks saved successfully! ^V^");
+        Ui.showLine();
     }
     //Save tasks to file END
 
     //Load tasks START
-    public static ArrayList<Task> load() {
+    public static ArrayList<Task> load() throws DukeException {
         ArrayList<Task> loadList = new ArrayList<Task>();
-        String storedPath = "data\\duke.txt";
         try {
-            FileReader fR = new FileReader(storedPath);
+            FileReader fR = new FileReader(filePath);
             BufferedReader bR = new BufferedReader(fR);
 
             int count =0;
@@ -74,7 +77,7 @@ public class Storage {
                 String[] aLine = input.split("\\Q|\\E");
 
                 if (aLine[0].trim().equals("D")) {
-                    loadList.add(count, new Deadline(aLine[2]trim(), aLine[3].trim()));
+                    loadList.add(count, new Deadline(aLine[2].trim(), aLine[3].trim()));
                     //check status
                     if (aLine[1].trim().equals("1")) {
                         loadList.get(count).mark();
@@ -97,10 +100,10 @@ public class Storage {
                     ++count;
                 }
             }
-
             bR.close();
         } catch (IOException e) {
-            System.out.println("Load saved tasks ERROR");
+            Ui.printMsg("Load saved tasks ERROR");
+            Ui.showLine();
         }
         return loadList;
     }
