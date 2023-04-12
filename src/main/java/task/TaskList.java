@@ -14,6 +14,7 @@ import task.TaskList;
  * -> helps to get all the tasks, store the tasks and run other commands
  */
 public class TaskList {
+    protected String description;
     public static ArrayList<Task> taskslist;
 
     public TaskList(ArrayList<Task> tasks) {
@@ -27,11 +28,14 @@ public class TaskList {
     public ArrayList<Task> getTasks(){
         return taskslist;
     }
-
-    public void getSize() {
-        System.out.println(taskslist.size());
+    
+     public String get() {
+        return description;
     }
 
+    public void set(String description) {
+        this.description = description;
+    }
 
     public void addDeadline(String deadLineTask, String lastDay) {
         taskslist.add(new Deadline(deadLineTask, lastDay));
