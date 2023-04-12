@@ -24,6 +24,7 @@ public class TodoCommand extends Commands{
         tasks.addTodo(description);
         Ui.printMsg(tasks.taskslist.get(tasks.taskslist.size()-1).toString());
         Ui.printMsg("Number of tasks in the list = " + tasks.taskslist.size());
+        ui.showLine();
     }
 
 }
