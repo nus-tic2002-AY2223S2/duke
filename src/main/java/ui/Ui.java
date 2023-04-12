@@ -37,10 +37,20 @@ public class Ui {
 
     //messages START
     public static void help(){
-        System.out.println("Hi, it looks like you did not type anything.");
+        System.out.println("Hi, do you need any help @_@");
         System.out.println("You may try the following commands:");
         System.out.println("Enter List -> to list all the tasks");
+        System.out.println("To mark a task as complete -> mark (task num)");
+        System.out.println("To mark a task as incomplete -> unmark (task num)");
+        System.out.println("To remove a task -> delete (task num)");
+        System.out.println("To add todo -> todo (description)");
+        System.out.println("To add deadline -> deadline (description) /by (date)");
+        System.out.println("To add event -> event (description) /from (date) /to (date)");
+        System.out.println("To find something in the list -> find (keyword)");
+        System.out.println("To update a task -> update (task num)-(something to replace)-(updated description) ;D works for date too!");
+        System.out.println("To add a recurring task -> repeat (task num)");
         System.out.println("Enter Bye -> to end the conversation");
+        System.out.println("Hope this helps ^_^");
     }
     public static void addedTaskMsg(){
         System.out.println("Got it. I've add this task:");
