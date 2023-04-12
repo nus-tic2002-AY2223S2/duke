@@ -22,6 +22,7 @@ public class DeleteCommand extends Commands{
         ui.printMsg("Noted. I've removed this task:");
         tasks.delete(posNo);
         Ui.printMsg("Number of tasks in the list = " + tasks.taskslist.size());
+        ui.showLine();
     }
 
 }
