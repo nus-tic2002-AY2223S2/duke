@@ -2,7 +2,7 @@ package duke.Parser;
 
 import duke.Exception.DukeException;
 import duke.TasksType.Task;
-import duke.Ui.Ui;
+
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -45,7 +45,7 @@ public class Parser {
             throw new DukeException("☹ OOPS!!! The description/index of a " + splitted[0] + " cannot be empty.");
         }
         if (splitted[0].equalsIgnoreCase("mark") || splitted[0].equalsIgnoreCase("unmark") || splitted[0].equalsIgnoreCase("delete") ) {
-            if ( Integer.parseInt(splitted[1]) > list.size() || Integer.parseInt(splitted[1]) == 0) {
+            if ( Integer.parseInt(splitted[1]) > list.size() || Integer.parseInt(splitted[1]) <= 0) {
                 throw new DukeException("☹ OOPS!!! Index is not within the size of items in the list");
             }
         }
