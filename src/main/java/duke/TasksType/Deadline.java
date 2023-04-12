@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class Deadline extends Task
 {
-    protected LocalDateTime by;
+    private LocalDateTime by;
 
     /**
      * Constructor for Deadline task type, has a description (inherited) member and a by member for datetime
