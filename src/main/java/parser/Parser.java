@@ -1,6 +1,7 @@
 package parser;
 
 import command.*;
+import command.UpdateCommand;
 import exception.DukeException;
 import ui.Ui;
 import storage.Storage;
@@ -24,68 +25,57 @@ public class Parser {
      * @return
      */
     public static Commands parse(String input) {
-        String[] givenCommand = input.split(" ");
+        String[] givenCommand = input.split(" ", 2);
         String firstCommand = givenCommand[0];
 
         try {
             switch (firstCommand) {
-                /*case "help":
-                    return new Ui.help();*/
+                case "help":
+                    Ui.help();
+                    Ui.showLine();
+                    return new Commands();
                 case "list":
                     return new listArray();
                 case "bye":
                     return new ByeCommand();
                 case "mark":
-                    String markPosNo = givenCommand[1].trim();
-                    int markNum = Integer.parseInt(markPosNo) - 1;
+                    int markNum = Integer.parseInt(givenCommand[1].trim()) - 1;
                     return new MarkCommand(markNum);
                 case "unmark":
-                    String posNo = givenCommand[1].trim();
-                    int num = Integer.parseInt(posNo) - 1;
+                    int num = Integer.parseInt(givenCommand[1].trim()) - 1;
                     return new UnmarkCommand(num);
                 case "deadline":
-                    String[] givenBy = input.split("/by"); // split the command at /by
-                    System.out.println("datetime: "+givenBy[1]);
+                    String[] givenBy = givenCommand[1].split("/by"); // split the command at /by
                     String lastDay = LocalDateTime.formatDate(givenBy[1].trim()); // get the due date/time
-                    String deadLineTask = givenBy[0].replace("deadline", "").trim(); //remove deadline to get the task
-                    return new DeadlineCommand(deadLineTask, lastDay);
+                    return new DeadlineCommand(givenBy[0].trim(), lastDay);
                 case "todo":
-                    String[] splitTask = input.split(" ", 2); //split by min 2 array
-                    String todoTask = splitTask[1]; //get description
-                    return new TodoCommand(todoTask);
+                    return new TodoCommand(givenCommand[1].trim()); //get description
                 case "event":
-                    String[] givenFrom = input.split("/from"); // split the command at /from
-                    String eventTask = givenFrom[0].replace("event", "").trim();//remove event to get the task
+                    String[] givenFrom = givenCommand[1].split("/from"); // split the command at /from
                     String[] fromTo = givenFrom[1].split("/to"); //split at /to to get from and to
-                    String fromEvent = LocalDateTime.formatDate(fromTo[0].trim()); //get the from
-                    String toEvent = LocalDateTime.formatDate(fromTo[1].trim()); // get the to
-                    return new EventCommand(eventTask, fromEvent, toEvent);
+                    String fromEvent = LocalDateTime.formatDate(fromTo[0].trim()); //get the from in a formatdatetime
+                    String toEvent = LocalDateTime.formatDate(fromTo[1].trim()); // get the to in a formatdatetime
+                    return new EventCommand(givenFrom[0].trim(), fromEvent, toEvent);
                 case "delete":
-                    String[] splitDelete = input.split(" ", 2); //split by min 2 array
-                    String deleteTask = splitDelete[1].trim(); //get the position
-                    int selectedNum = Integer.parseInt(deleteTask) - 1;
+                    int selectedNum = Integer.parseInt(givenCommand[1].trim()) - 1; //get the position
                     return new DeleteCommand(selectedNum);
-                 case "update":
-                    String[] splitTheTask = input.split(" ", 2);
-                    String[] updateChosenTask = splitTheTask[1].split("-");
-                    int updateNum = Integer.parseInt(updateChosenTask[0]) - 1;
-                    return new UpdateCommand(updateNum, updateChosenTask[1], updateChosenTask[2]);
+                case "update":
+                    String[] updateChosenTask = givenCommand[1].split("-"); //split accordingly
+                    int updateNum = Integer.parseInt(updateChosenTask[0].trim()) - 1; //get the task number
+                    return new UpdateCommand(updateNum, updateChosenTask[1].trim(), updateChosenTask[2].trim());
                 case "find":
-                    String[] splitFindWord = input.split(" ", 2); //split by min 2 array
-                    String findWord = splitFindWord[1]; //get description
-                    return new FindCommand(findWord);
+                    return new FindCommand(givenCommand[1].trim()); //gets the keyword
                 case "repeat":
-                    String[] splitRepeat = input.split(" ", 2);
-                    int selectedRepeat = Integer.parseInt(splitRepeat[1]) - 1;
+                    int selectedRepeat = Integer.parseInt(givenCommand[1].trim()) - 1; //get selected task
                     return new RepeatCommand(selectedRepeat);
                 default:
                     throw new DukeException();
             }
         } catch (DukeException e) {
             Ui.showLoadingError();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Ui.printMsg("No description given :(");
         }
         return new ErrorCommand(input);
     }
-
-
 }
