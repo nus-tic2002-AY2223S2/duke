@@ -47,7 +47,7 @@ public class FindCommand extends Commands{
             }
 
         }
-
+        Ui.showLine();
 
     }
 }
