@@ -76,7 +76,7 @@ public class Ui {
     /**
      * this method will print motherhood bye statement
      */
-    public void showByeMeg() {
+    public void showByeMsg() {
         System.out.println(byeMsg);
     }
 

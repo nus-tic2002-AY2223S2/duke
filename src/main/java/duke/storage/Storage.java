@@ -24,7 +24,7 @@ public class Storage {
      *  Attribute
      */
 
-    private static String filePath = System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "data";
+    private static String filePath = System.getProperty("user.home") + File.separator + "Desktop" + File.separator + "data"; //Idea referenced from https://www.delftstack.com/howto/java/java-user-home-directory/
     private static String fileName = "duke.txt";
     private static Path existingPath;
     private static Path existingFile;

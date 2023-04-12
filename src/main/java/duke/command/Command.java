@@ -183,7 +183,7 @@ public class Command {
         }
         else {
             isByeAttribute = true;
-            ui.showByeMeg();
+            ui.showByeMsg();
         }
     }
 
