@@ -22,6 +22,7 @@ public class UpdateCommand extends Commands{
     /**
      * @param updateTask -> update with chosen description
      * @param updateNum -> update the chosen task number
+     * @param replacedTask -> chosen one to edit
      */
     public UpdateCommand(int updateNum, String replacedTask, String updateTask){
         this.updateNum = updateNum;
@@ -39,7 +40,6 @@ public class UpdateCommand extends Commands{
             Task updatedTask = task;
             //find the word to replace in the task
             if(task.getDescription().toString().toLowerCase().contains(replacedTask)) {
-                //task.setDescription(updateTask);
                 String[] words = task.getDescription().toString().split(" ");
                 for (int i =0; i< words.length; i++) {
                     if (words[i].equals(replacedTask)) {
@@ -65,9 +65,8 @@ public class UpdateCommand extends Commands{
             } else {
                 Ui.printMsg("-_- There is no such word to edit " + replacedTask);
             }
-            //
             Ui.printMsg("We have successfully edit the task: " + updatedTask);
-
         }
+        ui.showLine();
     }
 }
