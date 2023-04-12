@@ -9,14 +9,19 @@ import ui.Ui;
  *
  */
 public class ByeCommand extends Commands {
-    private static boolean exit = false;
+    protected static boolean isExit = false;
     public static boolean exit() {
-        return exit;
+        return isExit;
     }
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         ui.printMsg("GoodBye! Have a great day :)");
-        exit = true;
+        ui.showLine();
+        isExit = true;
+    }
+
+    public static boolean getExitStatus() {
+        return isExit;
     }
 
 }
