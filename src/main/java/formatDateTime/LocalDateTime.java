@@ -50,7 +50,6 @@ public class LocalDateTime {
                     DateTimeFormatter outPut = DateTimeFormatter.ofPattern("d'th' 'of' MMMM yyyy, ha", Locale.ENGLISH);
                     updatedDateTime = date.format(outPut);
             }
-            //System.out.println(updatedDateTime);
         } catch (DateTimeParseException e) {
             Ui.printMsg("Invalid date and time format");
         }
