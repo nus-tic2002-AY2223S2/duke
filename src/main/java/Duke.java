@@ -1,11 +1,23 @@
+import java.io.FileNotFoundException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Duke {
-    public static void main(String[] args) throws DukeException {
+    public static void main(String[] args) {
         System.out.println("Hello! I'm Duke\n" + "What can I do for you?");
+
+        ArrayList<String> current_task = null;
+        try {
+            Storage storage = new Storage();
+            current_task = storage.ReadFile("src/main/task.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         Scanner scanner = new Scanner(System.in);
+
         // create an array of task
         ArrayList<Task> list_of_task = new ArrayList<Task>();
 
@@ -67,6 +79,7 @@ public class Duke {
 
                 if (input.matches("deadline(.*)")) {
                     // find by/
+
                     int stop = 0;
                     String found = "/by";
 
@@ -86,17 +99,26 @@ public class Duke {
                     list_of_task.add(deadline);
                     System.out.println("Got it. I've added this task:\n" + deadline.toString());
                     System.out.println(String.format("Now you have %s tasks in the list.", list_of_task.size()));
-
                 }
 
                 if (input.matches("todo(.*)")) {
+
                     String[] modifiedArray = Arrays.copyOfRange(strArr, 1, strArr.length);
                     String joinedString = String.join(" ", modifiedArray);
 
                     Todo to_do_task = new Todo(joinedString);
+
+                    try {
+                        Storage todo = new Storage();
+                        todo.WriteFile(to_do_task.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     list_of_task.add(to_do_task);
+
                     System.out.println("Got it. I've added this task:\n" + to_do_task.toString());
-                    System.out.println(String.format("Now you have %s tasks in the list.", list_of_task.size()));
+                    System.out.println(String.format("Now you have %s tasks in the list.", list_of_task.size() + current_task.size()));
                 }
 
 
@@ -131,7 +153,8 @@ public class Duke {
                     System.out.println(list_of_task.get(i).toString());
                     list_of_task.remove(i);
 
-                    if (!list_of_task.isEmpty()) System.out.println(String.format("Now you have %s tasks in the list.", list_of_task.size()));
+                    if (!list_of_task.isEmpty())
+                        System.out.println(String.format("Now you have %s tasks in the list.", list_of_task.size()));
                 }
 
                 if (input.equals("list")) {
