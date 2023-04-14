@@ -17,6 +17,7 @@ public class Parser {
     private static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm"; //for invalidDateTime()
 
     /**
+     * Throws exceptions if input is invalid
      * This method validated the input given by the user
      * only the specified commands are allowed, exceptions will be thrown if anything word is parsed.
      * Using regex, validates the event and deadline inputs are correct with the required information.
@@ -123,6 +124,7 @@ public class Parser {
 
 
     /**
+     * Validates index is within list size
      * This method checks if the index for priority change is within the list size
      * @param index takes in an integer of the index input by user
      * @param list takes in the list of task
@@ -135,7 +137,8 @@ public class Parser {
     }
 
     /**
-     * This method ensures that the dateTime format input by user is correct
+     * Returns a boolean on whether the DateTime format is valid
+     * Ensures that the dateTime format input by user is correct
      * @param input takes in the string input of dateTime
      * @return false if dateTime format is different from requirement
      */

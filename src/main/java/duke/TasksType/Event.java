@@ -9,7 +9,7 @@ public class Event extends Task
     protected LocalDateTime to;
 
     /**
-     * Constructor for Event task type, has description (inherited) member, a from member, and to member
+     * Constructs Event task type, has description (inherited) member, a from member, and to member
      * @param description takes in a string input description to describe the event
      * @param from takes in a LocalDateTime input to indicate the start date time of the event
      * @param to takes in a LocalDateTime input to indicate the end date time of the event
@@ -21,7 +21,7 @@ public class Event extends Task
     }
 
     /**
-     * This method is called to format the display for event tasks
+     * Returns a String to format the display for event tasks
      * @return a string used for display
      */
     @Override
@@ -30,7 +30,7 @@ public class Event extends Task
     }
 
     /**
-     * This method is called to get the start date time of the event task
+     * Returns a LocalDateTime to get the start date time of the event task
      * @return a LocalDateTime for display or conversion
      */
     public LocalDateTime getFrom() {

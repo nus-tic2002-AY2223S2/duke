@@ -5,8 +5,7 @@ public class Ui {
     }
 
     /**
-     * This method is called upon once the program is executed
-     * to display the welcome page
+     * Prints the welcome message
      */
     public void showWelcome() {
         String logo = " ____        _        \n"
@@ -23,7 +22,7 @@ public class Ui {
     }
 
     /**
-     * This method is called to print a line for demarcation of output texts
+     * Prints a line for demarcation of output texts
      */
     public static void showLine() {
         System.out.println("__________________________________________________________________________________________");

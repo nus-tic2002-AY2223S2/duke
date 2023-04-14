@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TodoTest {
     /**
-     * This JUnit tests on the Todo class
+     * Tests on the Todo class
      * ensures that theh task description is correctly stored into the ArrayList
      */
     @Test

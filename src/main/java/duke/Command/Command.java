@@ -14,7 +14,8 @@ import java.util.Scanner;
 
 public class Command {
     /**
-     * This executeLoad() method loads the previously saved file, with each line into the different task types
+     * Returns a Task used to store in the list of tasks
+     * Loads the previously saved file, with each line into the different task types
      * Checks for the task type and returns a task element that is used to store in the ArrayList is the loadFile() method
      * Checks if the string has an X to change the isDone member of the task to true
      * Checks the priority level and change the priorityLevel of the task according
@@ -50,7 +51,7 @@ public class Command {
     }
 
     /**
-     * This execute() method tries to load a file, and runs the endless loop to scan for user inputs (commands)
+     * Tries to load a file, and runs the endless loop to scan for user inputs (commands)
      * declares the boolean, scanner object, loader, task list
      * calls for load file to try loading an existing file and store into the list
      * starts loop and scans for user commands (question)

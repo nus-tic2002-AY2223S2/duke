@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 public class Util {
 
     /**
-     * This method checks if the mark/unmark input is valid
+     * Returns a boolean if the mark/unmark input is valid
      * @param input takes in a string input from user and check if it has a word and another string (num) behind
      * @return true if only there are two words
      */
@@ -18,7 +18,7 @@ public class Util {
     }
 
     /**
-     * This method changes dates and times to string format
+     * Returns a String of correct dates and times format
      * @param formattedDT takes in a LocalDateTime formatted input
      * @return a string in "yyyy-MM-dd HH:mm"
      */
@@ -28,7 +28,7 @@ public class Util {
     }
 
     /**
-     * This method converts the default LocalDateTime format into the required format
+     * Returns a LocalDateTime in correct format
      * @param dt takes in a LocalDateTime input with default format
      * @return a LocalDateTime variable
      */
@@ -39,7 +39,7 @@ public class Util {
     }
 
     /**
-     * This method displays the required LocalDateTime into string
+     * Returns a String displays the required LocalDateTime into string
      * @param formattedDT takes in the formatted LocalDateTime input
      * @return a string of the formatted LocalDateTime
      */
@@ -49,7 +49,7 @@ public class Util {
     }
 
     /**
-     * This method converts the string into priority level
+     * Returns a PriorityLevel that was converted from a String
      * @param s takes in a string input
      * @return a priorityLevel
      */
@@ -65,7 +65,7 @@ public class Util {
     }
 
     /**
-     * This method validates the dateTime ensuring that it is not in the past
+     * Validates the dateTime ensuring that it is not in the past
      * @param dateTime takes in a LocalDateTime input
      * @throws DukeException if the time is before current time
      */
@@ -78,7 +78,7 @@ public class Util {
     }
 
     /**
-     * This method validates the start and end dateTime in the Event task
+     * Validates the start and end dateTime in the Event task
      * such that the end dateTime will never be before start dateTime
      * @param dateTimeStart takes in a LocalDateTime as the start dateTime
      * @param dateTimeEnd takes in a LocalDateTime as the end dateTime

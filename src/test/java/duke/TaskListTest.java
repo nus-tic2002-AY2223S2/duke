@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TaskListTest {
     /**
-     * This JUnit tests the TaskList class, setPriority() method
+     * Tests the TaskList class, setPriority() method
      * When user changes the priorityLevel of the task,
      * the correct priorityLevel will be stored
      */
@@ -26,7 +26,7 @@ public class TaskListTest {
         assertEquals(Task.priorityLevel.High, taskList.getTask(0).getPriorityLevel());
     }
     /**
-     * This JUnit tests the TaskList class, addTask() method
+     * Tests the TaskList class, addTask() method
      * adds two tasks and asserts that the description is stored and retrieved correctly
      */
     @Test

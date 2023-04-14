@@ -3,7 +3,7 @@ package duke.TasksType;
 public class Todo extends Task
 {
     /**
-     * Constructor for Todo task type, has description (inherited) member
+     * Constructs Todo task type, has description (inherited) member
      * @param description takes in a string input description to describe the Todo
      */
     public Todo(String description) {
@@ -11,7 +11,7 @@ public class Todo extends Task
      }
 
     /**
-     * This method is called to format the display for Todo tasks
+     * Returns a String to format the display for Todo tasks
      * @return a string used for display
      */
     @Override

@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ParserTest {
     /**
-     * This JUnit tests the Parser class validateQuestion() method
+     * Tests the Parser class validateQuestion() method
      * if an unknown input was given by user,
      * the correct error message will be displayed
      */

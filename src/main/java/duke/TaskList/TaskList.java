@@ -13,7 +13,7 @@ public class TaskList {
     }
 
     /**
-     * This method stores an ArrayList of Tasks into another list
+     * Stores an ArrayList of Tasks into another list
      * @param list takes in an ArrayList of Tasks
      */
     public void storeList(ArrayList<Task> list) {
@@ -21,7 +21,7 @@ public class TaskList {
     }
 
     /**
-     * This method adds a task into the ArrayList in accordance to the task type
+     * Adds a task into the ArrayList in accordance to the task type
      * asserts that the ArrayList should not be empty or no elements inside after a Task is added
      * @param task takes in a Task input and add into the ArrayList
      */
@@ -35,7 +35,7 @@ public class TaskList {
     }
 
     /**
-     * This method deletes a specific task indicated by the user when a task is no longer useful or relevant
+     * Deletes a specific task indicated by the user when a task is no longer useful or relevant
      * @param IndexToDelete takes in an integer input and remove the task in the ArrayList according to the index
      */
     public void deleteTask(int IndexToDelete) {
@@ -47,24 +47,26 @@ public class TaskList {
     }
 
     /**
+     * Returns a Task fron the ArrayList
      * This method is called to retrieve a particular task with a given index
      * @param index takes in an integer input to locate the element in the ArrayList
-     * @return the Task from the ArrayList
+     * @return Task
      */
     public Task getTask(int index) {
         return list.get(index);
     }
 
     /**
+     * Returns an ArrayList of tasks
      * This method is called to simply retrieve the entire list of tasks
-     * @return an ArrayList of tasks
+     * @return ArrayList
      */
     public ArrayList<Task> getList() {
         return list;
     }
 
     /**
-     * This method is called to display all the items in the ArrayList
+     * Displays all the items in the ArrayList
      * called toString() methods of every different task type
      */
     public void listTask() {
@@ -78,7 +80,7 @@ public class TaskList {
     }
 
     /**
-     * This method is called to change priorityLevel of a specific task with the given index
+     * Changes priorityLevel of a specific task with the given index
      * @param index takes in an integer given by user to indicate the specific task
      * @param p takes in a priorityLevel to indicate the level that the user wants to change to
      */
@@ -91,7 +93,7 @@ public class TaskList {
     }
 
     /**
-     * This method basically sorts the list according the priorityLevel
+     * Sorts the list according the priorityLevel
      * Elements with High will be at the front of the Arraylist while Low will be at the back
      * Since there are only 3 levels, the sorting is done by splitting into three different ArrayList and combining them again
      */
@@ -119,7 +121,7 @@ public class TaskList {
     }
 
     /**
-     * This method loops through the ArrayList and prints out the every element that is related to the string provided by user
+     * Loops through the ArrayList and prints out the every element that is related to the string provided by user
      * @param word takes in a string word to perform search every item using contains() method
      */
     public void find (String word) {
