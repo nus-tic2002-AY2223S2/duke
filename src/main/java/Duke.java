@@ -23,6 +23,52 @@ public class Duke {
         public void unmarkAsDone() {
             isDone = false;
         }
+
+        @Override
+        public String toString() {
+            return getStatusIcon() + " " + description;
+        }
+    }
+
+    public static class ToDo extends Task {
+        public ToDo(String description) {
+            super(description);
+        }
+
+        @Override
+        public String toString() {
+            return "[T] " + super.toString();
+        }
+    }
+
+    public static class Deadline extends Task {
+        protected String by;
+
+        public Deadline(String description, String by) {
+            super(description);
+            this.by = by;
+        }
+
+        @Override
+        public String toString() {
+            return "[D] " + super.toString() + " (by: " + by + ")";
+        }
+    }
+
+    public static class Event extends Task {
+        protected String from;
+        protected String to;
+
+        public Event(String description, String from, String to) {
+            super(description);
+            this.from = from;
+            this.to = to;
+        }
+
+        @Override
+        public String toString() {
+            return "[E] " + super.toString() + " (from: " + from + "| to: " + to + ")";
+        }
     }
 
     public static void main(String[] args) {
@@ -47,7 +93,7 @@ public class Duke {
             else if (line.equals("list")) {
                 System.out.println("Here are the tasks in your list:");
                 for(int i = 0; i < inputCount; i++) {
-                    System.out.println(i + 1 + ". " + storage[i].getStatusIcon() + " " + storage[i].description);
+                    System.out.println(i + 1 + ". " + storage[i].toString());
                 }
             }
             else if (line.startsWith("mark ")) {
@@ -61,6 +107,38 @@ public class Duke {
                 storage[index].unmarkAsDone();
                 System.out.println("Nice! I've marked this task as not done yet: ");
                 System.out.println(" " + storage[index].getStatusIcon() + " " + storage[index].description);
+            }
+            else if (line.startsWith("todo ")) {
+                ToDo task = new ToDo (line);
+                storage[inputCount] = task;
+                inputCount++;
+                System.out.println("Got it. I've added this task:");
+                System.out.println(" " + task.toString());
+                System.out.println("Now you have " + inputCount + " tasks in the list.");
+            }
+            else if (line.startsWith("deadline ")) {
+                int separatorIndex = line.indexOf("/by ");
+                String description = line.substring(9, separatorIndex - 1);
+                String by = line.substring(separatorIndex + 4);
+                Deadline task = new Deadline(description, by);
+                storage[inputCount] = task;
+                inputCount++;
+                System.out.println("Got it. I've added this task:");
+                System.out.println(" " + task.toString());
+                System.out.println("Now you have " + inputCount + " tasks in the list.");
+            }
+            else if (line.startsWith("event ")) {
+                int fromIndex = line.indexOf("/from ");
+                int toIndex = line.indexOf("/to ");
+                String description = line.substring(6, fromIndex - 1);
+                String from = line.substring(fromIndex + 6, toIndex);
+                String to = line.substring(toIndex + 4);
+                Event task = new Event(description, from, to);
+                storage[inputCount] = task;
+                inputCount++;
+                System.out.println("Got it. I've added this task:");
+                System.out.println(" " + task.toString());
+                System.out.println("Now you have " + inputCount + " tasks in the list.");
             }
             else {
                 Task task = new Task(line);
