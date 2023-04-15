@@ -13,6 +13,8 @@ import duke.type.CommandType;
 import duke.type.TaskType;
 import duke.ui.Ui;
 
+import java.text.ParseException;
+
 import static duke.util.Utils.formatDateTime;
 
 /**
@@ -104,7 +106,7 @@ public class Parser {
      * @param command A string representing the user command.
      * @return A Deadline object parsed from the user input.
      */
-    public static Deadline parseDeadline(String command) throws IndexOutOfBoundsException, IllegalDeadlineException {
+    public static Deadline parseDeadline(String command) throws IndexOutOfBoundsException, IllegalDeadlineException, ParseException {
         String[] commandStringList = command.split(BY_COMMAND);
         if (commandStringList.length < 2) {
             throw new IllegalDeadlineException();
@@ -133,7 +135,7 @@ public class Parser {
      * @param command A string representing the user command.
      * @return An Event object parsed from the user input.
      */
-    public static Event parseEvent(String command) throws IndexOutOfBoundsException, IllegalEventException {
+    public static Event parseEvent(String command) throws IndexOutOfBoundsException, IllegalEventException, ParseException {
         String[] commandStringList = command.split(FROM_COMMAND);
         if (commandStringList.length < 2) {
             throw new IllegalEventException();
@@ -247,6 +249,8 @@ public class Parser {
             Ui.printException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
         } catch (IndexOutOfBoundsException e) {
             Ui.printException("IndexOutOfBoundsException for task: " + command);
+        } catch (ParseException e) {
+            Ui.printException("Date ParseException for task: " + command);
         }
         return task;
     }
@@ -256,7 +260,7 @@ public class Parser {
      *
      * @param command A string representing the user command.
      */
-    public static void parseEditTask(String command, Task task) throws IndexOutOfBoundsException {
+    public static void parseEditTask(String command, Task task) throws IndexOutOfBoundsException, ParseException {
         if (command.contains(DESCRIPTION_COMMAND)) {
             String[] taskElements = command.split(DESCRIPTION_COMMAND);
             String description = taskElements[taskElements.length - 1].trim();

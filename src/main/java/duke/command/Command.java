@@ -7,6 +7,8 @@ import duke.type.CommandType;
 import duke.type.TaskType;
 import duke.ui.Ui;
 
+import java.text.ParseException;
+
 import static duke.parser.Parser.*;
 
 public class Command {
@@ -94,6 +96,10 @@ public class Command {
             Ui.printException("IndexOutOfBoundsException : " + command);
         } catch (NumberFormatException ex) {
             Ui.printException("NumberFormatException for task: " + command);
+        }catch (ParseException ex) {
+            Ui.printException("Date ParseException for task: " + command);
+        } catch (CloneNotSupportedException e) {
+            Ui.printException("CloneNotSupportedException for task: " + command);
         }
     }
 
@@ -117,16 +123,18 @@ public class Command {
      * @param taskList A TaskList object representing list of tasks of the user.
      * @param command  A string representing user command. Clone command should be in the format "clone [line-number]"
      */
-    private void cloneTask(TaskList taskList, String command, DukeFileReaderAndWriter fileReaderAndWriter) throws IndexOutOfBoundsException, NumberFormatException {
+    private void cloneTask(TaskList taskList, String command, DukeFileReaderAndWriter fileReaderAndWriter) throws IndexOutOfBoundsException, NumberFormatException, CloneNotSupportedException {
         int index = parseIndex(command);
         Task task = taskList.getItem(index);
 
-        taskList.addItem(task);
+        Task clonedTask = (Task) task.clone();
+
+        taskList.addItem(clonedTask);
 
         String clonedLine = fileReaderAndWriter.readLine(index);
         fileReaderAndWriter.appendInFile(clonedLine + System.lineSeparator());
 
-        Ui.printNewTaskString(taskList, task);
+        Ui.printNewTaskString(taskList, clonedTask);
     }
 
     /**
@@ -135,7 +143,7 @@ public class Command {
      * @param taskList A TaskList object representing list of tasks of the user.
      * @param command  A string representing user command.Edit command should be in the format "edit [line-number] [/description or /by or /to or /from] [update-text]"
      */
-    private void editTask(TaskList taskList, String command, DukeFileReaderAndWriter fileReaderAndWriter) throws IndexOutOfBoundsException, NumberFormatException {
+    private void editTask(TaskList taskList, String command, DukeFileReaderAndWriter fileReaderAndWriter) throws IndexOutOfBoundsException, NumberFormatException, ParseException{
         int index = parseIndex(command);
         Task task = taskList.getItem(index);
 

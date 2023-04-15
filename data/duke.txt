@@ -1,9 +1,8 @@
-DEADLINE start Exam Revision /by Sunday#true
-EVENT ignite nights /from Monday /to Friday#true
-TODO cook something new#false
-DEADLINE return book in library /by Apr 11 2023#false
-TODO find a destination to travel for summer vacay#false
-TODO find a holiday destination#false
-EVENT JJ concert /from May 12 2023 /to May 31 2023#false
-TODO read book#false
-DEADLINE return book in library /by Apr 11 2023#false
+TODO todotesting#false
+DEADLINE project submission deadline /by Apr 16 2023#false
+EVENT test3 /from Monday /to friday#false
+TODO todo cooking#false
+TODO Excercise#true
+DEADLINE Submit Excercise 4 /by mon#false
+TODO Excercise#true
+TODO Excercise#false

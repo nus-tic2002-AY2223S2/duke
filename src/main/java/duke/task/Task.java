@@ -2,13 +2,17 @@ package duke.task;
 
 import duke.type.TaskType;
 
-public abstract class Task {
+public abstract class Task implements Cloneable {
     protected String description;
     protected boolean isDone;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+    }
+
+    public Object clone()throws CloneNotSupportedException {
+        return super.clone();
     }
 
     public boolean isDone() {
@@ -43,6 +47,7 @@ public abstract class Task {
     public abstract String toCommand();
 
     public abstract TaskType getType();
+
 }
 
 
