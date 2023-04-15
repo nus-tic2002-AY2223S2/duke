@@ -75,6 +75,8 @@ public class Parser {
             Ui.showLoadingError();
         } catch (ArrayIndexOutOfBoundsException e) {
             Ui.printMsg("No description given :(");
+        } catch (IndexOutOfBoundsException e) {
+            Ui.printMsg("The number is greater than the number of tasks in the list :(");
         }
         return new ErrorCommand(input);
     }
