@@ -20,8 +20,12 @@ public class MarkCommand extends Commands{
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        tasks.taskslist.get(posNo).mark();
-        ui.printMsg("Ok, I've marked this task as done: " + tasks.taskslist.get(posNo).toString());
-        ui.showLine();
+        try {
+            tasks.taskslist.get(posNo).mark();
+            ui.printMsg("Ok, I've marked this task as done: " + tasks.taskslist.get(posNo).toString());
+            ui.showLine();
+        } catch (IndexOutOfBoundsException e) {
+            Ui.printMsg("The number is greater than the number of tasks in the list :(");
+        }
     }
 }
