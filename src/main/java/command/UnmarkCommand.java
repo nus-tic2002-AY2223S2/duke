@@ -21,8 +21,12 @@ public class UnmarkCommand extends Commands{
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        tasks.taskslist.get(posNo).notMark();
-        ui.printMsg("Ok, I've marked this task as not done yet:" + tasks.taskslist.get(posNo).toString());
-        ui.showLine();    
+        try{
+            tasks.taskslist.get(posNo).notMark();
+            ui.printMsg("Ok, I've marked this task as not done yet:" + tasks.taskslist.get(posNo).toString());
+            ui.showLine();
+        } catch (IndexOutOfBoundsException e) {
+            Ui.printMsg("The number is greater than the number of tasks in the list :(");
+        }  
     }
 }
