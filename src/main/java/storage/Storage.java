@@ -18,8 +18,6 @@ import ui.Ui;
 public class Storage {
     protected static File f;
     protected static String filePath;
-    protected static FileWriter fileWriter;
-    protected static BufferedWriter bW;
 
     /**
      *
