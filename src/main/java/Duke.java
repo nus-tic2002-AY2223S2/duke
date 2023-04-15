@@ -71,15 +71,22 @@ public class Duke {
                     String to_timing = String.join(" ", to_timingArray);
 
                     Event event = new Event(task, from_timing, to_timing);
+
+                    try {
+                        Storage todo = new Storage();
+                        todo.WriteFile(event.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     list_of_task.add(event);
 
                     System.out.println("Got it. I've added this task:\n" + event.toString());
-                    System.out.println(String.format("Now you have %s tasks in the list.", list_of_task.size()));
+                    System.out.println(String.format("Now you have %s tasks in the list.", current_task.size() + 1));
                 }
 
                 if (input.matches("deadline(.*)")) {
                     // find by/
-
                     int stop = 0;
                     String found = "/by";
 
@@ -96,9 +103,17 @@ public class Duke {
                     String timing = String.join(" ", timingArray);
 
                     Deadline deadline = new Deadline(task, timing);
+
+                    try {
+                        Storage todo = new Storage();
+                        todo.WriteFile(deadline.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     list_of_task.add(deadline);
                     System.out.println("Got it. I've added this task:\n" + deadline.toString());
-                    System.out.println(String.format("Now you have %s tasks in the list.", list_of_task.size()));
+                    System.out.println(String.format("Now you have %s tasks in the list.", current_task.size() + 1 ));
                 }
 
                 if (input.matches("todo(.*)")) {
@@ -118,7 +133,7 @@ public class Duke {
                     list_of_task.add(to_do_task);
 
                     System.out.println("Got it. I've added this task:\n" + to_do_task.toString());
-                    System.out.println(String.format("Now you have %s tasks in the list.", list_of_task.size() + current_task.size()));
+                    System.out.println(String.format("Now you have %s tasks in the list.", current_task.size() + 1));
                 }
 
 
@@ -126,8 +141,15 @@ public class Duke {
                     String num_input = input.replaceAll("\\D+", "");
                     int i = Integer.parseInt(num_input);
 
-                    if (i > list_of_task.size()) continue;
+                    if (i > current_task.size()) continue;
                     list_of_task.get(i - 1).markDone();
+
+//                    try {
+//                        Storage todo = new Storage();
+//                        todo.RewriteFile("[ ]", "x");
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
 
                     System.out.println("Nice! I've marked this task as done: ");
                     System.out.println(list_of_task.get(i - 1).getDescription());
@@ -148,20 +170,28 @@ public class Duke {
                     String num_input = input.replaceAll("\\D+", "");
                     int i = Integer.parseInt(num_input);
 
-                    if (i > list_of_task.size()) continue;
+                    if (i > current_task.size()) continue;
                     System.out.println("Noted. I've removed this task:");
-                    System.out.println(list_of_task.get(i).toString());
-                    list_of_task.remove(i);
+                    System.out.println(current_task.get(i - 1).toString());
+                    current_task.remove(i - 1);
 
                     if (!list_of_task.isEmpty())
-                        System.out.println(String.format("Now you have %s tasks in the list.", list_of_task.size()));
+                        System.out.println(String.format("Now you have %s tasks in the list.", current_task.size()));
                 }
 
                 if (input.equals("list")) {
-                    if (list_of_task.isEmpty()) continue;
+                    if (current_task.isEmpty()) continue;
                     System.out.println("Here are the tasks in your list: ");
-                    for (int index = 0; index < list_of_task.size(); index++) {
-                        System.out.println(index + 1 + ". " + list_of_task.get(index).toString());
+
+                    try {
+                        Storage storage = new Storage();
+                        current_task = storage.ReadFile("src/main/task.txt");
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+                    for (int index = 0; index < current_task.size(); index++) {
+                        System.out.println((index + 1) + ". " + current_task.get(index).toString());
                     }
                 }
 

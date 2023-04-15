@@ -1,3 +1,7 @@
-[T][ ]hi hi
-[T][ ]byebye
-[T][ ]hihi
+[T][[x]]hi[x]hi
+[T][[x]]list[x]adding
+[D][[x]]cancel[x](by:[x]10pm)
+[T][[x]]hi[x]hi
+[T][[x]]byebye
+[T][[x]]hi
+[T][[x]]hi[x]hi

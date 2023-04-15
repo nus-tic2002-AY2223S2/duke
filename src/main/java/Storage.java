@@ -42,4 +42,40 @@ public class Storage {
             }
         }
     }
-}
+
+    public static void RewriteFile (String stringToReplace, String replaceWith) throws IOException {
+        {
+            String fileName = "src/main/task.txt";
+            String oldContent = "";
+            BufferedReader reader = null;
+            FileWriter writer = null;
+
+            try {
+                reader = new BufferedReader(new FileReader(fileName));
+                //Reading all the lines of input text file into oldContent
+                String line = reader.readLine();
+
+                while (line != null) {
+                    oldContent = oldContent + line + System.lineSeparator();
+                    line = reader.readLine();
+                }
+
+                //Replacing oldString with newString in the oldContent
+                String newContent = oldContent.replaceAll(stringToReplace, replaceWith);
+                //Rewriting the input text file with newContent
+                writer = new FileWriter(fileName);
+                writer.write(newContent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    reader.close();
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    }
