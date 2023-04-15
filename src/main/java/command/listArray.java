@@ -13,7 +13,12 @@ public class listArray extends Commands {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-         ui.lists(tasks.getTasks());
+         if (tasks.taskslist.size() == 0) {
+            ui.printMsg("There are no task in your list now. :( Please add some tasks");
+        } else {
+            ui.lists(tasks.getTasks());
+        }
+        Ui.showLine();
     }
 
 }
