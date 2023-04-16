@@ -71,11 +71,6 @@ public class Utils {
         return name.matches("[a-zA-Z]+");
     }
 
-
-//    public static <T> ArrayList<T> listToArrayList(List<T> list) {
-//        return list != null ? new ArrayList<>(list) : null;
-//    }
-
 }
 
 

@@ -82,7 +82,6 @@ public class Parser {
      */
     public static Todo parseTodo(String command) throws IndexOutOfBoundsException, IllegalTodoException, NumberFormatException {
         String[] commandStringList = command.split(" ");
-        //assert commandStringList.length >= 2 : "☹ OOPS!!! The description of a todo cannot be empty.";
         if (commandStringList.length < 2) {
             throw new IllegalTodoException();
         }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * A <code>duke.storage.Storage</code> interface deals with loading tasks from the file and saving tasks in the file
  */
 public interface Storage {
-    String FILE_PATH = "data/duke.txt";
+    String FILE_PATH = "/tmp/duke.txt";
 
     /**
      * This method write text in the file at the source.
