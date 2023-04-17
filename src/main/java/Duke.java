@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
 public class Duke {
     public static void main(String[] args) {
         System.out.println("Hello! I'm Duke\n" + "What can I do for you?");
@@ -67,10 +71,18 @@ public class Duke {
                     String[] to_timingArray = Arrays.copyOfRange(strArr, to + 1, strArr.length);
 
                     String task = String.join(" ", taskArray);
+
                     String from_timing = String.join(" ", from_timingArray);
+
+                    LocalDate date_format_from = LocalDate.parse(from_timing);
+                    String format_from_timing = date_format_from.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+
                     String to_timing = String.join(" ", to_timingArray);
 
-                    Event event = new Event(task, from_timing, to_timing);
+                    LocalDate date_format_to = LocalDate.parse(to_timing);
+                    String format_to_timing = date_format_to.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+
+                    Event event = new Event(task, format_from_timing, format_to_timing);
 
                     try {
                         Storage todo = new Storage();
@@ -102,7 +114,10 @@ public class Duke {
                     String task = String.join(" ", taskArray);
                     String timing = String.join(" ", timingArray);
 
-                    Deadline deadline = new Deadline(task, timing);
+                    LocalDate date_format = LocalDate.parse(timing);
+                    String format_timing = date_format.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+
+                    Deadline deadline = new Deadline(task, format_timing);
 
                     try {
                         Storage todo = new Storage();
@@ -142,6 +157,7 @@ public class Duke {
                     int i = Integer.parseInt(num_input);
 
                     if (i > current_task.size()) continue;
+
                     list_of_task.get(i - 1).markDone();
 
 //                    try {

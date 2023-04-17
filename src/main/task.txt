@@ -5,3 +5,9 @@
 [T][[x]]byebye
 [T][[x]]hi
 [T][[x]]hi[x]hi
+
+[T][ ]hi
+[E][ ]do (by: 2019-10-15 to: 2019-10-15)
+[E][ ]todo (by: 2019-10-15 to: 2019-10-15)
+[E][ ]todo (by: Oct 15 2019 to: 2019-10-15)
+[D][ ]return book (by: Oct 15 2019)
