@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 
 import java.util.ArrayList;
@@ -39,12 +40,26 @@ public class Duke {
                         && !input.contains("todo")
                         && !input.contains("deadline")
                         && !input.contains("event")
+                        && !input.contains("find")
                 ) {
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
 
                 if ((strArr.length == 1) && (strArr[0].contains("todo"))) {
                     throw new DukeException("☹ OOPS!!! The description of a todo cannot be empty.");
+                }
+
+                if (input.matches("find(.*)")) {
+                    String[] taskArray = Arrays.copyOfRange(strArr, 1, strArr.length);
+                    String task = String.join(" ", taskArray);
+
+                    try {
+                        FileSearch fileSearch = new FileSearch();
+                        fileSearch.parseFile(task);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 if (input.matches("event(.*)")) {
@@ -83,7 +98,7 @@ public class Duke {
                     String format_to_timing = date_format_to.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
 
                     Event event = new Event(task, format_from_timing, format_to_timing);
-
+// update
                     try {
                         Storage todo = new Storage();
                         todo.WriteFile(event.toString());
