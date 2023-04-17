@@ -41,12 +41,17 @@ public class Duke {
                         && !input.contains("deadline")
                         && !input.contains("event")
                         && !input.contains("find")
+                        && !input.contains("undo")
                 ) {
                     throw new DukeException("☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
                 }
 
                 if ((strArr.length == 1) && (strArr[0].contains("todo"))) {
                     throw new DukeException("☹ OOPS!!! The description of a todo cannot be empty.");
+                }
+
+                if (input.contains("undo")) {
+
                 }
 
                 if (input.matches("find(.*)")) {
@@ -156,6 +161,7 @@ public class Duke {
                     try {
                         Storage todo = new Storage();
                         todo.WriteFile(to_do_task.toString());
+                        todo.copyFile();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

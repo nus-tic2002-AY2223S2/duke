@@ -1,9 +1,28 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
-    public static ArrayList<String> ReadFile(String datapath) throws FileNotFoundException {
+        public static void copyFile() throws IOException {
+            System.out.println("working");
+
+            Path sourceDirectory = Paths.get("src/main/task.txt");
+            Path targetDirectory  = Paths.get("src/main/task-copy.txt");
+
+            //copy source to target using Files Class
+            try {
+                Files.copy(sourceDirectory, targetDirectory,StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                System.out.println(e.toString());
+            }
+        }
+
+        public static ArrayList<String> ReadFile(String datapath) throws FileNotFoundException {
         try {
             File myObj = new File(datapath);
             Scanner myReader = new Scanner(myObj);
