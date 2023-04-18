@@ -3,6 +3,13 @@ import java.util.Scanner;
 
 public class Duke {
 
+    public static class DukeException extends Exception {
+        public DukeException(String message) {
+            super(message);
+        }
+    }
+
+
     public static class Task {
         protected String description;
         protected boolean isDone;
@@ -87,64 +94,90 @@ public class Duke {
         int inputCount = 0;
         while(!line.equals("bye")) {
             line = in.nextLine();
-            if (line.equals("bye")) {
-                System.out.println("Bye. Hope to see you soon!");
-            }
-            else if (line.equals("list")) {
-                System.out.println("Here are the tasks in your list:");
-                for(int i = 0; i < inputCount; i++) {
-                    System.out.println(i + 1 + ". " + storage[i].toString());
+            try {
+                if (line.equals("bye")) {
+                    System.out.println("Bye. Hope to see you soon!");
+                } else if (line.equals("list")) {
+                    System.out.println("Here are the tasks in your list:");
+                    for (int i = 0; i < inputCount; i++) {
+                        System.out.println(i + 1 + ". " + storage[i].toString());
+                    }
+                } else if (line.startsWith("mark ")) {
+                    int index = Integer.parseInt(line.substring(5)) - 1; // e.g. 2. ITEM is index 1 in reality
+                    storage[index].markAsDone();
+                    System.out.println("Nice! I've marked this task as done: ");
+                    System.out.println(" " + storage[index].getStatusIcon() + " " + storage[index].description);
+                } else if (line.startsWith("unmark ")) {
+                    int index = Integer.parseInt(line.substring(7)) - 1;
+                    storage[index].unmarkAsDone();
+                    System.out.println("Nice! I've marked this task as not done yet: ");
+                    System.out.println(" " + storage[index].getStatusIcon() + " " + storage[index].description);
+                } else if (line.startsWith("todo ")) {
+                    if (line.length() <= 5) {
+                        throw new DukeException("YO! The description of a todo cannot be empty!");
+                    }
+                    ToDo task = new ToDo(line);
+                    storage[inputCount] = task;
+                    inputCount++;
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(" " + task.toString());
+                    System.out.println("Now you have " + inputCount + " tasks in the list.");
+                } else if (line.startsWith("deadline ")) {
+                    int separatorIndex = line.indexOf("/by ");
+                    if (separatorIndex == -1) {
+                        throw new DukeException("YO! The deadline must have a '/by' followed by a date!");
+                    }
+                    String description = line.substring(9, separatorIndex - 1);
+                    if (description.isEmpty()) {
+                        throw new DukeException("YO! There must be a description for your deadline!");
+                    }
+                    String by = line.substring(separatorIndex + 4);
+                    Deadline task = new Deadline(description, by);
+                    storage[inputCount] = task;
+                    inputCount++;
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(" " + task.toString());
+                    System.out.println("Now you have " + inputCount + " tasks in the list.");
+                } else if (line.startsWith("event ")) {
+                    int fromIndex = line.indexOf("/from ");
+                    int toIndex = line.indexOf("/to ");
+                    if (fromIndex == -1 || toIndex == -1) {
+                        throw new DukeException("YO! The event must have '/from' and '/to' followed by dates.");
+                    }
+                    String description = line.substring(6, fromIndex - 1);
+                    if (description.isEmpty()) {
+                        throw new DukeException("YO! There must be a description for your event!");
+                    }
+                    String from = line.substring(fromIndex + 6, toIndex);
+                    String to = line.substring(toIndex + 4);
+                    Event task = new Event(description, from, to);
+                    storage[inputCount] = task;
+                    inputCount++;
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(" " + task.toString());
+                    System.out.println("Now you have " + inputCount + " tasks in the list.");
+                } else {
+                    Task task = new Task(line);
+                    storage[inputCount] = task;
+                    inputCount++;
+                    System.out.println("added: " + task.description);
                 }
-            }
-            else if (line.startsWith("mark ")) {
-                int index = Integer.parseInt(line.substring(5)) - 1; // e.g. 2. ITEM is index 1 in reality
-                storage[index].markAsDone();
-                System.out.println("Nice! I've marked this task as done: ");
-                System.out.println(" " + storage[index].getStatusIcon() + " " + storage[index].description);
-            }
-            else if (line.startsWith("unmark ")) {
-                int index = Integer.parseInt(line.substring(7)) - 1;
-                storage[index].unmarkAsDone();
-                System.out.println("Nice! I've marked this task as not done yet: ");
-                System.out.println(" " + storage[index].getStatusIcon() + " " + storage[index].description);
-            }
-            else if (line.startsWith("todo ")) {
-                ToDo task = new ToDo (line);
-                storage[inputCount] = task;
-                inputCount++;
-                System.out.println("Got it. I've added this task:");
-                System.out.println(" " + task.toString());
-                System.out.println("Now you have " + inputCount + " tasks in the list.");
-            }
-            else if (line.startsWith("deadline ")) {
-                int separatorIndex = line.indexOf("/by ");
-                String description = line.substring(9, separatorIndex - 1);
-                String by = line.substring(separatorIndex + 4);
-                Deadline task = new Deadline(description, by);
-                storage[inputCount] = task;
-                inputCount++;
-                System.out.println("Got it. I've added this task:");
-                System.out.println(" " + task.toString());
-                System.out.println("Now you have " + inputCount + " tasks in the list.");
-            }
-            else if (line.startsWith("event ")) {
-                int fromIndex = line.indexOf("/from ");
-                int toIndex = line.indexOf("/to ");
-                String description = line.substring(6, fromIndex - 1);
-                String from = line.substring(fromIndex + 6, toIndex);
-                String to = line.substring(toIndex + 4);
-                Event task = new Event(description, from, to);
-                storage[inputCount] = task;
-                inputCount++;
-                System.out.println("Got it. I've added this task:");
-                System.out.println(" " + task.toString());
-                System.out.println("Now you have " + inputCount + " tasks in the list.");
-            }
-            else {
-                Task task = new Task(line);
-                storage[inputCount] = task;
-                inputCount++;
-                System.out.println("added: " + task.description);
+            } catch (DukeException e) {
+                System.out.println("------------------------------------------------------------");
+                System.out.println(e.getMessage());
+                System.out.println("____________________________________________________________");
+            } catch (NumberFormatException e) {
+                System.out.println("____________________________________________________________");
+                System.out.println("YO! The task number must be a valid integer!");
+                System.out.println("____________________________________________________________");
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("____________________________________________________________");
+                System.out.println("YO! The task number is out of range!");
+                System.out.println("____________________________________________________________");
+            } catch (NullPointerException e) {
+                System.out.println("____________________________________________________________");
+                System.out.println("YO! The task number is out of range!");
+                System.out.println("____________________________________________________________");
             }
         }
     }
