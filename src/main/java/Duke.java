@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+import java.util.ArrayList;
 
 public class Duke {
 
@@ -85,13 +85,12 @@ public class Duke {
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
         System.out.println("Greetings from\n" + logo);
-        System.out.println("So... how can I assist you?");
+        System.out.println("Please add your todo / deadline / event! (-:");
 
         String line = " ";
         Scanner in = new Scanner(System.in);
 
-        Task[] storage = new Task[100];
-        int inputCount = 0;
+        ArrayList<Task> storage = new ArrayList<>();
         while(!line.equals("bye")) {
             line = in.nextLine();
             try {
@@ -99,29 +98,28 @@ public class Duke {
                     System.out.println("Bye. Hope to see you soon!");
                 } else if (line.equals("list")) {
                     System.out.println("Here are the tasks in your list:");
-                    for (int i = 0; i < inputCount; i++) {
-                        System.out.println(i + 1 + ". " + storage[i].toString());
+                    for (int i = 0; i < storage.size(); i++) {
+                        System.out.println(i + 1 + ". " + storage.get(i).toString());
                     }
                 } else if (line.startsWith("mark ")) {
                     int index = Integer.parseInt(line.substring(5)) - 1; // e.g. 2. ITEM is index 1 in reality
-                    storage[index].markAsDone();
+                    storage.get(index).markAsDone();
                     System.out.println("Nice! I've marked this task as done: ");
-                    System.out.println(" " + storage[index].getStatusIcon() + " " + storage[index].description);
+                    System.out.println(" " + storage.get(index).getStatusIcon() + " " + storage.get(index).description);
                 } else if (line.startsWith("unmark ")) {
                     int index = Integer.parseInt(line.substring(7)) - 1;
-                    storage[index].unmarkAsDone();
+                    storage.get(index).unmarkAsDone();
                     System.out.println("Nice! I've marked this task as not done yet: ");
-                    System.out.println(" " + storage[index].getStatusIcon() + " " + storage[index].description);
+                    System.out.println(" " + storage.get(index).getStatusIcon() + " " + storage.get(index).description);
                 } else if (line.startsWith("todo ")) {
                     if (line.length() <= 5) {
                         throw new DukeException("YO! The description of a todo cannot be empty!");
                     }
                     ToDo task = new ToDo(line);
-                    storage[inputCount] = task;
-                    inputCount++;
+                    storage.add(task);
                     System.out.println("Got it. I've added this task:");
                     System.out.println(" " + task.toString());
-                    System.out.println("Now you have " + inputCount + " tasks in the list.");
+                    System.out.println("Now you have " + storage.size() + " tasks in the list.");
                 } else if (line.startsWith("deadline ")) {
                     int separatorIndex = line.indexOf("/by ");
                     if (separatorIndex == -1) {
@@ -133,11 +131,10 @@ public class Duke {
                     }
                     String by = line.substring(separatorIndex + 4);
                     Deadline task = new Deadline(description, by);
-                    storage[inputCount] = task;
-                    inputCount++;
+                    storage.add(task);
                     System.out.println("Got it. I've added this task:");
                     System.out.println(" " + task.toString());
-                    System.out.println("Now you have " + inputCount + " tasks in the list.");
+                    System.out.println("Now you have " + storage.size() + " tasks in the list.");
                 } else if (line.startsWith("event ")) {
                     int fromIndex = line.indexOf("/from ");
                     int toIndex = line.indexOf("/to ");
@@ -151,16 +148,21 @@ public class Duke {
                     String from = line.substring(fromIndex + 6, toIndex);
                     String to = line.substring(toIndex + 4);
                     Event task = new Event(description, from, to);
-                    storage[inputCount] = task;
-                    inputCount++;
+                    storage.add(task);
                     System.out.println("Got it. I've added this task:");
                     System.out.println(" " + task.toString());
-                    System.out.println("Now you have " + inputCount + " tasks in the list.");
+                    System.out.println("Now you have " + storage.size() + " tasks in the list.");
+                } else if (line.startsWith("delete ")) {
+                    int index = Integer.parseInt(line.substring(7)) - 1;
+                    if (index < 0 || index >= storage.size()) {
+                        throw new IndexOutOfBoundsException();
+                    }
+                    Task removedTask = storage.remove(index);
+                    System.out.println("Noted. I have removed this task:");
+                    System.out.println(" " + removedTask.toString());
+                    System.out.println("Now you have " + storage.size() + " tasks in the list.");
                 } else {
-                    Task task = new Task(line);
-                    storage[inputCount] = task;
-                    inputCount++;
-                    System.out.println("added: " + task.description);
+                    throw new DukeException("I have no idea what you just typed lmao");
                 }
             } catch (DukeException e) {
                 System.out.println("------------------------------------------------------------");
