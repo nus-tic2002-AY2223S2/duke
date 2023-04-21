@@ -1,6 +1,6 @@
 public class Command {
     public enum CommandType {
-        BYE, LIST, DONE, DELETE, TODO, DEADLINE, EVENT, UNDONE, FIND, HELP
+        BYE, LIST, MARK, DELETE, TODO, DEADLINE, EVENT, UNMARK, FIND, HELP
     }
 
     private final CommandType command;
@@ -72,7 +72,7 @@ public class Command {
             case LIST:
                 System.out.println(ui.showList(tasks));
                 break;
-            case DONE:
+            case MARK:
                 try {
                     Task task = tasks.markDone(this.index - 1);
                     System.out.println(ui.showDone(tasks, task.toString()));
@@ -80,7 +80,7 @@ public class Command {
                     System.out.println(e.getMessage());
                 }
                 break;
-            case UNDONE:
+            case UNMARK:
                 try {
                     Task task = tasks.markUndone(this.index - 1);
                     System.out.println(ui.showUndone(tasks, task.toString()));

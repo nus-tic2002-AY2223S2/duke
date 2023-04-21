@@ -10,7 +10,7 @@ public class Parser {
                 return new Command(Command.CommandType.LIST);
             case "mark":
                 try {
-                    return new Command(Command.CommandType.DONE, Integer.parseInt(command[1]));
+                    return new Command(Command.CommandType.MARK, Integer.parseInt(command[1]));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     throw new DukeException("☹ OOPS!!! You need to specify which task to mark as done.");
                 } catch (NumberFormatException e) {
@@ -18,7 +18,7 @@ public class Parser {
                 }
             case "unmark":
                 try {
-                    return new Command(Command.CommandType.UNDONE, Integer.parseInt(command[1]));
+                    return new Command(Command.CommandType.UNMARK, Integer.parseInt(command[1]));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     throw new DukeException("☹ OOPS!!! You need to specify which task to mark as undone.");
                 } catch (NumberFormatException e) {
