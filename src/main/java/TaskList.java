@@ -21,10 +21,12 @@ public class TaskList {
         this.tasks.add(task);
     }
 
-    public Task deleteTask(int index) {
-
-        return this.tasks.remove(index);
-
+    public Task deleteTask(int index) throws DukeException {
+        try {
+            return this.tasks.remove(index);
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException("OOPS!!! The index is out of range.");
+        }
     }
 
     public Task getTask(int index) {
@@ -34,18 +36,22 @@ public class TaskList {
     public int getLength() {
         return this.tasks.size();
     }
-
-    public Task markDone(int index) {
-        Task task = this.tasks.get(index);
-        task.markAsDone();
-        return task;
-
+    public Task markDone(int index) throws DukeException {
+        try {
+            Task task = this.tasks.get(index);
+            task.markAsDone();
+            return task;
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException("OOPS!!! The index is out of range.");
+        }
     }
-
-    public Task markUndone(int index) {
-        Task task = this.tasks.get(index);
-        task.markAsUndone();
-        return task;
-
+    public Task markUndone(int index) throws DukeException {
+        try {
+            Task task = this.tasks.get(index);
+            task.markAsUndone();
+            return task;
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException("OOPS!!! The index is out of range.");
+        }
     }
 }

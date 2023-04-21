@@ -51,8 +51,8 @@ public class Ui {
                 "2. deadline <description> /by <date>\n" +
                 "3. event <description> /from <date> /to <date>\n" +
                 "4. list\n" +
-                "5. done <index>\n" +
-                "6. undone <index>\n" +
+                "5. mark <index>\n" +
+                "6. unmark <index>\n" +
                 "7. delete <index>\n" +
                 "8. find <keyword>\n" +
                 "9. bye";

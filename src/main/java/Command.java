@@ -1,6 +1,6 @@
 public class Command {
     public enum CommandType {
-        BYE, LIST, DONE, DELETE, TODO, DEADLINE, EVENT, UNDONE, FIND, HELP, INVALID
+        BYE, LIST, DONE, DELETE, TODO, DEADLINE, EVENT, UNDONE, FIND, HELP
     }
 
     private final CommandType command;
@@ -49,12 +49,22 @@ public class Command {
         this.index = index;
     }
 
+    //    public String getCommand() {
+//        return this.command;
+//    }
+    public String getDescription() {
+        return this.description;
+    }
+
+    public String getTime() {
+        return this.startTime;
+    }
+
     public boolean isExit() {
         return this.command.equals(CommandType.BYE);
     }
 
-    public void execute(TaskList tasks, Ui ui) {
-        Task task;
+    public void execute(TaskList tasks, Ui ui) throws DukeException {
         switch (this.command) {
             case BYE:
                 System.out.println(ui.showBye());
@@ -63,22 +73,28 @@ public class Command {
                 System.out.println(ui.showList(tasks));
                 break;
             case DONE:
-
-                task = tasks.markDone(this.index - 1);
-                System.out.println(ui.showDone(tasks, task.toString()));
-
+                try {
+                    Task task = tasks.markDone(this.index - 1);
+                    System.out.println(ui.showDone(tasks, task.toString()));
+                } catch (DukeException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case UNDONE:
-
-                task = tasks.markUndone(this.index - 1);
-                System.out.println(ui.showUndone(tasks, task.toString()));
-
+                try {
+                    Task task = tasks.markUndone(this.index - 1);
+                    System.out.println(ui.showUndone(tasks, task.toString()));
+                } catch (DukeException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case DELETE:
-
-                task = tasks.deleteTask(this.index - 1);
-                System.out.println(ui.showDelete(tasks, task.toString()));
-
+                try {
+                    Task task = tasks.deleteTask(this.index - 1);
+                    System.out.println(ui.showDelete(tasks, task.toString()));
+                } catch (DukeException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case TODO:
                 Task todo = new Todo(this.description);
@@ -105,4 +121,3 @@ public class Command {
         }
     }
 }
-
