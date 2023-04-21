@@ -1,6 +1,10 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
+import java.io.*;
+import java.io.File;
+
+
 public class Duke {
 
     public static class DukeException extends Exception {
@@ -31,6 +35,57 @@ public class Duke {
             isDone = false;
         }
 
+        public String toFileFormat() {
+            return (isDone ? "1" : "0") + " | " + description;
+        }
+
+        public static Task fromFileFormat(String line) {
+            String[] parts = line.split(" \\| ");
+
+            // Check if the input line has the correct format
+            if (parts.length < 3 || parts.length > 5) {
+                // System.err.println("Invalid line format: " + line);
+                return null;
+            }
+
+            Task task = null;
+            String taskType = parts[0];
+            boolean isDone = parts[1].equals("1");
+            String description = parts[2];
+
+            switch (taskType) {
+                case "T":
+                    task = new ToDo(description);
+                    break;
+                case "D":
+                    if (parts.length != 4) {
+                        System.err.println("Invalid line format for deadline " + line);
+                        return null;
+                    }
+                    String by = parts[3];
+                    task = new Deadline(description, by);
+                    break;
+                case "E":
+                    if (parts.length != 5) {
+                        System.err.println("Invalid line format for event: " + line);
+                        return null;
+                    }
+                    String from = parts[3];
+                    String to = parts[4];
+                    task = new Event(description, from, to);
+                    break;
+                default:
+                    System.err.println("Invalid task type: " + taskType);
+                    return null;
+            }
+
+            if (task != null && isDone) {
+                task.markAsDone();
+            }
+
+            return task;
+        }
+
         @Override
         public String toString() {
             return getStatusIcon() + " " + description;
@@ -46,6 +101,10 @@ public class Duke {
         public String toString() {
             return "[T] " + super.toString();
         }
+
+        public String toFileFormat() {
+            return "T | " + super.toFileFormat();
+        }
     }
 
     public static class Deadline extends Task {
@@ -59,6 +118,10 @@ public class Duke {
         @Override
         public String toString() {
             return "[D] " + super.toString() + " (by: " + by + ")";
+        }
+
+        public String toFileFormat() {
+            return "D | " + super.toFileFormat() + " | " + by;
         }
     }
 
@@ -76,7 +139,54 @@ public class Duke {
         public String toString() {
             return "[E] " + super.toString() + " (from: " + from + "| to: " + to + ")";
         }
+
+        public String toFileFormat() {
+            return "E | " + super.toFileFormat() + " | " + from + " | " + to;
+        }
     }
+
+    private static void saveTasks(ArrayList<Task> storage) {
+        try {
+            File directory = new File("data");
+            if (!directory.exists()) {
+                directory.mkdir();
+            }
+            FileWriter writer = new FileWriter("data" + File.separator +"duke.txt");
+            for (Task task : storage) {
+                writer.write(task.toFileFormat() + System.lineSeparator());
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred while saving tasks.");
+        }
+    }
+
+    private static void loadTasks(ArrayList<Task> storage) {
+        try {
+            File directory = new File("data");
+            if (!directory.exists()) {
+                directory.mkdir();
+            }
+            File file = new File("data" + File.separator + "duke.txt");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            Scanner reader = new Scanner(file);
+            while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                Task task = Task.fromFileFormat(data);
+                if (task != null) {
+                    storage.add(task);
+                }
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred while loading tasks.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while creating the data file.");
+        }
+    }
+
 
     public static void main(String[] args) {
         String logo = " ____        _        \n"
@@ -91,6 +201,8 @@ public class Duke {
         Scanner in = new Scanner(System.in);
 
         ArrayList<Task> storage = new ArrayList<>();
+        loadTasks(storage);
+
         while(!line.equals("bye")) {
             line = in.nextLine();
             try {
@@ -106,11 +218,13 @@ public class Duke {
                     storage.get(index).markAsDone();
                     System.out.println("Nice! I've marked this task as done: ");
                     System.out.println(" " + storage.get(index).getStatusIcon() + " " + storage.get(index).description);
+                    saveTasks(storage);
                 } else if (line.startsWith("unmark ")) {
                     int index = Integer.parseInt(line.substring(7)) - 1;
                     storage.get(index).unmarkAsDone();
                     System.out.println("Nice! I've marked this task as not done yet: ");
                     System.out.println(" " + storage.get(index).getStatusIcon() + " " + storage.get(index).description);
+                    saveTasks(storage);
                 } else if (line.startsWith("todo ")) {
                     if (line.length() <= 5) {
                         throw new DukeException("YO! The description of a todo cannot be empty!");
@@ -120,6 +234,7 @@ public class Duke {
                     System.out.println("Got it. I've added this task:");
                     System.out.println(" " + task.toString());
                     System.out.println("Now you have " + storage.size() + " tasks in the list.");
+                    saveTasks(storage);
                 } else if (line.startsWith("deadline ")) {
                     int separatorIndex = line.indexOf("/by ");
                     if (separatorIndex == -1) {
@@ -135,6 +250,7 @@ public class Duke {
                     System.out.println("Got it. I've added this task:");
                     System.out.println(" " + task.toString());
                     System.out.println("Now you have " + storage.size() + " tasks in the list.");
+                    saveTasks(storage);
                 } else if (line.startsWith("event ")) {
                     int fromIndex = line.indexOf("/from ");
                     int toIndex = line.indexOf("/to ");
@@ -152,6 +268,7 @@ public class Duke {
                     System.out.println("Got it. I've added this task:");
                     System.out.println(" " + task.toString());
                     System.out.println("Now you have " + storage.size() + " tasks in the list.");
+                    saveTasks(storage);
                 } else if (line.startsWith("delete ")) {
                     int index = Integer.parseInt(line.substring(7)) - 1;
                     if (index < 0 || index >= storage.size()) {
@@ -161,6 +278,7 @@ public class Duke {
                     System.out.println("Noted. I have removed this task:");
                     System.out.println(" " + removedTask.toString());
                     System.out.println("Now you have " + storage.size() + " tasks in the list.");
+                    saveTasks(storage);
                 } else {
                     throw new DukeException("I have no idea what you just typed lmao");
                 }
