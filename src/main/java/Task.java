@@ -1,6 +1,7 @@
-public class Task{
-    protected String description;
-    protected boolean isDone;
+
+public abstract class Task {
+    private final String description;
+    private boolean isDone;
 
     public Task(String description) {
         this.description = description;
@@ -11,25 +12,28 @@ public class Task{
         return (isDone ? "X" : " "); // mark done task with X
     }
 
-    public String getDescription(){
-        return this.description;
+    public void markAsDone() {
+        this.isDone = true;
     }
 
-    public void setDone(boolean done) {
-        isDone = done;
-    }
-
-    public void markDone(int i){
-        this.isDone =true;
-    }
-
-    public void unMark(){
+    public void markAsUndone() {
         this.isDone = false;
     }
 
-    @Override
-    public String toString(){
-        return "[" + this.getStatusIcon() +"]" +this.getDescription();
+    public String getDescription() {
+        return this.description;
     }
 
+    @Override
+    public String toString() {
+        return "[" + this.getStatusIcon() + "] " + this.getDescription();
+    }
+
+    public abstract String getTaskType();
+
+    public abstract String getTaskStartTime();
+    public abstract String getTaskEndTime();
+    public String getTaskStatusInString() {
+        return this.isDone ? "1" : "0";
+    }
 }

@@ -1,53 +1,51 @@
 import java.util.ArrayList;
 
 public class TaskList {
-    protected boolean isEmpty;
-    protected int length;
-    protected ArrayList<Task> taskList;
+    private final ArrayList<Task> tasks;
+    private final int length;
+    private final boolean isEmpty;
 
-    public TaskList(){
-        this.isEmpty = true;
+    public TaskList() {
+        this.tasks = new ArrayList<>();
         this.length = 0;
-        taskList = new ArrayList<>();
+        this.isEmpty = true;
     }
 
-    public TaskList(ArrayList<Task> taskList) {
+    public TaskList(ArrayList<Task> tasks) {
+        this.tasks = tasks;
+        this.length = tasks.size();
         this.isEmpty = false;
-        this.length = taskList.size();
-        this.taskList = taskList;
+    }
+
+    public void addTask(Task task) {
+        this.tasks.add(task);
+    }
+
+    public Task deleteTask(int index) {
+
+        return this.tasks.remove(index);
+
+    }
+
+    public Task getTask(int index) {
+        return this.tasks.get(index);
     }
 
     public int getLength() {
-        return this.length;
+        return this.tasks.size();
     }
 
-    public void addTask(String item){
-        Task task = new Task(item);
-        this.taskList.add(task);
-        this.length++;
-        this.isEmpty = false;
+    public Task markDone(int index) {
+        Task task = this.tasks.get(index);
+        task.markAsDone();
+        return task;
+
     }
 
-    public String getTask(int i){
-        return this.taskList.get(i).toString();
-    }
+    public Task markUndone(int index) {
+        Task task = this.tasks.get(index);
+        task.markAsUndone();
+        return task;
 
-    public boolean isEmpty(){
-        return this.isEmpty;
     }
-
-    public Task getTaskObject(int i){
-        return this.taskList.get(i);
-    }
-
-    public void markDone(int i) {
-        Task task = this.taskList.get(i);
-        task.setDone(true);
-    }
-
-    public void unMark(int i) {
-        Task task = this.taskList.get(i);
-        task.setDone(false);
-    }
-
 }
