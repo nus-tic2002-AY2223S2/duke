@@ -101,7 +101,7 @@ public class Duke {
     }
 
 
-
+    // Writes the content of the list to file
     private static void writeToFile(String filePath, String textToAdd) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         fw.write(textToAdd);
@@ -157,13 +157,18 @@ public class Duke {
         // Individual Feature 1 - Reminder
         System.out.println("Here are your pending tasks\n");
         int s=0;
+        int y=0;
         while(s<j){
             if(tasks.get(s).getStatusIcon().equals(" ")) {
                 System.out.println(s + 1 + ". " + tasks.get(s));
+                y++;
             }
 
                 s++;
 
+        }
+        if(y==0){
+            System.out.println("...Great!! You have no pending tasks!\n");
         }
 
         while(i==1){
