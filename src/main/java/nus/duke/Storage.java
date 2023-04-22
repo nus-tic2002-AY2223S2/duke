@@ -15,9 +15,6 @@ import java.time.format.DateTimeFormatter;
 // level 7 Save
 // *************************
 public class Storage {
-
-
-
     protected File filename;
 
     // create a data file in filePath

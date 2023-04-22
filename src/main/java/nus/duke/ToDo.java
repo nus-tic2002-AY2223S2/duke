@@ -6,9 +6,11 @@ public class ToDo extends Task {
         super(description);
     }
 
+    /*
     public ToDo(Task task) {
         super(task.description);
     }
+    */
 
     public String toString() {
         return "[T]" + super.toString();
