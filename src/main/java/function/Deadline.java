@@ -1,3 +1,4 @@
+package function;
 
 public class Deadline extends Task {
     private final String by;
@@ -8,7 +9,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + this.by + ")";
+        return "\t [D]" + super.toString() + " (by: " + this.by + ")";
     }
     public String getTaskType() {
         return "D";
