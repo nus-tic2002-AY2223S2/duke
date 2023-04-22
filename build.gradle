@@ -46,7 +46,6 @@ test {
 }
 
 application {
-    //mainClassName = "nus.duke.Launcher"
     mainClassName = "nus.duke.Duke"
 }
 
