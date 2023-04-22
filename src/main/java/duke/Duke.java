@@ -1,3 +1,5 @@
+package duke;
+
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.Arrays;
@@ -15,7 +17,7 @@ public class Duke {
 
 
     //Read from Existing File and update list
-    private static int printFileContents(String filePath, ArrayList<Task>tasks) throws FileNotFoundException {
+    public static int printFileContents(String filePath, ArrayList<Task>tasks) throws FileNotFoundException {
 
         File f = new File(filePath); // create a File for the given file path
         Scanner s = new Scanner(f); // create a Scanner using the File as the source
@@ -150,7 +152,7 @@ public class Duke {
         j=readt(tasks);
         System.out.println("\nYou're all set! \nSo, What's on your mind today?\n");
         System.out.println("Below are the list of things you can do\n");
-        System.out.println("1.Add Tasks:\n i.todo Task Name\n ii.deadline Task Name/Date\n iii.event Task_Name/Date\n2.Display List of Tasks- list\n3.Find Task- find keyword\n4.Delete Task- delete number\n5.Mark/Unmark Task- mark/unmark number\n");
+        System.out.println("1.Add Tasks:\n i.todo Task_Name\n ii.deadline Task_Name/Date(YYYY-MM-DD)\n iii.event Task_Name/Date(YYYY-MM-DD)\n2.Display List of Tasks- list\n3.Find Task- find key_word\n4.Delete Task- delete Task_Number\n5.Mark/Unmark Task_Number- mark/unmark number\n");
         while(i==1){
             System.out.println("Waiting for your command....\n");
             Scanner in = new Scanner(System.in);
