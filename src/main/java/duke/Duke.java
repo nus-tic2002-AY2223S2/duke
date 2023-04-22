@@ -153,6 +153,19 @@ public class Duke {
         System.out.println("\nYou're all set! \nSo, What's on your mind today?\n");
         System.out.println("Below are the list of things you can do\n");
         System.out.println("1.Add Tasks:\n i.todo Task_Name\n ii.deadline Task_Name/Date(YYYY-MM-DD)\n iii.event Task_Name/Date(YYYY-MM-DD)\n2.Display List of Tasks- list\n3.Find Task- find key_word\n4.Delete Task- delete Task_Number\n5.Mark/Unmark Task_Number- mark/unmark number\n");
+
+        // Individual Feature 1 - Reminder
+        System.out.println("Here are your pending tasks\n");
+        int s=0;
+        while(s<j){
+            if(tasks.get(s).getStatusIcon().equals(" ")) {
+                System.out.println(s + 1 + ". " + tasks.get(s));
+            }
+
+                s++;
+
+        }
+
         while(i==1){
             System.out.println("Waiting for your command....\n");
             Scanner in = new Scanner(System.in);
@@ -296,6 +309,7 @@ public class Duke {
                     System.out.println("----------~~~~~~~~-----------");
                 }
 
+                // Individual Feature 2- Better Search- Partial word Search
                 else if(temp.substring(0, 4).equals("find")){
 
                     String find= temp.substring(5);
