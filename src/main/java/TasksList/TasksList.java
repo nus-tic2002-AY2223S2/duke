@@ -13,10 +13,6 @@ public class TasksList {
         this.tasksList = new ArrayList<>();
     }
 
-    public static ArrayList<Task> getTasksList() {
-        return tasksList;
-    }
-
     /**
      * Adds all tasks from user input into tasksList
      *
@@ -24,12 +20,12 @@ public class TasksList {
      */
     public void taskAdd(Task task){
         String space = " ";
-        Ui.showLine();
         int taskNum = 0;
         for (Task tasks : tasksList) {
             if(task.getDescription().equals(tasks.getDescription())){
                 taskNum++;
                 System.out.println(space + "The task being added clashes with another task in the list.");
+                Ui.showLine();
                 break;
             }
         }
@@ -38,7 +34,6 @@ public class TasksList {
             Ui.Echo("Got it. I've added this task: \n  " + task +
                     "\n Now you have " + tasksList.size() + " tasks in the list.");
         }
-        Ui.showLine();
     }
 
     /**
@@ -112,15 +107,18 @@ public class TasksList {
                 break;
             case "D":
                 task = new Deadline(body[2],
-                        LocalDateTime.parse(body[3].replace("T"," "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                        LocalDateTime.parse(body[3].replace("T"," "),
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
                 if (body[1].equals("1")) {
                     task.Mark();
                 }
                 break;
             case "E":
                 task = new Event(body[2],
-                        LocalDateTime.parse(body[3].replace("T"," "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
-                        LocalDateTime.parse(body[4].replace("T"," "), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                        LocalDateTime.parse(body[3].replace("T"," "),
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")),
+                        LocalDateTime.parse(body[4].replace("T"," "),
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
                 if (body[1].equals("1")) {
                     task.Mark();
                 }
@@ -178,6 +176,5 @@ public class TasksList {
         }
         Ui.showLine();
     }
-
 }
 

@@ -36,14 +36,18 @@ public class Parser {
     }
 
     /**
+     * Based on the input command keyed by user, we will find first keyword.
+     *
      * @param inputCommand command keyed by user
-     * @return first keyword from input command
+     * @return first keyword
      */
     public static String keyCommand(String inputCommand){
         return inputCommand.split(" ",2)[0].trim();
     }
 
     /**
+     * Based on the input command keyed by user, we will find another half command.
+     *
      * @param inputCommand command keyed by user
      * @return another command split by space from input command
      * @throws DukeException

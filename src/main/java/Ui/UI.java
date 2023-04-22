@@ -1,16 +1,11 @@
 package ui;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
-
 import exception.DukeException;
-import task.Task;
-import taskslist.TasksList;
 
 public class Ui {
-    public static ArrayList<Task> tasksList = TasksList.getTasksList();
 
     public static void showWelcome(){
         String logo = " ____        _        \n"
@@ -29,6 +24,10 @@ public class Ui {
      * Show to the user about Duke menu
      */
     public static void showUserMenu(){
+        printMenu();
+    }
+
+    private static void printMenu() {
         Set<String> hashSet = new HashSet<>();
         String space = " ";
         System.out.println("Please key in command followed as below:");
@@ -59,6 +58,7 @@ public class Ui {
         }
         System.out.println();
     }
+
 
     /**
      * User key in full command

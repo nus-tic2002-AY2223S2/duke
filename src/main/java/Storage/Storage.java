@@ -38,7 +38,7 @@ public class Storage extends TasksList {
             File file = new File(this.filePath);
             boolean isCreateNewFile = file.createNewFile();
             if (isCreateNewFile) {
-                System.out.println("File created,file path: " + file.getAbsolutePath());
+                System.out.println("New File created,file path: " + file.getAbsolutePath());
             }else{
                 System.out.println("File already exist,file path: " + file.getAbsolutePath());
             }

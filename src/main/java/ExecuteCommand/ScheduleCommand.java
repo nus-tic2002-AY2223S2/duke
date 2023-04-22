@@ -8,11 +8,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class ScheduleCommand extends Command{
-    private final String inputCommand;
-    public static final Storage storage = Storage.getStorage();
 
     public ScheduleCommand(String inputCommand) {
-        this.inputCommand = inputCommand;
+        super(inputCommand);
     }
 
     public void execute()throws DukeException {
