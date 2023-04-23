@@ -5,6 +5,9 @@ import java.util.Iterator;
 
 import task.Task;
 
+/**
+ * Represents a list of tasks with various operations.
+ */
 public class TaskList implements Iterable<Task>{
     private ArrayList<Task> tasks;
 

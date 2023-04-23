@@ -9,6 +9,9 @@ import java.util.Scanner;
 import task.Task;
 import tasklist.TaskList;
 
+/**
+ * Represents a storage to manage reading from and writing to a file.
+ */
 public class Storage {
     private String filePath;
 
@@ -24,6 +27,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the tasks from a TaskList object to a file.
+     *
+     * @param tasks The TaskList object containing tasks to be saved.
+     */
     public void saveTasks(TaskList tasks) {
         try {
             FileWriter fw = new FileWriter(filePath);
@@ -38,7 +46,13 @@ public class Storage {
             System.out.println("Error: Unable to save tasks.");
         }
     }
-
+    
+    /**
+     * Loads tasks from a file and returns them as a TaskList object.
+     *
+     * @return A TaskList object containing the tasks loaded from the file.
+     * @throws FileNotFoundException If the file is not found.
+     */
     public TaskList loadTasks() throws FileNotFoundException {
         File file = new File(filePath);
         TaskList tasks = new TaskList();

@@ -5,7 +5,9 @@ import storage.Storage;
 import ui.Ui;
 import task.Task;
 import tasklist.TaskList;
-
+/**
+ * Represents a mark command that marks a task in the task list as done.
+ */
 public class MarkCommand extends Command {
     private int index;
 

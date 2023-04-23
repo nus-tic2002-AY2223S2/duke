@@ -5,7 +5,9 @@ import storage.Storage;
 import ui.Ui;
 import task.Task;
 import tasklist.TaskList;
-
+/**
+ * Represents an unmark command that marks a task in the task list as not done.
+ */
 public class UnmarkCommand extends Command {
     private int index;
 

@@ -1,5 +1,11 @@
 package task;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+/**
+ * Represents an abstract task with a description and a completion status.
+ */
 public abstract class Task {
     protected String description;
     protected boolean isDone;
@@ -48,7 +54,7 @@ public abstract class Task {
                     System.err.println("Invalid line format for deadline " + line);
                     return null;
                 }
-                String by = parts[3];
+                LocalDateTime by = LocalDateTime.parse(parts[3]);
                 task = new Deadline(description, by);
                 break;
             case "E":

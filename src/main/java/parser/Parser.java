@@ -9,12 +9,18 @@ import command.UnmarkCommand;
 import command.ExitCommand;
 import command.InvalidCommand;
 
-import task.ToDo;
-import task.Deadline;
-import task.Event;
-import task.Task;
 
+/**
+ * Represents a parser that processes and interprets user inputs into commands.
+ */
 public class Parser {
+
+    /**
+     * Parses the user input and returns the corresponding Command object.
+     *
+     * @param input The user input as a string.
+     * @return The corresponding Command object based on the user input.
+     */
     public static Command parse(String input) {
         if (input.equals("bye")) {
             return new ExitCommand();

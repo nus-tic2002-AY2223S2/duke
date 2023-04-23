@@ -4,7 +4,9 @@ import exception.DukeException;
 import storage.Storage;
 import ui.Ui;
 import tasklist.TaskList;
-
+/**
+ * Represents an invalid command that is unrecognized by the application.
+ */
 public class InvalidCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {

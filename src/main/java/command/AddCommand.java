@@ -8,6 +8,10 @@ import tasklist.TaskList;
 import task.ToDo;
 import task.Deadline;
 import task.Event;
+import java.time.DateTimeException;
+
+
+import static task.Deadline.parseDateTime;
 
 public class AddCommand extends Command {
     private String taskInput;
@@ -34,7 +38,12 @@ public class AddCommand extends Command {
                 if (deadlineParts.length != 2) {
                     throw new DukeException("Error: Deadline should have a description and a date separated by '/by'.");
                 }
-                return new Deadline(deadlineParts[0], deadlineParts[1]);
+                try {
+                    return new Deadline(deadlineParts[0], parseDateTime(deadlineParts[1]));
+                } catch (DateTimeException e) {
+                    throw new DukeException("Error: Invalid date format. Use 'M/d/yyyy HHmm' format, e.g., 2/12/2019 1800.");
+                }
+
             case "event":
                 String[] eventParts = description.split(" /from ");
                 if (eventParts.length != 2) {

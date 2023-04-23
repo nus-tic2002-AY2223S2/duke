@@ -1,4 +1,2 @@
 T | 0 | now
-T | 0 | l
-D | 0 | now | tr
-E | 0 | shit | now | tmr
+T | 1 | now

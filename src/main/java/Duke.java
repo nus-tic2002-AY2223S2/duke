@@ -9,6 +9,9 @@ import command.Command;
 
 import java.io.File;
 
+/**
+ * Represents the main class for the Duke application.
+ */
 public class Duke {
 
     private Storage storage;
