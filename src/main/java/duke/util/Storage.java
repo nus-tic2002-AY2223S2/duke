@@ -13,15 +13,20 @@ import duke.task.Event;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Storage class will storage the tasks data in sql
+ */
 public class Storage {
     private final String filePath;
     public Storage(String filePath) {
         this.filePath = filePath;
     }
-    public String getFilePath() {
-        return this.filePath;
-    }
 
+    /**
+     * Load methods is used to low the existing tasks data from sql
+     * @return the database of task list
+     * @throws DukeException Invalid date format in database
+     */
     public TaskList load() throws DukeException {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
