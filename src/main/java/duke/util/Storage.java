@@ -10,6 +10,9 @@ import duke.task.Task;
 import duke.task.Todo;
 import duke.task.Deadline;
 import duke.task.Event;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+
 public class Storage {
     private final String filePath;
     public Storage(String filePath) {
@@ -19,7 +22,7 @@ public class Storage {
         return this.filePath;
     }
 
-    public TaskList load() throws DukeException{
+    public TaskList load() throws DukeException {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
             Statement stmt = conn.createStatement();
@@ -40,18 +43,26 @@ public class Storage {
                         tasks.addTask(todo);
                         break;
                     case "D":
-                        Deadline deadline = new Deadline(taskDescription, taskEndDate);
-                        if (taskStatus.equals("1")) {
-                            deadline.markAsDone();
+                        try {
+                            Deadline deadline = new Deadline(taskDescription, LocalDateTime.parse(taskEndDate));
+                            if (taskStatus.equals("1")) {
+                                deadline.markAsDone();
+                            }
+                            tasks.addTask(deadline);
+                        } catch (DateTimeParseException e) {
+                            throw new DukeException("Invalid date format in database");
                         }
-                        tasks.addTask(deadline);
                         break;
                     case "E":
-                        Event event = new Event(taskDescription, taskStartDate, taskEndDate);
-                        if (taskStatus.equals("1")) {
-                            event.markAsDone();
+                        try {
+                            Event event = new Event(taskDescription, LocalDateTime.parse(taskStartDate), LocalDateTime.parse(taskEndDate));
+                            if (taskStatus.equals("1")) {
+                                event.markAsDone();
+                            }
+                            tasks.addTask(event);
+                        } catch (DateTimeParseException e) {
+                            throw new DukeException("Invalid date format in database");
                         }
-                        tasks.addTask(event);
                         break;
                 }
 

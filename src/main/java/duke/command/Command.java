@@ -9,18 +9,28 @@ import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Todo;
 
+import javax.swing.*;
+import java.time.LocalDateTime;
+
 public class Command {
     public enum CommandType {
-        BYE, LIST, MARK, DELETE, TODO, DEADLINE, EVENT, UNMARK, FIND, HELP
+        BYE, LIST, MARK, DELETE, TODO, DEADLINE, EVENT, UNMARK, FIND, HELP, DUE
     }
 
     private final CommandType command;
     private final String description;
-    private final String startTime;
-    private final String endTime;
+    private final LocalDateTime startTime;
+    private final LocalDateTime endTime;
     private final int index;
+    public Command(CommandType command, LocalDateTime endTime) {
+        this.command = command;
+        this.description = null;
+        this.startTime = null;
+        this.endTime = endTime;
+        this.index = -1;
+    }
 
-    public Command(CommandType command, String description, String startTime, String endTime) {
+    public Command(CommandType command, String description, LocalDateTime startTime, LocalDateTime endTime) {
         this.command = command;
         this.description = description;
         this.startTime = startTime;
@@ -28,35 +38,35 @@ public class Command {
         this.index = -1;
     }
 
-    public Command(CommandType command, String description, String startTime) {
+    public Command(CommandType command, String description, LocalDateTime startTime) {
         this.command = command;
         this.description = description;
         this.startTime = startTime;
-        this.endTime = "";
+        this.endTime = null;
         this.index = -1;
     }
 
     public Command(CommandType command, String description) {
         this.command = command;
         this.description = description;
-        this.startTime = "";
-        this.endTime = "";
+        this.startTime = null;
+        this.endTime = null;
         this.index = -1;
     }
 
     public Command(CommandType command) {
         this.command = command;
-        this.description = "";
-        this.startTime = "";
-        this.endTime = "";
+        this.description = null;
+        this.startTime = null;
+        this.endTime = null;
         this.index = -1;
     }
 
     public Command(CommandType command, int index) {
         this.command = command;
-        this.description = "";
-        this.startTime = "";
-        this.endTime = "";
+        this.description = null;
+        this.startTime = null;
+        this.endTime = null;
         this.index = index;
     }
 
@@ -67,8 +77,9 @@ public class Command {
         return this.description;
     }
 
-    public String getTime() {
-        return this.startTime;
+    public String getTime() throws DukeException {
+        assert this.startTime != null;
+        return this.startTime.toString();
     }
 
     public boolean isExit() {
@@ -126,7 +137,12 @@ public class Command {
             case HELP:
                 System.out.println(ui.showHelp());
                 break;
-
+            case DUE:
+                System.out.println(ui.showDue(tasks, endTime));
+                break;
+            case FIND:
+                System.out.println(ui.showFind(tasks, description));
+                break;
             default:
                 System.out.println(ui.showInvalid());
                 break;

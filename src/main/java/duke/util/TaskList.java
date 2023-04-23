@@ -3,6 +3,7 @@ package duke.util;
 import java.util.ArrayList;
 import duke.task.Task;
 import duke.exceptions.DukeException;
+import java.time.LocalDateTime;
 public class TaskList {
     private final ArrayList<Task> tasks;
     private final int length;
@@ -56,5 +57,23 @@ public class TaskList {
         } catch (IndexOutOfBoundsException e) {
             throw new DukeException("OOPS!!! The index is out of range.");
         }
+    }
+    public TaskList findTasks(String keyword) {
+        ArrayList<Task> tasks = new ArrayList<>();
+        for (Task task : this.tasks) {
+            if (task.getDescription().contains(keyword)) {
+                tasks.add(task);
+            }
+        }
+        return new TaskList(tasks);
+    }
+    public TaskList tasksDueBefore(LocalDateTime dueTime) {
+        ArrayList<Task> tasks = new ArrayList<>();
+        for (Task task : this.tasks) {
+            if (!task.getTaskType().equals("T") && LocalDateTime.parse(task.getTaskEndTime()).isBefore(dueTime)) {
+                tasks.add(task);
+            }
+        }
+        return new TaskList(tasks);
     }
 }
