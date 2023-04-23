@@ -2,6 +2,7 @@ package tasklist;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import task.Task;
 
@@ -44,6 +45,17 @@ public class TaskList implements Iterable<Task>{
         task.unmarkAsDone();
         return task;
     }
+
+    public List<Task> findTasks(String keyword) {
+        List<Task> matchingTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.toString().contains(keyword)) {
+                matchingTasks.add(task);
+            }
+        }
+        return matchingTasks;
+    }
+
 
     @Override
     public Iterator<Task> iterator() {

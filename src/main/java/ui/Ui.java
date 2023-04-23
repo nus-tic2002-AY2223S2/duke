@@ -1,8 +1,10 @@
 package ui;
 
 import java.util.Scanner;
+import java.util.List;
 import task.Task;
 import tasklist.TaskList;
+
 
 public class Ui {
     private Scanner scanner;
@@ -61,6 +63,22 @@ public class Ui {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i + 1) + ". " + tasks.get(i));
+        }
+    }
+
+    public void showPriorityUpdated(Task task, int taskIndex) {
+        System.out.println("Priority of the following task has been updated: ");
+        System.out.println(taskIndex + "." + task);
+    }
+
+    public void showMatchingTasks(List<Task> matchingTasks) {
+        if (matchingTasks.isEmpty()) {
+            System.out.println("No tasks found matching your search.");
+        } else {
+            System.out.println("Here are the matching tasks in your list:");
+            for (int i = 0; i < matchingTasks.size(); i++) {
+                System.out.println((i + 1) + ". " + matchingTasks.get(i));
+            }
         }
     }
 }

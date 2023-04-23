@@ -9,10 +9,12 @@ import java.time.format.DateTimeFormatter;
 public abstract class Task {
     protected String description;
     protected boolean isDone;
+    protected int priority;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.priority = 0;// default priority = 0 (lowest)
     }
 
     public String getStatusIcon() {
@@ -27,6 +29,9 @@ public abstract class Task {
         isDone = false;
     }
 
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
     public String toFileFormat() {
         return (isDone ? "1" : "0") + " | " + description;
     }
@@ -80,6 +85,6 @@ public abstract class Task {
 
     @Override
     public String toString() {
-        return getStatusIcon() + " " + description;
+        return getStatusIcon() + " " + description + (priority > 0 ? " (P" + priority + ")" : "");
     }
 }
