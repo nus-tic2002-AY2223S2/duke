@@ -20,7 +20,7 @@ public class AddCommand extends Command {
         this.taskInput = taskInput;
     }
 
-    private Task createTask(String taskInput) throws DukeException {
+    Task createTask(String taskInput) throws DukeException {
         String[] inputParts = taskInput.split(" ", 2);
         String taskType = inputParts[0];
 
@@ -41,7 +41,7 @@ public class AddCommand extends Command {
                 try {
                     return new Deadline(deadlineParts[0], parseDateTime(deadlineParts[1]));
                 } catch (DateTimeException e) {
-                    throw new DukeException("Error: Invalid date format. Use 'M/d/yyyy HHmm' format, e.g., 2/12/2019 1800.");
+                    throw new DukeException("Error: Invalid date format. Use 'd/m/yyyy HHmm' format, e.g., 12/2/2019 1800.");
                 }
 
             case "event":
@@ -53,7 +53,12 @@ public class AddCommand extends Command {
                 if (timeParts.length != 2) {
                     throw new DukeException("Error: Event should have a description and '/from' and '/to' dates.");
                 }
-                return new Event(eventParts[0], timeParts[0], timeParts[1]);
+                try {
+                    return new Event(eventParts[0], parseDateTime(timeParts[0]), parseDateTime(timeParts[1]));
+                } catch (DateTimeException e) {
+                    throw new DukeException("Error: Invalid date format. Use Use 'm/d/yyyy HHmm' format, e.g., 12/2/2019 1800.");
+                }
+
             default:
                 throw new DukeException("Error: Unknown task type.");
         }

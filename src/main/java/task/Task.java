@@ -62,8 +62,8 @@ public abstract class Task {
                     System.err.println("Invalid line format for event: " + line);
                     return null;
                 }
-                String from = parts[3];
-                String to = parts[4];
+                LocalDateTime from = LocalDateTime.parse(parts[3]);
+                LocalDateTime to = LocalDateTime.parse(parts[4]);
                 task = new Event(description, from, to);
                 break;
             default:
