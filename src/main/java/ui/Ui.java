@@ -24,6 +24,7 @@ public class Ui {
     }
 
     public void showError(String message) {
+        assert message != null : "Error message cannot be null";
         System.out.println("------------------------------------------------------------");
         System.out.println(message);
         System.out.println("____________________________________________________________");
@@ -48,6 +49,7 @@ public class Ui {
     }
 
     public void showTaskAdded(Task task, int taskCount) {
+        assert task != null : "Task cannot be null";
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + task);
         System.out.println("Now you have " + taskCount + " tasks in the list.");

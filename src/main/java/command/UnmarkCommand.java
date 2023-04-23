@@ -17,9 +17,13 @@ public class UnmarkCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
-        Task task = tasks.unmarkAsDone(index);
-        ui.showTaskUnmarked(task); // Make sure to implement this method in the Ui class
-        storage.saveTasks(tasks);
+        try {
+            Task task = tasks.unmarkAsDone(index);
+            ui.showTaskUnmarked(task); // Make sure to implement this method in the Ui class
+            storage.saveTasks(tasks);
+        } catch (IndexOutOfBoundsException e) {
+            ui.showError("Error: Invalid task number.");
+        }
     }
 
     @Override

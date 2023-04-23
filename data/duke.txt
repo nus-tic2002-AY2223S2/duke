@@ -1,4 +1,5 @@
-T | 0 | now
-D | 0 | drink bbt | 2023-02-02T18:00
-E | 1 | attend gala | 2023-03-03T08:00 | 2023-03-03T20:00
-T | 1 | now
+D | 0 | sell books | 2023-07-02T13:00
+E | 0 | attend met gala | 2023-07-02T12:00 | 2023-08-02T08:00
+T | 0 | find bobby
+T | 0 | eat
+E | 1 | danceoff | 2024-03-02T13:00 | 2024-03-03T12:00

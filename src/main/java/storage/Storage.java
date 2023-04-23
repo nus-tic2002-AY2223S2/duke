@@ -16,6 +16,7 @@ public class Storage {
     private String filePath;
 
     public Storage(String filePath) {
+        assert filePath != null : "File path cannot be null";
         this.filePath = filePath; File file = new File(filePath);
         if (!file.exists()) {
             file.getParentFile().mkdirs();

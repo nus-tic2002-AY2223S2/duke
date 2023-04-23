@@ -17,6 +17,7 @@ public class AddCommand extends Command {
     private String taskInput;
 
     public AddCommand(String taskInput) {
+        assert taskInput != null : "Task input cannot be null";
         this.taskInput = taskInput;
     }
 

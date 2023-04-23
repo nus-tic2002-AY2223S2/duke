@@ -17,9 +17,13 @@ public class MarkCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeException {
-        Task task = tasks.markAsDone(index);
-        ui.showTaskMarked(task);
-        storage.saveTasks(tasks);
+        try {
+            Task task = tasks.markAsDone(index);
+            ui.showTaskMarked(task);
+            storage.saveTasks(tasks);
+        } catch (IndexOutOfBoundsException e) {
+            ui.showError("Error: Invalid task number.");
+        }
     }
 
     @Override
