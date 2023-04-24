@@ -30,6 +30,7 @@ public class Storage {
     public TaskList load() throws DukeException {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
+            assert conn != null;
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM tasks");
             TaskList tasks = new TaskList();
@@ -80,6 +81,7 @@ public class Storage {
     public void save(TaskList tasks) throws DukeException {
         try {
             Connection conn = DriverManager.getConnection("jdbc:sqlite:" + this.filePath);
+            assert conn != null;
             Statement stmt = conn.createStatement();
             stmt.execute("DROP TABLE IF EXISTS tasks");
             stmt.execute("CREATE TABLE tasks(id INTEGER PRIMARY KEY, type TEXT NOT NULL, description TEXT NOT NULL, start_time TEXT, end_time TEXT, done INTEGER NOT NULL)");

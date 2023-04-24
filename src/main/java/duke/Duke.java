@@ -60,6 +60,6 @@ public class Duke {
      * @param args he command line arguments
      */
     public static void main(String[] args) {
-        new Duke("data/duke.sql").run();
+        new Duke("data.db").run();
     }
 }
